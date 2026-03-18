@@ -1,0 +1,1187 @@
+Country,Region,Section,Question,Response
+Alberta (CA),North America,Fiscal,Taxation environment,Neutral
+Alberta (CA),North America,Fiscal,Shift profit center possible,Yes
+Alberta (CA),North America,Fiscal,Electricity tax exposure,No
+Alberta (CA),North America,Fiscal,Tax abatements available,No
+Alberta (CA),North America,Fiscal,Constraint to access benefits,Moderate
+Alberta (CA),North America,Fiscal,Corporate Income Tax (CIT),0.17
+Alberta (CA),North America,Permitting,Operational license timeline,Yes
+Alberta (CA),North America,Permitting,ASIC import license required,No
+Alberta (CA),North America,Permitting,Construction permit timeline,3 – 6 months
+Alberta (CA),North America,Permitting,EIA complexity,Moderate
+Alberta (CA),North America,Permitting,Water permits restrictiveness,Moderate
+Alberta (CA),North America,Permitting,Heat/noise/emissions regulations,Significant
+Alberta (CA),North America,Permitting,Zoning restrictions impact,High
+Alberta (CA),North America,Legal,Regulatory environment,Favorable
+Alberta (CA),North America,Legal,Framework evolution outlook,Highly Favorable
+Alberta (CA),North America,Energy,Grid access barriers,High
+Alberta (CA),North America,Energy,Grid connection lead time,> 24 months
+Alberta (CA),North America,Energy,Electricity price,On par than the median (>$42.5 - 47.5/MWh)
+Alberta (CA),North America,Energy,Regulatory status for miners,Neutral
+Alberta (CA),North America,Customs,VAT rate,< 6%
+Alberta (CA),North America,Customs,VAT filing burden,Low
+Alberta (CA),North America,Customs,ASIC import process,Neutral
+Alberta (CA),North America,Customs,Electrical infra import,Neutral
+Alberta (CA),North America,Customs,Tariff on China imports,< 10%
+Alberta (CA),North America,Customs,Procurement lead times,Slightly
+Alberta (CA),North America,Customs,Mitigation effectiveness,Effective
+Argentina,Latin America,Fiscal,Taxation environment,Neutral
+Argentina,Latin America,Fiscal,Taxation environment,Neutral
+Argentina,Latin America,Fiscal,Shift profit center possible,Yes
+Argentina,Latin America,Fiscal,Shift profit center possible,Yes
+Argentina,Latin America,Fiscal,Electricity tax exposure,No
+Argentina,Latin America,Fiscal,Electricity tax exposure,No
+Argentina,Latin America,Fiscal,Tax abatements available,No
+Argentina,Latin America,Fiscal,Tax abatements available,No
+Argentina,Latin America,Fiscal,Constraint to access benefits,High
+Argentina,Latin America,Fiscal,Constraint to access benefits,Neutral
+Argentina,Latin America,Fiscal,Corporate Income Tax (CIT),0.35
+Argentina,Latin America,Permitting,Operational license timeline,No
+Argentina,Latin America,Permitting,Operational license timeline,No
+Argentina,Latin America,Permitting,ASIC import license required,Yes
+Argentina,Latin America,Permitting,ASIC import license required,Yes
+Argentina,Latin America,Permitting,Construction permit timeline,6 – 9 months
+Argentina,Latin America,Permitting,Construction permit timeline,3 – 6 months
+Argentina,Latin America,Permitting,EIA complexity,Low
+Argentina,Latin America,Permitting,Water permits restrictiveness,High
+Argentina,Latin America,Permitting,Heat/noise/emissions regulations,Significant
+Argentina,Latin America,Permitting,Heat/noise/emissions regulations,Unsignificant
+Argentina,Latin America,Permitting,Zoning restrictions impact,Very low – inexistant
+Argentina,Latin America,Permitting,Zoning restrictions impact,Very low – inexistant
+Argentina,Latin America,Legal,Regulatory environment,Neutral
+Argentina,Latin America,Legal,Regulatory environment,Favorable
+Argentina,Latin America,Legal,Framework evolution outlook,Favorable
+Argentina,Latin America,Legal,Framework evolution outlook,Favorable
+Argentina,Latin America,Legal,Legislative risk,No risk
+Argentina,Latin America,Energy,Grid access barriers,Moderate
+Argentina,Latin America,Energy,Grid access barriers,High
+Argentina,Latin America,Energy,Grid connection lead time,12 – 18 months
+Argentina,Latin America,Energy,Grid connection lead time,6 – 12 months
+Argentina,Latin America,Energy,Electricity price,Slightly Higher than the median (>$47.5 - 55/MWh)
+Argentina,Latin America,Energy,Regulatory status for miners,Neutral
+Argentina,Latin America,Customs,VAT rate,< 6%
+Argentina,Latin America,Customs,VAT rate,< 6%
+Argentina,Latin America,Customs,VAT filing burden,Moderate
+Argentina,Latin America,Customs,ASIC import process,Unfavorable
+Argentina,Latin America,Customs,ASIC import process,Unfavorable
+Argentina,Latin America,Customs,Electrical infra import,Unfavorable
+Argentina,Latin America,Customs,Electrical infra import,Neutral
+Argentina,Latin America,Customs,Tariff on China imports,10 - 15%
+Argentina,Latin America,Customs,Tariff on China imports,10 - 15%
+Argentina,Latin America,Customs,Procurement lead times,Highly
+Argentina,Latin America,Customs,Procurement lead times,Low
+Argentina,Latin America,Customs,Mitigation effectiveness,Highly Effective
+Argentina,Latin America,Customs,Mitigation effectiveness,Effective
+Australia,Oceania,Fiscal,Taxation environment,Unfavorable
+Australia,Oceania,Fiscal,Shift profit center possible,No
+Australia,Oceania,Fiscal,Electricity tax exposure,No
+Australia,Oceania,Fiscal,Tax abatements available,No
+Australia,Oceania,Fiscal,Constraint to access benefits,High
+Australia,Oceania,Fiscal,Corporate Income Tax (CIT),0.3
+Australia,Oceania,Permitting,Operational license timeline,Yes
+Australia,Oceania,Permitting,ASIC import license required,Yes
+Australia,Oceania,Permitting,Construction permit timeline,9 – 12 months
+Australia,Oceania,Permitting,EIA complexity,Moderate
+Australia,Oceania,Permitting,Water permits restrictiveness,Moderate
+Australia,Oceania,Permitting,Heat/noise/emissions regulations,Extremely Significant
+Australia,Oceania,Permitting,Zoning restrictions impact,High
+Australia,Oceania,Legal,Regulatory environment,Unfavorable
+Australia,Oceania,Legal,Framework evolution outlook,Highly Unfavorable
+Australia,Oceania,Energy,Grid access barriers,12 – 18 months
+Australia,Oceania,Energy,Grid connection lead time,Higher than the median (>$55.0 - $65.0/MWh)
+Australia,Oceania,Energy,Electricity price,Highly unfavorable
+Australia,Oceania,Energy,Regulatory status for miners,High curtailments when connected to any grid in Australia
+Australia,Oceania,Customs,VAT rate,Low
+Australia,Oceania,Customs,VAT filing burden,Relatively easy - done on monthly or quarterly basis
+Australia,Oceania,Customs,ASIC import process,Highly Unfavorable
+Australia,Oceania,Customs,Electrical infra import,< 10%
+Australia,Oceania,Customs,Tariff on China imports,Slightly
+Australia,Oceania,Customs,Procurement lead times,"Generally customs delays 100% of the time. Although we've imported for 7+ years, they constantly stop imports to inspect them & request additional information every time"
+Brazil,Latin America,Fiscal,Taxation environment,Neutral
+Brazil,Latin America,Fiscal,Taxation environment,Unfavorable
+Brazil,Latin America,Fiscal,Taxation environment,Unfavorable
+Brazil,Latin America,Fiscal,Shift profit center possible,Yes
+Brazil,Latin America,Fiscal,Shift profit center possible,Yes
+Brazil,Latin America,Fiscal,Shift profit center possible,Yes
+Brazil,Latin America,Fiscal,Electricity tax exposure,No
+Brazil,Latin America,Fiscal,Electricity tax exposure,No
+Brazil,Latin America,Fiscal,Electricity tax exposure,No
+Brazil,Latin America,Fiscal,Tax abatements available,Yes
+Brazil,Latin America,Fiscal,Tax abatements available,Yes
+Brazil,Latin America,Fiscal,Tax abatements available,Yes
+Brazil,Latin America,Fiscal,Constraint to access benefits,Neutral
+Brazil,Latin America,Fiscal,Constraint to access benefits,High
+Brazil,Latin America,Fiscal,Constraint to access benefits,High
+Brazil,Latin America,Fiscal,Corporate Income Tax (CIT),0.15
+Brazil,Latin America,Fiscal,Corporate Income Tax (CIT),0.15
+Brazil,Latin America,Fiscal,Corporate Income Tax (CIT),15% - 25%
+Brazil,Latin America,Permitting,Operational license timeline,No
+Brazil,Latin America,Permitting,Operational license timeline,No
+Brazil,Latin America,Permitting,Operational license timeline,No
+Brazil,Latin America,Permitting,ASIC import license required,No
+Brazil,Latin America,Permitting,ASIC import license required,No
+Brazil,Latin America,Permitting,ASIC import license required,No
+Brazil,Latin America,Permitting,Construction permit timeline,3 – 6 months
+Brazil,Latin America,Permitting,Construction permit timeline,3 – 6 months
+Brazil,Latin America,Permitting,Construction permit timeline,Less than 3 months
+Brazil,Latin America,Permitting,EIA complexity,Moderate
+Brazil,Latin America,Permitting,EIA complexity,Moderate
+Brazil,Latin America,Permitting,Water permits restrictiveness,Moderate
+Brazil,Latin America,Permitting,Heat/noise/emissions regulations,Significant
+Brazil,Latin America,Permitting,Heat/noise/emissions regulations,Unsignificant
+Brazil,Latin America,Permitting,Heat/noise/emissions regulations,Unsignificant
+Brazil,Latin America,Permitting,Zoning restrictions impact,Moderate
+Brazil,Latin America,Permitting,Zoning restrictions impact,Very low – inexistant
+Brazil,Latin America,Permitting,Zoning restrictions impact,Very low – inexistant
+Brazil,Latin America,Legal,Regulatory environment,Favorable
+Brazil,Latin America,Legal,Regulatory environment,Neutral
+Brazil,Latin America,Legal,Regulatory environment,Neutral
+Brazil,Latin America,Legal,Framework evolution outlook,Favorable
+Brazil,Latin America,Legal,Framework evolution outlook,Neutral
+Brazil,Latin America,Legal,Framework evolution outlook,Unfavorable
+Brazil,Latin America,Legal,Legislative risk,Yes. There are three “on-the-horizon” items matter most — and none of them are a direct ban. They’re tax + reporting + industrial policy.
+Brazil,Latin America,Energy,Grid access barriers,12 – 18 months
+Brazil,Latin America,Energy,Grid access barriers,6 – 12 months
+Brazil,Latin America,Energy,Grid access barriers,6 – 12 months
+Brazil,Latin America,Energy,Grid connection lead time,Slightly Higher than the median (>$47.5 - 55/MWh)
+Brazil,Latin America,Energy,Grid connection lead time,On par than the median (>$42.5 - 47.5/MWh)
+Brazil,Latin America,Energy,Grid connection lead time,Slightly Higher than the median (>$47.5 - 55/MWh)
+Brazil,Latin America,Energy,Electricity price,Neutral
+Brazil,Latin America,Energy,Electricity price,Neutral
+Brazil,Latin America,Energy,Electricity price,Neutral
+Brazil,Latin America,Energy,Regulatory status for miners,Yes. Grid-connected miners are exposed to utility tariffs. But exposure is structural and manageable if designed correctly.
+Brazil,Latin America,Energy,Regulatory status for miners,Behind the meter / off-grid strategies
+Brazil,Latin America,Energy,Regulatory status for miners,No
+Brazil,Latin America,Customs,VAT rate,Highly
+Brazil,Latin America,Customs,VAT filing burden,"Yes. Under Brazil’s current tax system, recovering input VAT-type credits can be complex."
+Brazil,Latin America,Customs,VAT filing burden,Not recoverable
+Brazil,Latin America,Customs,VAT filing burden,Not recoverable
+Brazil,Latin America,Customs,ASIC import process,Neutral
+Brazil,Latin America,Customs,ASIC import process,Neutral
+Brazil,Latin America,Customs,ASIC import process,Neutral
+Brazil,Latin America,Customs,ASIC import process,39.75
+Brazil,Latin America,Customs,Tariff on China imports,Slightly
+Brazil,Latin America,Customs,Tariff on China imports,Slightly
+Brazil,Latin America,Customs,Tariff on China imports,Highly
+Brazil,Latin America,Customs,Procurement lead times,"Customs delays, documentation requirements, a lot of additional paperwork"
+Brazil,Latin America,Customs,Procurement lead times,Customs delays
+Chile,Latin America,Fiscal,Taxation environment,Favorable
+Chile,Latin America,Fiscal,Shift profit center possible,Yes
+Chile,Latin America,Fiscal,Electricity tax exposure,No
+Chile,Latin America,Fiscal,Tax abatements available,No
+Chile,Latin America,Fiscal,Constraint to access benefits,Neutral
+Chile,Latin America,Fiscal,Corporate Income Tax (CIT),0.27
+Chile,Latin America,Permitting,Operational license timeline,Yes
+Chile,Latin America,Permitting,ASIC import license required,No
+Chile,Latin America,Permitting,Construction permit timeline,6 – 9 months
+Chile,Latin America,Permitting,EIA complexity,High
+Chile,Latin America,Permitting,Water permits restrictiveness,Moderate
+Chile,Latin America,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Chile,Latin America,Permitting,Zoning restrictions impact,Very low – inexistant
+Chile,Latin America,Legal,Regulatory environment,Neutral
+Chile,Latin America,Legal,Framework evolution outlook,Neutral
+Chile,Latin America,Legal,Legislative risk,No
+Chile,Latin America,Energy,Grid access barriers,> 24 months
+Chile,Latin America,Energy,Grid connection lead time,Higher than the median (>$55.0 - $65.0/MWh)
+Chile,Latin America,Energy,Regulatory status for miners,No
+Chile,Latin America,Customs,VAT rate,Low
+Chile,Latin America,Customs,VAT filing burden,Facil
+Chile,Latin America,Customs,ASIC import process,Favorable
+Chile,Latin America,Customs,Electrical infra import,10 - 15%
+Chile,Latin America,Customs,Tariff on China imports,Highly
+Chile,Latin America,Customs,Procurement lead times,No
+DRC,Africa,Fiscal,Taxation environment,Unfavorable
+DRC,Africa,Fiscal,Shift profit center possible,Yes
+DRC,Africa,Fiscal,Electricity tax exposure,No
+DRC,Africa,Fiscal,Tax abatements available,No
+DRC,Africa,Fiscal,Constraint to access benefits,High
+DRC,Africa,Fiscal,Corporate Income Tax (CIT),0
+DRC,Africa,Permitting,Operational license timeline,No
+DRC,Africa,Permitting,ASIC import license required,Yes
+DRC,Africa,Permitting,Construction permit timeline,3 – 6 months
+DRC,Africa,Permitting,Zoning restrictions impact,Very low – inexistant
+DRC,Africa,Legal,Regulatory environment,Neutral
+DRC,Africa,Legal,Framework evolution outlook,Neutral
+DRC,Africa,Energy,Grid connection lead time,Lower than the median (<$35/MWh)
+DRC,Africa,Energy,Electricity price,Highly Unfavorable
+DRC,Africa,Energy,Regulatory status for miners,Drying fruits
+DRC,Africa,Customs,VAT filing burden,No eligibility to VAT refund
+DRC,Africa,Customs,ASIC import process,Highly Unfavorable
+DRC,Africa,Customs,Electrical infra import,> 30%
+Ethiopia,Africa,Fiscal,Taxation environment,Unfavorable
+Ethiopia,Africa,Fiscal,Taxation environment,Neutral
+Ethiopia,Africa,Fiscal,Taxation environment,Neutral
+Ethiopia,Africa,Fiscal,Taxation environment,Unfavorable
+Ethiopia,Africa,Fiscal,Taxation environment,Neutral
+Ethiopia,Africa,Fiscal,Shift profit center possible,No
+Ethiopia,Africa,Fiscal,Shift profit center possible,No
+Ethiopia,Africa,Fiscal,Shift profit center possible,No
+Ethiopia,Africa,Fiscal,Shift profit center possible,No
+Ethiopia,Africa,Fiscal,Shift profit center possible,Yes
+Ethiopia,Africa,Fiscal,Electricity tax exposure,Yes
+Ethiopia,Africa,Fiscal,Electricity tax exposure,Yes
+Ethiopia,Africa,Fiscal,Electricity tax exposure,Yes
+Ethiopia,Africa,Fiscal,Electricity tax exposure,Yes
+Ethiopia,Africa,Fiscal,Electricity tax exposure,Yes
+Ethiopia,Africa,Fiscal,Tax abatements available,Yes
+Ethiopia,Africa,Fiscal,Tax abatements available,Yes
+Ethiopia,Africa,Fiscal,Tax abatements available,Yes
+Ethiopia,Africa,Fiscal,Tax abatements available,Yes
+Ethiopia,Africa,Fiscal,Tax abatements available,Yes
+Ethiopia,Africa,Fiscal,Constraint to access benefits,Neutral
+Ethiopia,Africa,Fiscal,Constraint to access benefits,Neutral
+Ethiopia,Africa,Fiscal,Constraint to access benefits,Low
+Ethiopia,Africa,Fiscal,Constraint to access benefits,High
+Ethiopia,Africa,Fiscal,Constraint to access benefits,Neutral
+Ethiopia,Africa,Fiscal,Corporate Income Tax (CIT),Mining profita taxed as ordinary corporate income tax at 30%
+Ethiopia,Africa,Fiscal,Corporate Income Tax (CIT),So far they haven’t applied yet but they have issued a law for miners to pay corporate tax which is expected to be 30%
+Ethiopia,Africa,Fiscal,Corporate Income Tax (CIT),0.3
+Ethiopia,Africa,Fiscal,Corporate Income Tax (CIT),0
+Ethiopia,Africa,Permitting,Operational license timeline,Yes
+Ethiopia,Africa,Permitting,Operational license timeline,Yes
+Ethiopia,Africa,Permitting,Operational license timeline,Yes
+Ethiopia,Africa,Permitting,Operational license timeline,Yes
+Ethiopia,Africa,Permitting,Operational license timeline,Yes
+Ethiopia,Africa,Permitting,ASIC import license required,Yes
+Ethiopia,Africa,Permitting,ASIC import license required,Yes
+Ethiopia,Africa,Permitting,ASIC import license required,Yes
+Ethiopia,Africa,Permitting,ASIC import license required,Yes
+Ethiopia,Africa,Permitting,ASIC import license required,Yes
+Ethiopia,Africa,Permitting,Construction permit timeline,6 – 9 months
+Ethiopia,Africa,Permitting,Construction permit timeline,6 – 9 months
+Ethiopia,Africa,Permitting,Construction permit timeline,9 – 12 months
+Ethiopia,Africa,Permitting,Construction permit timeline,6 – 9 months
+Ethiopia,Africa,Permitting,Construction permit timeline,9 – 12 months
+Ethiopia,Africa,Permitting,EIA complexity,Very low
+Ethiopia,Africa,Permitting,EIA complexity,Very low
+Ethiopia,Africa,Permitting,EIA complexity,Highly
+Ethiopia,Africa,Permitting,Water permits restrictiveness,No approvals required
+Ethiopia,Africa,Permitting,Water permits restrictiveness,No approvals required
+Ethiopia,Africa,Permitting,Heat/noise/emissions regulations,Unsignificant
+Ethiopia,Africa,Permitting,Heat/noise/emissions regulations,Unsignificant
+Ethiopia,Africa,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Ethiopia,Africa,Permitting,Zoning restrictions impact,Neutral
+Ethiopia,Africa,Permitting,Zoning restrictions impact,Moderate
+Ethiopia,Africa,Permitting,Zoning restrictions impact,Neutral
+Ethiopia,Africa,Legal,Regulatory environment,Unfavorable
+Ethiopia,Africa,Legal,Regulatory environment,Neutral
+Ethiopia,Africa,Legal,Regulatory environment,Neutral
+Ethiopia,Africa,Legal,Regulatory environment,Unfavorable
+Ethiopia,Africa,Legal,Regulatory environment,Neutral
+Ethiopia,Africa,Legal,Framework evolution outlook,Unfavorable
+Ethiopia,Africa,Legal,Framework evolution outlook,Neutral
+Ethiopia,Africa,Legal,Framework evolution outlook,Highly unfavorable
+Ethiopia,Africa,Legal,Framework evolution outlook,Neutral
+Ethiopia,Africa,Legal,Framework evolution outlook,Neutral
+Ethiopia,Africa,Legal,Legislative risk,"waiting for, negative"
+Ethiopia,Africa,Energy,Grid access barriers,< 6 months
+Ethiopia,Africa,Energy,Grid access barriers,6 – 12 months
+Ethiopia,Africa,Energy,Grid access barriers,6 – 12 months
+Ethiopia,Africa,Energy,Grid access barriers,6 – 12 months
+Ethiopia,Africa,Energy,Grid connection lead time,Lower than the median (<$35/MWh)
+Ethiopia,Africa,Energy,Grid connection lead time,Slightly Lower than the median (>$35 - 42.5/MWh)
+Ethiopia,Africa,Energy,Grid connection lead time,Slightly Higher than the median (>$47.5 - 55/MWh)
+Ethiopia,Africa,Energy,Grid connection lead time,Slightly Lower than the median (>$35 - 42.5/MWh)
+Ethiopia,Africa,Energy,Electricity price,Unfavorable
+Ethiopia,Africa,Energy,Electricity price,Unfavorable
+Ethiopia,Africa,Energy,Electricity price,Unfavorable
+Ethiopia,Africa,Energy,Electricity price,Unfavorable
+Ethiopia,Africa,Energy,Regulatory status for miners,Revised Tariffs from EEP starting 1st December 2025
+Ethiopia,Africa,Customs,VAT rate,Neutral
+Ethiopia,Africa,Customs,VAT rate,Moderate
+Ethiopia,Africa,Customs,VAT rate,Neutral
+Ethiopia,Africa,Customs,VAT filing burden,No issue
+Ethiopia,Africa,Customs,VAT filing burden,"this is, in principle, problematic"
+Ethiopia,Africa,Customs,ASIC import process,Neutral
+Ethiopia,Africa,Customs,ASIC import process,Neutral
+Ethiopia,Africa,Customs,ASIC import process,Unfavorable
+Ethiopia,Africa,Customs,ASIC import process,Neutral
+Ethiopia,Africa,Customs,ASIC import process,Highly Unfavorable
+Ethiopia,Africa,Customs,Electrical infra import,< 10%
+Ethiopia,Africa,Customs,Electrical infra import,< 10%
+Ethiopia,Africa,Customs,Electrical infra import,< 10%
+Ethiopia,Africa,Customs,Electrical infra import,< 10%
+Ethiopia,Africa,Customs,Tariff on China imports,Highly
+Ethiopia,Africa,Customs,Tariff on China imports,Slightly
+Ethiopia,Africa,Customs,Tariff on China imports,Highly
+Ethiopia,Africa,Customs,Tariff on China imports,Moderately
+Ethiopia,Africa,Customs,Procurement lead times,"Documentation requirements, customs delay, INSA delay"
+Ethiopia,Africa,Customs,Procurement lead times,"Yes, customs can take weeks to months. Investment license process can take months"
+Finland,Europe,Fiscal,Taxation environment,Neutral
+Finland,Europe,Fiscal,Taxation environment,Highly unfavorable
+Finland,Europe,Fiscal,Shift profit center possible,Yes
+Finland,Europe,Fiscal,Shift profit center possible,Yes
+Finland,Europe,Fiscal,Electricity tax exposure,Yes
+Finland,Europe,Fiscal,Electricity tax exposure,Yes
+Finland,Europe,Fiscal,Tax abatements available,No
+Finland,Europe,Fiscal,Tax abatements available,No
+Finland,Europe,Fiscal,Constraint to access benefits,High
+Finland,Europe,Fiscal,Constraint to access benefits,High
+Finland,Europe,Fiscal,Corporate Income Tax (CIT),New taxes on electricity which will be applied by mid 2026.
+Finland,Europe,Fiscal,Corporate Income Tax (CIT),"Finnish tax authorities are not considering mining a VAT-eligible industry, so they are now claiming back the already occured input VAT on import and electricity purchase from several miners. This means hosting is the only viable option for Finnish miners until this is resolved."
+Finland,Europe,Permitting,Operational license timeline,No
+Finland,Europe,Permitting,Operational license timeline,No
+Finland,Europe,Permitting,ASIC import license required,3 – 6 months
+Finland,Europe,Permitting,ASIC import license required,3 – 6 months
+Finland,Europe,Permitting,Construction permit timeline,Neutral
+Finland,Europe,Permitting,Construction permit timeline,Neutral
+Finland,Europe,Permitting,EIA complexity,No approvals required
+Finland,Europe,Permitting,EIA complexity,Neutral
+Finland,Europe,Permitting,Water permits restrictiveness,Significant
+Finland,Europe,Permitting,Water permits restrictiveness,Moderatly Significant
+Finland,Europe,Permitting,Heat/noise/emissions regulations,Neutral
+Finland,Europe,Permitting,Heat/noise/emissions regulations,Neutral
+Finland,Europe,Legal,Regulatory environment,Unfavorable
+Finland,Europe,Legal,Regulatory environment,Unfavorable
+Finland,Europe,Legal,Framework evolution outlook,Highly
+Finland,Europe,Legal,Legislative risk,"There is a data center electricity tax coming in the summer of 2026, which will increase  all-in power price by about $0.025/kwh. Miners who reuse heat will be exempted."
+Finland,Europe,Energy,Grid access barriers,12 – 18 months
+Finland,Europe,Energy,Grid access barriers,12 – 18 months
+Finland,Europe,Energy,Grid connection lead time,Slightly Higher than the median (>$47.5 - 55/MWh)
+Finland,Europe,Energy,Grid connection lead time,Slightly Higher than the median (>$47.5 - 55/MWh)
+Finland,Europe,Energy,Electricity price,Favorable
+Finland,Europe,Energy,Electricity price,Highly Favorable
+Finland,Europe,Energy,Regulatory status for miners,"Miners purchase electricity on the open market similarly as all other electricity customers. Norway has some demand response opportunities, but income from such activities is not co-mingled with the electricity purchase."
+Finland,Europe,Customs,VAT rate,Neutral
+Finland,Europe,Customs,VAT rate,Low
+Finland,Europe,Customs,VAT filing burden,See my answer on B9
+Finland,Europe,Customs,ASIC import process,Highly Favorable
+Finland,Europe,Customs,ASIC import process,Neutral
+Finland,Europe,Customs,Tariff on China imports,Slightly
+Finland,Europe,Customs,Tariff on China imports,Slightly
+Iceland,Europe,Fiscal,Taxation environment,Neutral
+Iceland,Europe,Fiscal,Taxation environment,Neutral
+Iceland,Europe,Fiscal,Taxation environment,Favorable
+Iceland,Europe,Fiscal,Shift profit center possible,Yes
+Iceland,Europe,Fiscal,Shift profit center possible,Yes
+Iceland,Europe,Fiscal,Shift profit center possible,Yes
+Iceland,Europe,Fiscal,Electricity tax exposure,No
+Iceland,Europe,Fiscal,Electricity tax exposure,No
+Iceland,Europe,Fiscal,Electricity tax exposure,No
+Iceland,Europe,Fiscal,Tax abatements available,No
+Iceland,Europe,Fiscal,Tax abatements available,No
+Iceland,Europe,Fiscal,Constraint to access benefits,Moderate
+Iceland,Europe,Fiscal,Constraint to access benefits,Low
+Iceland,Europe,Fiscal,Constraint to access benefits,Low
+Iceland,Europe,Fiscal,Corporate Income Tax (CIT),0.21
+Iceland,Europe,Fiscal,Corporate Income Tax (CIT),0.21
+Iceland,Europe,Fiscal,Corporate Income Tax (CIT),0.21
+Iceland,Europe,Permitting,Operational license timeline,No
+Iceland,Europe,Permitting,Operational license timeline,No
+Iceland,Europe,Permitting,Operational license timeline,No
+Iceland,Europe,Permitting,ASIC import license required,No
+Iceland,Europe,Permitting,ASIC import license required,No
+Iceland,Europe,Permitting,ASIC import license required,No
+Iceland,Europe,Permitting,Construction permit timeline,Less than 3 months
+Iceland,Europe,Permitting,Construction permit timeline,3 – 6 months
+Iceland,Europe,Permitting,Construction permit timeline,6 – 9 months
+Iceland,Europe,Permitting,EIA complexity,Neutral
+Iceland,Europe,Permitting,EIA complexity,Neutral
+Iceland,Europe,Permitting,EIA complexity,Neutral
+Iceland,Europe,Permitting,Water permits restrictiveness,Neutral
+Iceland,Europe,Permitting,Water permits restrictiveness,No approvals required
+Iceland,Europe,Permitting,Water permits restrictiveness,Neutral
+Iceland,Europe,Permitting,Heat/noise/emissions regulations,Unsignificant
+Iceland,Europe,Permitting,Heat/noise/emissions regulations,Significant
+Iceland,Europe,Permitting,Zoning restrictions impact,Low
+Iceland,Europe,Permitting,Zoning restrictions impact,Moderate
+Iceland,Europe,Permitting,Zoning restrictions impact,High
+Iceland,Europe,Legal,Regulatory environment,Favorable
+Iceland,Europe,Legal,Regulatory environment,Favorable
+Iceland,Europe,Legal,Regulatory environment,Favorable
+Iceland,Europe,Legal,Framework evolution outlook,Highly Favorable
+Iceland,Europe,Legal,Framework evolution outlook,Neutral
+Iceland,Europe,Legal,Framework evolution outlook,Favorable
+Iceland,Europe,Legal,Legislative risk,A common legislature on cryptocurrencies
+Iceland,Europe,Legal,Legislative risk,TSO Transmission tariff adjustments (incl. loss/system services components) can increase delivered power cost for large loads when grid-connected
+Iceland,Europe,Energy,Grid access barriers,< 6 months
+Iceland,Europe,Energy,Grid access barriers,6 – 12 months
+Iceland,Europe,Energy,Grid access barriers,> 24 months
+Iceland,Europe,Energy,Grid connection lead time,On par than the median (>$42.5 - 47.5/MWh)
+Iceland,Europe,Energy,Grid connection lead time,On par than the median (>$42.5 - 47.5/MWh)
+Iceland,Europe,Energy,Grid connection lead time,Higher than the median (>$55.0 - $65.0/MWh)
+Iceland,Europe,Energy,Electricity price,Neutral
+Iceland,Europe,Energy,Electricity price,Neutral
+Iceland,Europe,Energy,Regulatory status for miners,Miners and all other big industry (80GWh/yr min.) pay a tariff of ca. $10/MWh for Transport. Miners can participate in heat reuse and or curtailments to get better electricity pricing or additional revenues.
+Iceland,Europe,Energy,Regulatory status for miners,iceland has an inefficient energy market bitcoin is good in this case
+Iceland,Europe,Energy,Regulatory status for miners,Low–moderate; curtailment clauses increasingly standard; credits/price relief vary by PPA
+Iceland,Europe,Customs,VAT rate,Moderate
+Iceland,Europe,Customs,VAT rate,Low
+Iceland,Europe,Customs,VAT rate,Very low – inexistant
+Iceland,Europe,Customs,VAT filing burden,"Practcically none if the work is done right. Funds may be slower if documentation is incomplete, especially where zero-rating/export evidence is needed."
+Iceland,Europe,Customs,ASIC import process,Favorable
+Iceland,Europe,Customs,ASIC import process,Favorable
+Iceland,Europe,Customs,Tariff on China imports,Slightly
+Iceland,Europe,Customs,Tariff on China imports,Low
+Iceland,Europe,Customs,Tariff on China imports,Highly
+Iceland,Europe,Customs,Procurement lead times,Shipping schedules can slow down the process
+Kazakhstan,Central Asia,Fiscal,Taxation environment,Favorable
+Kazakhstan,Central Asia,Fiscal,Taxation environment,Favorable
+Kazakhstan,Central Asia,Fiscal,Taxation environment,Neutral
+Kazakhstan,Central Asia,Fiscal,Shift profit center possible,No
+Kazakhstan,Central Asia,Fiscal,Shift profit center possible,No
+Kazakhstan,Central Asia,Fiscal,Shift profit center possible,No
+Kazakhstan,Central Asia,Fiscal,Electricity tax exposure,Yes
+Kazakhstan,Central Asia,Fiscal,Electricity tax exposure,Yes
+Kazakhstan,Central Asia,Fiscal,Electricity tax exposure,Yes
+Kazakhstan,Central Asia,Fiscal,Tax abatements available,No
+Kazakhstan,Central Asia,Fiscal,Tax abatements available,No
+Kazakhstan,Central Asia,Fiscal,Tax abatements available,No
+Kazakhstan,Central Asia,Fiscal,Constraint to access benefits,High
+Kazakhstan,Central Asia,Fiscal,Constraint to access benefits,Moderate
+Kazakhstan,Central Asia,Fiscal,Constraint to access benefits,Low
+Kazakhstan,Central Asia,Fiscal,Corporate Income Tax (CIT),"20% CIT, also miners pay 16% VAT tax for the energy consumed, and digital mining tax fee equal to 0.002 US cent/kw*h"
+Kazakhstan,Central Asia,Fiscal,Corporate Income Tax (CIT),0.2
+Kazakhstan,Central Asia,Permitting,Operational license timeline,Yes
+Kazakhstan,Central Asia,Permitting,Operational license timeline,Yes
+Kazakhstan,Central Asia,Permitting,Operational license timeline,Yes
+Kazakhstan,Central Asia,Permitting,ASIC import license required,Yes
+Kazakhstan,Central Asia,Permitting,ASIC import license required,Yes
+Kazakhstan,Central Asia,Permitting,ASIC import license required,Yes
+Kazakhstan,Central Asia,Permitting,Construction permit timeline,Less than 3 months
+Kazakhstan,Central Asia,Permitting,Construction permit timeline,3 – 6 months
+Kazakhstan,Central Asia,Permitting,Construction permit timeline,Less than 3 months
+Kazakhstan,Central Asia,Permitting,EIA complexity,Low
+Kazakhstan,Central Asia,Permitting,EIA complexity,Low
+Kazakhstan,Central Asia,Permitting,Water permits restrictiveness,Low
+Kazakhstan,Central Asia,Permitting,Heat/noise/emissions regulations,Unsignificant
+Kazakhstan,Central Asia,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Kazakhstan,Central Asia,Permitting,Heat/noise/emissions regulations,Significant
+Kazakhstan,Central Asia,Permitting,Zoning restrictions impact,Moderate
+Kazakhstan,Central Asia,Permitting,Zoning restrictions impact,Very low – inexistant
+Kazakhstan,Central Asia,Permitting,Zoning restrictions impact,Neutral
+Kazakhstan,Central Asia,Legal,Regulatory environment,Favorable
+Kazakhstan,Central Asia,Legal,Regulatory environment,Neutral
+Kazakhstan,Central Asia,Legal,Regulatory environment,Neutral
+Kazakhstan,Central Asia,Legal,Framework evolution outlook,Highly Favorable
+Kazakhstan,Central Asia,Legal,Framework evolution outlook,Neutral
+Kazakhstan,Central Asia,Legal,Framework evolution outlook,Neutral
+Kazakhstan,Central Asia,Energy,Grid access barriers,Moderate
+Kazakhstan,Central Asia,Energy,Grid access barriers,High
+Kazakhstan,Central Asia,Energy,Grid access barriers,High
+Kazakhstan,Central Asia,Energy,Grid connection lead time,> 24 months
+Kazakhstan,Central Asia,Energy,Electricity price,Higher than the median (>$55.0 - $65.0/MWh)
+Kazakhstan,Central Asia,Energy,Electricity price,Slightly Higher than the median (>$47.5 - 55/MWh)
+Kazakhstan,Central Asia,Energy,Electricity price,Higher than the median (>$55.0 - $65.0/MWh)
+Kazakhstan,Central Asia,Energy,Regulatory status for miners,Neutral
+Kazakhstan,Central Asia,Customs,VAT rate,16 – 24%
+Kazakhstan,Central Asia,Customs,VAT rate,16 – 24%
+Kazakhstan,Central Asia,Customs,VAT rate,16 – 24%
+Kazakhstan,Central Asia,Customs,VAT filing burden,Neutral
+Kazakhstan,Central Asia,Customs,ASIC import process,Unfavorable
+Kazakhstan,Central Asia,Customs,ASIC import process,Neutral
+Kazakhstan,Central Asia,Customs,ASIC import process,Favorable
+Kazakhstan,Central Asia,Customs,Electrical infra import,Neutral
+Kazakhstan,Central Asia,Customs,Electrical infra import,Highly Favorable
+Kazakhstan,Central Asia,Customs,Electrical infra import,Favorable
+Kazakhstan,Central Asia,Customs,Procurement lead times,Slightly
+Kazakhstan,Central Asia,Customs,Procurement lead times,Low
+Kazakhstan,Central Asia,Customs,Procurement lead times,Low
+Kazakhstan,Central Asia,Customs,Mitigation effectiveness,No impact
+Kazakhstan,Central Asia,Customs,Mitigation effectiveness,Slightly Effective
+Kazakhstan,Central Asia,Customs,Mitigation effectiveness,No impact
+Kenya,Africa,Fiscal,Taxation environment,Neutral
+Kenya,Africa,Fiscal,Shift profit center possible,No
+Kenya,Africa,Fiscal,Electricity tax exposure,No
+Kenya,Africa,Fiscal,Tax abatements available,No
+Kenya,Africa,Fiscal,Constraint to access benefits,Neutral
+Kenya,Africa,Fiscal,Corporate Income Tax (CIT),mining Profits taxed as ordinary income tax at 30%
+Kenya,Africa,Permitting,Operational license timeline,No
+Kenya,Africa,Permitting,ASIC import license required,No
+Kenya,Africa,Permitting,Construction permit timeline,3 – 6 months
+Kenya,Africa,Permitting,EIA complexity,Moderate
+Kenya,Africa,Permitting,Water permits restrictiveness,Neutral
+Kenya,Africa,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Kenya,Africa,Permitting,Zoning restrictions impact,Very low – inexistant
+Kenya,Africa,Legal,Regulatory environment,Neutral
+Kenya,Africa,Legal,Framework evolution outlook,Neutral
+Kenya,Africa,Legal,Legislative risk,"Anticipated Tariff Adjustment expected at some point e.g Fuel Levy, Water Resource Levy etc"
+Kenya,Africa,Energy,Grid access barriers,< 6 months
+Kenya,Africa,Energy,Grid connection lead time,Lower than the median (<$35/MWh)
+Kenya,Africa,Customs,VAT rate,16 – 24%
+Kenya,Africa,Customs,VAT filing burden,Moderate
+Kenya,Africa,Customs,ASIC import process,Neutral
+Kenya,Africa,Customs,Electrical infra import,Neutral
+Kenya,Africa,Customs,Tariff on China imports,> 30%
+Kenya,Africa,Customs,Procurement lead times,Slightly
+Kenya,Africa,Customs,Mitigation effectiveness,Effective
+Norway,Europe,Fiscal,Taxation environment,Neutral
+Norway,Europe,Fiscal,Taxation environment,Favorable
+Norway,Europe,Fiscal,Taxation environment,Neutral
+Norway,Europe,Fiscal,Shift profit center possible,Yes
+Norway,Europe,Fiscal,Shift profit center possible,Yes
+Norway,Europe,Fiscal,Shift profit center possible,Yes
+Norway,Europe,Fiscal,Electricity tax exposure,Yes
+Norway,Europe,Fiscal,Electricity tax exposure,Yes
+Norway,Europe,Fiscal,Electricity tax exposure,Yes
+Norway,Europe,Fiscal,Tax abatements available,No
+Norway,Europe,Fiscal,Tax abatements available,No
+Norway,Europe,Fiscal,Tax abatements available,No
+Norway,Europe,Fiscal,Constraint to access benefits,High
+Norway,Europe,Fiscal,Constraint to access benefits,Neutral
+Norway,Europe,Fiscal,Constraint to access benefits,High
+Norway,Europe,Fiscal,Corporate Income Tax (CIT),0.22
+Norway,Europe,Permitting,Operational license timeline,No
+Norway,Europe,Permitting,Operational license timeline,No
+Norway,Europe,Permitting,Operational license timeline,No
+Norway,Europe,Permitting,ASIC import license required,No
+Norway,Europe,Permitting,ASIC import license required,No
+Norway,Europe,Permitting,ASIC import license required,Yes
+Norway,Europe,Permitting,Construction permit timeline,3 – 6 months
+Norway,Europe,Permitting,Construction permit timeline,3 – 6 months
+Norway,Europe,Permitting,Construction permit timeline,3 – 6 months
+Norway,Europe,Permitting,EIA complexity,Neutral
+Norway,Europe,Permitting,EIA complexity,Neutral
+Norway,Europe,Permitting,Water permits restrictiveness,Neutral
+Norway,Europe,Permitting,Water permits restrictiveness,No approvals required
+Norway,Europe,Permitting,Water permits restrictiveness,High
+Norway,Europe,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Norway,Europe,Permitting,Heat/noise/emissions regulations,Significant
+Norway,Europe,Permitting,Heat/noise/emissions regulations,Extremely Significant
+Norway,Europe,Permitting,Zoning restrictions impact,High
+Norway,Europe,Permitting,Zoning restrictions impact,High
+Norway,Europe,Permitting,Zoning restrictions impact,Moderate
+Norway,Europe,Legal,Regulatory environment,Neutral
+Norway,Europe,Legal,Regulatory environment,Neutral
+Norway,Europe,Legal,Regulatory environment,Neutral
+Norway,Europe,Legal,Framework evolution outlook,Unfavorable
+Norway,Europe,Legal,Framework evolution outlook,Unfavorable
+Norway,Europe,Legal,Framework evolution outlook,Unfavorable
+Norway,Europe,Legal,Legislative risk,Slightly
+Norway,Europe,Legal,Legislative risk,No risk
+Norway,Europe,Energy,Grid access barriers,Moderate
+Norway,Europe,Energy,Grid access barriers,High
+Norway,Europe,Energy,Grid access barriers,Moderate
+Norway,Europe,Energy,Grid connection lead time,18 – 24 months
+Norway,Europe,Energy,Grid connection lead time,18 – 24 months
+Norway,Europe,Energy,Grid connection lead time,18 – 24 months
+Norway,Europe,Energy,Electricity price,Lower than the median (<$35/MWh)
+Norway,Europe,Energy,Electricity price,Lower than the median (<$35/MWh)
+Norway,Europe,Energy,Regulatory status for miners,Neutral
+Norway,Europe,Energy,Regulatory status for miners,Neutral
+Norway,Europe,Customs,VAT rate,> 25%
+Norway,Europe,Customs,VAT rate,> 25%
+Norway,Europe,Customs,VAT filing burden,Low
+Norway,Europe,Customs,VAT filing burden,Neutral
+Norway,Europe,Customs,ASIC import process,Favorable
+Norway,Europe,Customs,ASIC import process,Highly Favorable
+Norway,Europe,Customs,ASIC import process,Favorable
+Norway,Europe,Customs,Electrical infra import,Favorable
+Norway,Europe,Customs,Electrical infra import,Favorable
+Norway,Europe,Customs,Procurement lead times,Slightly
+Norway,Europe,Customs,Procurement lead times,Highly
+Norway,Europe,Customs,Procurement lead times,Low
+Norway,Europe,Customs,Mitigation effectiveness,Effective
+Oman,Middle East,Fiscal,Taxation environment,Highly Favorable
+Oman,Middle East,Fiscal,Taxation environment,Highly Favorable
+Oman,Middle East,Fiscal,Shift profit center possible,Yes
+Oman,Middle East,Fiscal,Electricity tax exposure,No
+Oman,Middle East,Fiscal,Electricity tax exposure,No
+Oman,Middle East,Fiscal,Tax abatements available,Yes
+Oman,Middle East,Fiscal,Tax abatements available,Yes
+Oman,Middle East,Fiscal,Constraint to access benefits,Low
+Oman,Middle East,Fiscal,Corporate Income Tax (CIT),0.15
+Oman,Middle East,Fiscal,Corporate Income Tax (CIT),0.15
+Oman,Middle East,Permitting,Operational license timeline,Yes
+Oman,Middle East,Permitting,Operational license timeline,Yes
+Oman,Middle East,Permitting,ASIC import license required,No
+Oman,Middle East,Permitting,ASIC import license required,No
+Oman,Middle East,Permitting,Construction permit timeline,Less than 3 months
+Oman,Middle East,Permitting,Construction permit timeline,3 – 6 months
+Oman,Middle East,Permitting,EIA complexity,Very low
+Oman,Middle East,Permitting,Water permits restrictiveness,Very low
+Oman,Middle East,Permitting,Water permits restrictiveness,Neutral
+Oman,Middle East,Permitting,Heat/noise/emissions regulations,Unsignificant
+Oman,Middle East,Permitting,Heat/noise/emissions regulations,Unsignificant
+Oman,Middle East,Permitting,Zoning restrictions impact,Very low – inexistant
+Oman,Middle East,Permitting,Zoning restrictions impact,Neutral
+Oman,Middle East,Legal,Regulatory environment,Highly Favorable
+Oman,Middle East,Legal,Regulatory environment,Favorable
+Oman,Middle East,Legal,Framework evolution outlook,Highly Favorable
+Oman,Middle East,Legal,Framework evolution outlook,Favorable
+Oman,Middle East,Energy,Grid access barriers,6 – 12 months
+Oman,Middle East,Energy,Grid access barriers,6 – 12 months
+Oman,Middle East,Energy,Grid connection lead time,On par than the median (>$42.5 - 47.5/MWh)
+Oman,Middle East,Energy,Grid connection lead time,Slightly Lower than the median (>$35 - 42.5/MWh)
+Oman,Middle East,Energy,Electricity price,Neutral
+Oman,Middle East,Energy,Regulatory status for miners,no
+Oman,Middle East,Customs,VAT rate,Very low – inexistant
+Oman,Middle East,Customs,ASIC import process,Highly Favorable
+Oman,Middle East,Customs,ASIC import process,Favorable
+Oman,Middle East,Customs,Tariff on China imports,No impact
+Oman,Middle East,Customs,Tariff on China imports,Highly
+Oman,Middle East,Customs,Procurement lead times,"No, use of custom brokers"
+Paraguay,Latin America,Fiscal,Taxation environment,Favorable
+Paraguay,Latin America,Fiscal,Taxation environment,Highly Favorable
+Paraguay,Latin America,Fiscal,Taxation environment,Highly Favorable
+Paraguay,Latin America,Fiscal,Taxation environment,Neutral
+Paraguay,Latin America,Fiscal,Taxation environment,Neutral
+Paraguay,Latin America,Fiscal,Taxation environment,Unfavorable
+Paraguay,Latin America,Fiscal,Taxation environment,Highly Favorable
+Paraguay,Latin America,Fiscal,Shift profit center possible,Yes
+Paraguay,Latin America,Fiscal,Shift profit center possible,Yes
+Paraguay,Latin America,Fiscal,Shift profit center possible,Yes
+Paraguay,Latin America,Fiscal,Shift profit center possible,Yes
+Paraguay,Latin America,Fiscal,Shift profit center possible,Yes
+Paraguay,Latin America,Fiscal,Shift profit center possible,Yes
+Paraguay,Latin America,Fiscal,Shift profit center possible,Yes
+Paraguay,Latin America,Fiscal,Electricity tax exposure,Yes
+Paraguay,Latin America,Fiscal,Electricity tax exposure,Yes
+Paraguay,Latin America,Fiscal,Electricity tax exposure,Yes
+Paraguay,Latin America,Fiscal,Electricity tax exposure,Yes
+Paraguay,Latin America,Fiscal,Electricity tax exposure,Yes
+Paraguay,Latin America,Fiscal,Electricity tax exposure,Yes
+Paraguay,Latin America,Fiscal,Tax abatements available,Yes
+Paraguay,Latin America,Fiscal,Tax abatements available,Yes
+Paraguay,Latin America,Fiscal,Tax abatements available,Yes
+Paraguay,Latin America,Fiscal,Tax abatements available,Yes
+Paraguay,Latin America,Fiscal,Tax abatements available,Yes
+Paraguay,Latin America,Fiscal,Tax abatements available,Yes
+Paraguay,Latin America,Fiscal,Tax abatements available,No
+Paraguay,Latin America,Fiscal,Constraint to access benefits,Low
+Paraguay,Latin America,Fiscal,Constraint to access benefits,Neutral
+Paraguay,Latin America,Fiscal,Constraint to access benefits,Low
+Paraguay,Latin America,Fiscal,Constraint to access benefits,High
+Paraguay,Latin America,Fiscal,Constraint to access benefits,Neutral
+Paraguay,Latin America,Fiscal,Constraint to access benefits,High
+Paraguay,Latin America,Fiscal,Constraint to access benefits,Moderate
+Paraguay,Latin America,Fiscal,Corporate Income Tax (CIT),0.1
+Paraguay,Latin America,Fiscal,Corporate Income Tax (CIT),0.1
+Paraguay,Latin America,Fiscal,Corporate Income Tax (CIT),0.1
+Paraguay,Latin America,Fiscal,Corporate Income Tax (CIT),0.1
+Paraguay,Latin America,Fiscal,Corporate Income Tax (CIT),0.1
+Paraguay,Latin America,Fiscal,Corporate Income Tax (CIT),0.1
+Paraguay,Latin America,Fiscal,Corporate Income Tax (CIT),0.1
+Paraguay,Latin America,Permitting,Operational license timeline,No
+Paraguay,Latin America,Permitting,Operational license timeline,No
+Paraguay,Latin America,Permitting,Operational license timeline,No
+Paraguay,Latin America,Permitting,Operational license timeline,No
+Paraguay,Latin America,Permitting,Operational license timeline,No
+Paraguay,Latin America,Permitting,Operational license timeline,No
+Paraguay,Latin America,Permitting,Operational license timeline,No
+Paraguay,Latin America,Permitting,ASIC import license required,No
+Paraguay,Latin America,Permitting,ASIC import license required,No
+Paraguay,Latin America,Permitting,ASIC import license required,No
+Paraguay,Latin America,Permitting,ASIC import license required,No
+Paraguay,Latin America,Permitting,ASIC import license required,No
+Paraguay,Latin America,Permitting,ASIC import license required,No
+Paraguay,Latin America,Permitting,ASIC import license required,No
+Paraguay,Latin America,Permitting,Construction permit timeline,6 – 9 months
+Paraguay,Latin America,Permitting,Construction permit timeline,9 – 12 months
+Paraguay,Latin America,Permitting,Construction permit timeline,3 – 6 months
+Paraguay,Latin America,Permitting,Construction permit timeline,6 – 9 months
+Paraguay,Latin America,Permitting,Construction permit timeline,3 – 6 months
+Paraguay,Latin America,Permitting,EIA complexity,Moderate
+Paraguay,Latin America,Permitting,EIA complexity,Neutral
+Paraguay,Latin America,Permitting,EIA complexity,Neutral
+Paraguay,Latin America,Permitting,EIA complexity,Neutral
+Paraguay,Latin America,Permitting,Water permits restrictiveness,Neutral
+Paraguay,Latin America,Permitting,Water permits restrictiveness,Neutral
+Paraguay,Latin America,Permitting,Heat/noise/emissions regulations,Significant
+Paraguay,Latin America,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Paraguay,Latin America,Permitting,Heat/noise/emissions regulations,Significant
+Paraguay,Latin America,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Paraguay,Latin America,Permitting,Heat/noise/emissions regulations,Significant
+Paraguay,Latin America,Permitting,Heat/noise/emissions regulations,Unsignificant
+Paraguay,Latin America,Permitting,Zoning restrictions impact,Very low – inexistant
+Paraguay,Latin America,Permitting,Zoning restrictions impact,Neutral
+Paraguay,Latin America,Permitting,Zoning restrictions impact,Low
+Paraguay,Latin America,Permitting,Zoning restrictions impact,Low
+Paraguay,Latin America,Permitting,Zoning restrictions impact,High
+Paraguay,Latin America,Permitting,Zoning restrictions impact,Moderately
+Paraguay,Latin America,Legal,Regulatory environment,Favorable
+Paraguay,Latin America,Legal,Regulatory environment,Favorable
+Paraguay,Latin America,Legal,Regulatory environment,Favorable
+Paraguay,Latin America,Legal,Regulatory environment,Neutral
+Paraguay,Latin America,Legal,Regulatory environment,Favorable
+Paraguay,Latin America,Legal,Regulatory environment,Unfavorable
+Paraguay,Latin America,Legal,Regulatory environment,Neutral
+Paraguay,Latin America,Legal,Framework evolution outlook,Unfavorable
+Paraguay,Latin America,Legal,Framework evolution outlook,Highly Favorable
+Paraguay,Latin America,Legal,Framework evolution outlook,Neutral
+Paraguay,Latin America,Legal,Framework evolution outlook,Unfavorable
+Paraguay,Latin America,Legal,Framework evolution outlook,Neutral
+Paraguay,Latin America,Legal,Framework evolution outlook,Unfavorable
+Paraguay,Latin America,Legal,Framework evolution outlook,Favorable
+Paraguay,Latin America,Legal,Legislative risk,Moderate
+Paraguay,Latin America,Legal,Legislative risk,Highly
+Paraguay,Latin America,Energy,Grid access barriers,Low
+Paraguay,Latin America,Energy,Grid access barriers,Neutral
+Paraguay,Latin America,Energy,Grid access barriers,Neutral
+Paraguay,Latin America,Energy,Grid access barriers,Moderate
+Paraguay,Latin America,Energy,Grid access barriers,Neutral
+Paraguay,Latin America,Energy,Grid access barriers,Moderate
+Paraguay,Latin America,Energy,Grid access barriers,Moderate
+Paraguay,Latin America,Energy,Grid connection lead time,< 6 months
+Paraguay,Latin America,Energy,Grid connection lead time,< 6 months
+Paraguay,Latin America,Energy,Grid connection lead time,12 – 18 months
+Paraguay,Latin America,Energy,Grid connection lead time,6 – 12 months
+Paraguay,Latin America,Energy,Grid connection lead time,< 6 months
+Paraguay,Latin America,Energy,Grid connection lead time,6 – 12 months
+Paraguay,Latin America,Energy,Grid connection lead time,6 – 12 months
+Paraguay,Latin America,Energy,Electricity price,Slightly Lower than the median (>$35 - 42.5/MWh)
+Paraguay,Latin America,Energy,Electricity price,On par than the median (>$42.5 - 47.5/MWh)
+Paraguay,Latin America,Energy,Electricity price,Slightly Higher than the median (>$47.5 - 55/MWh)
+Paraguay,Latin America,Energy,Electricity price,Higher than the median (>$55.0 - $65.0/MWh)
+Paraguay,Latin America,Energy,Electricity price,Slightly Higher than the median (>$47.5 – 55/MWh)
+Paraguay,Latin America,Energy,Electricity price,On par than the median (>$42.5 - 47.5/MWh)
+Paraguay,Latin America,Energy,Regulatory status for miners,Unfavorable
+Paraguay,Latin America,Energy,Regulatory status for miners,Favorable
+Paraguay,Latin America,Energy,Regulatory status for miners,Neutral
+Paraguay,Latin America,Customs,VAT filing burden,Neutral
+Paraguay,Latin America,Customs,VAT filing burden,Low
+Paraguay,Latin America,Customs,ASIC import process,Favorable
+Paraguay,Latin America,Customs,ASIC import process,Highly Favorable
+Paraguay,Latin America,Customs,ASIC import process,Favorable
+Paraguay,Latin America,Customs,ASIC import process,Neutral
+Paraguay,Latin America,Customs,ASIC import process,Highly Favorable
+Paraguay,Latin America,Customs,ASIC import process,Highly unfavorable
+Paraguay,Latin America,Customs,ASIC import process,Neutral
+Paraguay,Latin America,Customs,Electrical infra import,Favorable
+Paraguay,Latin America,Customs,Electrical infra import,Highly Favorable
+Paraguay,Latin America,Customs,Electrical infra import,Favorable
+Paraguay,Latin America,Customs,Electrical infra import,Favorable
+Paraguay,Latin America,Customs,Electrical infra import,Highly Favorable
+Paraguay,Latin America,Customs,Electrical infra import,Unfavorable
+Paraguay,Latin America,Customs,Electrical infra import,Neutral
+Paraguay,Latin America,Customs,Tariff on China imports,< 10%
+Paraguay,Latin America,Customs,Tariff on China imports,< 10%
+Paraguay,Latin America,Customs,Tariff on China imports,< 10%
+Paraguay,Latin America,Customs,Tariff on China imports,< 10%
+Paraguay,Latin America,Customs,Tariff on China imports,< 10%
+Paraguay,Latin America,Customs,Tariff on China imports,< 10%
+Paraguay,Latin America,Customs,Procurement lead times,Slightly
+Paraguay,Latin America,Customs,Procurement lead times,Slightly
+Paraguay,Latin America,Customs,Procurement lead times,Low
+Paraguay,Latin America,Customs,Procurement lead times,Highly
+Paraguay,Latin America,Customs,Procurement lead times,Slightly
+Paraguay,Latin America,Customs,Procurement lead times,Highly
+Paraguay,Latin America,Customs,Procurement lead times,Low
+Paraguay,Latin America,Customs,Mitigation effectiveness,Slightly Effective
+Paraguay,Latin America,Customs,Mitigation effectiveness,Effective
+Paraguay,Latin America,Customs,Mitigation effectiveness,Slightly Effective
+Paraguay,Latin America,Customs,Mitigation effectiveness,Effective
+Paraguay,Latin America,Customs,Mitigation effectiveness,Slightly Effective
+Paraguay,Latin America,Customs,Mitigation effectiveness,Effective
+Québec (CA),North America,Fiscal,Taxation environment,Neutral
+Québec (CA),North America,Fiscal,Taxation environment,Unfavorable
+Québec (CA),North America,Fiscal,Shift profit center possible,Yes
+Québec (CA),North America,Fiscal,Shift profit center possible,Yes
+Québec (CA),North America,Fiscal,Electricity tax exposure,No
+Québec (CA),North America,Fiscal,Electricity tax exposure,No
+Québec (CA),North America,Fiscal,Tax abatements available,No
+Québec (CA),North America,Fiscal,Tax abatements available,No
+Québec (CA),North America,Fiscal,Constraint to access benefits,Moderate
+Québec (CA),North America,Fiscal,Constraint to access benefits,Very low – inexistant
+Québec (CA),North America,Fiscal,Corporate Income Tax (CIT),15% + any provincial additional tax
+Québec (CA),North America,Fiscal,Corporate Income Tax (CIT),0.1495
+Québec (CA),North America,Permitting,Operational license timeline,No
+Québec (CA),North America,Permitting,Operational license timeline,No
+Québec (CA),North America,Permitting,ASIC import license required,No
+Québec (CA),North America,Permitting,ASIC import license required,No
+Québec (CA),North America,Permitting,Construction permit timeline,More than 12 months
+Québec (CA),North America,Permitting,Construction permit timeline,Less than 3 months
+Québec (CA),North America,Permitting,EIA complexity,Moderate
+Québec (CA),North America,Permitting,Water permits restrictiveness,Neutral
+Québec (CA),North America,Permitting,Heat/noise/emissions regulations,Significant
+Québec (CA),North America,Permitting,Heat/noise/emissions regulations,Significant
+Québec (CA),North America,Permitting,Zoning restrictions impact,High
+Québec (CA),North America,Permitting,Zoning restrictions impact,Moderate
+Québec (CA),North America,Legal,Regulatory environment,Neutral
+Québec (CA),North America,Legal,Regulatory environment,Neutral
+Québec (CA),North America,Legal,Framework evolution outlook,Neutral
+Québec (CA),North America,Legal,Framework evolution outlook,Neutral
+Québec (CA),North America,Legal,Legislative risk,Moderate
+Québec (CA),North America,Energy,Grid access barriers,Moderate
+Québec (CA),North America,Energy,Grid access barriers,High
+Québec (CA),North America,Energy,Grid connection lead time,12 – 18 months
+Québec (CA),North America,Energy,Grid connection lead time,6 – 12 months
+Québec (CA),North America,Energy,Electricity price,Slightly Higher than the median (>$47.5 - 55/MWh)
+Québec (CA),North America,Energy,Electricity price,Slightly Lower than the median (>$35 - 42.5/MWh)
+Québec (CA),North America,Energy,Regulatory status for miners,Favorable
+Québec (CA),North America,Energy,Regulatory status for miners,Neutral
+Québec (CA),North America,Customs,VAT filing burden,Low
+Québec (CA),North America,Customs,VAT filing burden,Low
+Québec (CA),North America,Customs,ASIC import process,Favorable
+Québec (CA),North America,Customs,ASIC import process,Neutral
+Québec (CA),North America,Customs,Electrical infra import,Favorable
+Québec (CA),North America,Customs,Electrical infra import,Neutral
+Québec (CA),North America,Customs,Tariff on China imports,< 10%
+Québec (CA),North America,Customs,Tariff on China imports,< 10%
+Québec (CA),North America,Customs,Procurement lead times,Highly
+Québec (CA),North America,Customs,Procurement lead times,Moderately
+Québec (CA),North America,Customs,Mitigation effectiveness,Highly Effective
+Québec (CA),North America,Customs,Mitigation effectiveness,Effective
+Russia,Europe,Fiscal,Taxation environment,Neutral
+Russia,Europe,Fiscal,Taxation environment,Favorable
+Russia,Europe,Fiscal,Taxation environment,Unfavorable
+Russia,Europe,Fiscal,Shift profit center possible,No
+Russia,Europe,Fiscal,Shift profit center possible,No
+Russia,Europe,Fiscal,Shift profit center possible,No
+Russia,Europe,Fiscal,Electricity tax exposure,No
+Russia,Europe,Fiscal,Electricity tax exposure,No
+Russia,Europe,Fiscal,Electricity tax exposure,No
+Russia,Europe,Fiscal,Tax abatements available,Yes
+Russia,Europe,Fiscal,Tax abatements available,Yes
+Russia,Europe,Fiscal,Tax abatements available,Yes
+Russia,Europe,Fiscal,Constraint to access benefits,High
+Russia,Europe,Fiscal,Constraint to access benefits,High
+Russia,Europe,Fiscal,Corporate Income Tax (CIT),"Varies from 13% (if income 2,4 mln rubles)  - 22% (if income more than 50 mln rubles)"
+Russia,Europe,Fiscal,Corporate Income Tax (CIT),0.22
+Russia,Europe,Permitting,Operational license timeline,Yes
+Russia,Europe,Permitting,Operational license timeline,Yes
+Russia,Europe,Permitting,Operational license timeline,Yes
+Russia,Europe,Permitting,ASIC import license required,Yes
+Russia,Europe,Permitting,ASIC import license required,Yes
+Russia,Europe,Permitting,ASIC import license required,Yes
+Russia,Europe,Permitting,Construction permit timeline,Less than 3 months
+Russia,Europe,Permitting,Construction permit timeline,9 – 12 months
+Russia,Europe,Permitting,Construction permit timeline,3 – 6 months
+Russia,Europe,Permitting,EIA complexity,Neutral
+Russia,Europe,Permitting,EIA complexity,Moderate
+Russia,Europe,Permitting,Water permits restrictiveness,Low
+Russia,Europe,Permitting,Water permits restrictiveness,Moderate
+Russia,Europe,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Russia,Europe,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Russia,Europe,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Russia,Europe,Permitting,Zoning restrictions impact,Moderate
+Russia,Europe,Permitting,Zoning restrictions impact,Very low – inexistant
+Russia,Europe,Permitting,Zoning restrictions impact,Moderate
+Russia,Europe,Legal,Regulatory environment,Favorable
+Russia,Europe,Legal,Regulatory environment,Favorable
+Russia,Europe,Legal,Regulatory environment,Neutral
+Russia,Europe,Legal,Framework evolution outlook,Favorable
+Russia,Europe,Legal,Framework evolution outlook,Highly unfavorable
+Russia,Europe,Legal,Framework evolution outlook,Unfavorable
+Russia,Europe,Legal,Legislative risk,Moderate
+Russia,Europe,Legal,Legislative risk,Slightly
+Russia,Europe,Energy,Grid access barriers,Moderate
+Russia,Europe,Energy,Grid access barriers,High
+Russia,Europe,Energy,Grid access barriers,Moderate
+Russia,Europe,Energy,Grid connection lead time,12 – 18 months
+Russia,Europe,Energy,Grid connection lead time,6 – 12 months
+Russia,Europe,Energy,Electricity price,Higher than the median (>$55.0 - $65.0/MWh)
+Russia,Europe,Energy,Electricity price,Lower than the median (<$35/MWh)
+Russia,Europe,Energy,Electricity price,Slightly Higher than the median (>$47.5 - 55/MWh)
+Russia,Europe,Energy,Regulatory status for miners,Unfavorable
+Russia,Europe,Energy,Regulatory status for miners,Unfavorable
+Russia,Europe,Energy,Regulatory status for miners,Unfavorable
+Russia,Europe,Customs,VAT rate,16 – 24%
+Russia,Europe,Customs,VAT rate,16 – 24%
+Russia,Europe,Customs,VAT rate,16 – 24%
+Russia,Europe,Customs,VAT filing burden,Moderate
+Russia,Europe,Customs,VAT filing burden,Low
+Russia,Europe,Customs,ASIC import process,Unfavorable
+Russia,Europe,Customs,ASIC import process,Favorable
+Russia,Europe,Customs,ASIC import process,Neutral
+Russia,Europe,Customs,Electrical infra import,Neutral
+Russia,Europe,Customs,Electrical infra import,Favorable
+Russia,Europe,Customs,Electrical infra import,Neutral
+Russia,Europe,Customs,Procurement lead times,Low
+Russia,Europe,Customs,Procurement lead times,Slightly
+Russia,Europe,Customs,Procurement lead times,Moderately
+Russia,Europe,Customs,Mitigation effectiveness,Slightly Effective
+Russia,Europe,Customs,Mitigation effectiveness,Slightly Effective
+Russia,Europe,Customs,Mitigation effectiveness,Effective
+Sweden,Europe,Fiscal,Taxation environment,Highly unfavorable
+Sweden,Europe,Fiscal,Shift profit center possible,No
+Sweden,Europe,Fiscal,Electricity tax exposure,Yes
+Sweden,Europe,Fiscal,Tax abatements available,No
+Sweden,Europe,Fiscal,Constraint to access benefits,High
+Sweden,Europe,Fiscal,Corporate Income Tax (CIT),"Swedish tax authorities are not considering mining a VAT-eligible industry, so they are now claiming back the already occured input VAT on import and electricity purchase from several miners. This means hosting is the only viable option for Swedish miners until this is resolved."
+Sweden,Europe,Permitting,Operational license timeline,No
+Sweden,Europe,Permitting,ASIC import license required,3 – 6 months
+Sweden,Europe,Permitting,Construction permit timeline,Neutral
+Sweden,Europe,Permitting,EIA complexity,Neutral
+Sweden,Europe,Permitting,Water permits restrictiveness,Moderatly Significant
+Sweden,Europe,Permitting,Heat/noise/emissions regulations,Neutral
+Sweden,Europe,Legal,Regulatory environment,Unfavorable
+Sweden,Europe,Legal,Framework evolution outlook,Highly
+Sweden,Europe,Legal,Legislative risk,See my answer on B9
+Sweden,Europe,Energy,Grid access barriers,12 – 18 months
+Sweden,Europe,Energy,Grid connection lead time,Slightly Lower than the median (>$35 - 42.5/MWh)
+Sweden,Europe,Energy,Electricity price,Neutral
+Sweden,Europe,Energy,Regulatory status for miners,"Miners purchase electricity on the open market similarly as all other electricity customers. Norway has some demand response opportunities, but income from such activities is not co-mingled with the electricity purchase."
+Sweden,Europe,Customs,VAT rate,Low
+Sweden,Europe,Customs,VAT filing burden,See my answer on B9
+Sweden,Europe,Customs,ASIC import process,Neutral
+Sweden,Europe,Customs,Tariff on China imports,Slightly
+Sweden,Europe,Customs,Procurement lead times,No problems
+Texas (US),North America,Fiscal,Taxation environment,Favorable
+Texas (US),North America,Fiscal,Taxation environment,Highly Unfavorable
+Texas (US),North America,Fiscal,Taxation environment,Favorable
+Texas (US),North America,Fiscal,Taxation environment,Neutral
+Texas (US),North America,Fiscal,Taxation environment,Favorable
+Texas (US),North America,Fiscal,Taxation environment,Neutral
+Texas (US),North America,Fiscal,Taxation environment,Favorable
+Texas (US),North America,Fiscal,Taxation environment,Unfavorable
+Texas (US),North America,Fiscal,Taxation environment,Highly Favorable
+Texas (US),North America,Fiscal,Shift profit center possible,Yes
+Texas (US),North America,Fiscal,Shift profit center possible,Yes
+Texas (US),North America,Fiscal,Shift profit center possible,Yes
+Texas (US),North America,Fiscal,Shift profit center possible,Yes
+Texas (US),North America,Fiscal,Shift profit center possible,Yes
+Texas (US),North America,Fiscal,Shift profit center possible,Yes
+Texas (US),North America,Fiscal,Shift profit center possible,Yes
+Texas (US),North America,Fiscal,Electricity tax exposure,No
+Texas (US),North America,Fiscal,Electricity tax exposure,No
+Texas (US),North America,Fiscal,Electricity tax exposure,No
+Texas (US),North America,Fiscal,Electricity tax exposure,No
+Texas (US),North America,Fiscal,Electricity tax exposure,No
+Texas (US),North America,Fiscal,Electricity tax exposure,No
+Texas (US),North America,Fiscal,Electricity tax exposure,No
+Texas (US),North America,Fiscal,Electricity tax exposure,No
+Texas (US),North America,Fiscal,Electricity tax exposure,No
+Texas (US),North America,Fiscal,Tax abatements available,Yes
+Texas (US),North America,Fiscal,Tax abatements available,Yes
+Texas (US),North America,Fiscal,Tax abatements available,Yes
+Texas (US),North America,Fiscal,Tax abatements available,Yes
+Texas (US),North America,Fiscal,Tax abatements available,No
+Texas (US),North America,Fiscal,Tax abatements available,Yes
+Texas (US),North America,Fiscal,Tax abatements available,Yes
+Texas (US),North America,Fiscal,Tax abatements available,Yes
+Texas (US),North America,Fiscal,Tax abatements available,Yes
+Texas (US),North America,Fiscal,Constraint to access benefits,Low
+Texas (US),North America,Fiscal,Constraint to access benefits,Moderate
+Texas (US),North America,Fiscal,Constraint to access benefits,Moderate
+Texas (US),North America,Fiscal,Constraint to access benefits,Neutral
+Texas (US),North America,Fiscal,Constraint to access benefits,High
+Texas (US),North America,Fiscal,Constraint to access benefits,Neutral
+Texas (US),North America,Fiscal,Constraint to access benefits,Moderate
+Texas (US),North America,Fiscal,Constraint to access benefits,High
+Texas (US),North America,Fiscal,Corporate Income Tax (CIT),0.21
+Texas (US),North America,Fiscal,Corporate Income Tax (CIT),0.25
+Texas (US),North America,Fiscal,Corporate Income Tax (CIT),0.071
+Texas (US),North America,Fiscal,Corporate Income Tax (CIT),0.09
+Texas (US),North America,Permitting,Operational license timeline,No
+Texas (US),North America,Permitting,Operational license timeline,No
+Texas (US),North America,Permitting,Operational license timeline,No
+Texas (US),North America,Permitting,Operational license timeline,No
+Texas (US),North America,Permitting,Operational license timeline,No
+Texas (US),North America,Permitting,Operational license timeline,No
+Texas (US),North America,Permitting,Operational license timeline,No
+Texas (US),North America,Permitting,Operational license timeline,No
+Texas (US),North America,Permitting,Operational license timeline,No
+Texas (US),North America,Permitting,ASIC import license required,No
+Texas (US),North America,Permitting,ASIC import license required,No
+Texas (US),North America,Permitting,ASIC import license required,No
+Texas (US),North America,Permitting,ASIC import license required,No
+Texas (US),North America,Permitting,ASIC import license required,No
+Texas (US),North America,Permitting,ASIC import license required,No
+Texas (US),North America,Permitting,ASIC import license required,No
+Texas (US),North America,Permitting,ASIC import license required,No
+Texas (US),North America,Permitting,ASIC import license required,No
+Texas (US),North America,Permitting,Construction permit timeline,3 – 6 months
+Texas (US),North America,Permitting,Construction permit timeline,3 – 6 months
+Texas (US),North America,Permitting,Construction permit timeline,6 – 9 months
+Texas (US),North America,Permitting,Construction permit timeline,3 – 6 months
+Texas (US),North America,Permitting,Construction permit timeline,3 – 6 months
+Texas (US),North America,Permitting,Construction permit timeline,3 – 6 months
+Texas (US),North America,Permitting,Construction permit timeline,6 – 9 months
+Texas (US),North America,Permitting,Construction permit timeline,3 – 6 months
+Texas (US),North America,Permitting,Construction permit timeline,Less than 3 months
+Texas (US),North America,Permitting,EIA complexity,Neutral
+Texas (US),North America,Permitting,EIA complexity,Neutral
+Texas (US),North America,Permitting,EIA complexity,Moderate
+Texas (US),North America,Permitting,EIA complexity,Moderate
+Texas (US),North America,Permitting,EIA complexity,Neutral
+Texas (US),North America,Permitting,EIA complexity,Neutral
+Texas (US),North America,Permitting,EIA complexity,Moderate
+Texas (US),North America,Permitting,EIA complexity,Neutral
+Texas (US),North America,Permitting,Water permits restrictiveness,Neutral
+Texas (US),North America,Permitting,Water permits restrictiveness,Neutral
+Texas (US),North America,Permitting,Water permits restrictiveness,Moderate
+Texas (US),North America,Permitting,Water permits restrictiveness,Neutral
+Texas (US),North America,Permitting,Water permits restrictiveness,Very low
+Texas (US),North America,Permitting,Water permits restrictiveness,Neutral
+Texas (US),North America,Permitting,Water permits restrictiveness,Moderate
+Texas (US),North America,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Texas (US),North America,Permitting,Heat/noise/emissions regulations,Extremely Significant
+Texas (US),North America,Permitting,Heat/noise/emissions regulations,Significant
+Texas (US),North America,Permitting,Heat/noise/emissions regulations,Significant
+Texas (US),North America,Permitting,Heat/noise/emissions regulations,Extremely Significant
+Texas (US),North America,Permitting,Heat/noise/emissions regulations,Significant
+Texas (US),North America,Permitting,Heat/noise/emissions regulations,Significant
+Texas (US),North America,Permitting,Heat/noise/emissions regulations,Unsignificant
+Texas (US),North America,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+Texas (US),North America,Permitting,Zoning restrictions impact,Low
+Texas (US),North America,Permitting,Zoning restrictions impact,Moderate
+Texas (US),North America,Permitting,Zoning restrictions impact,Moderate
+Texas (US),North America,Permitting,Zoning restrictions impact,Neutral
+Texas (US),North America,Permitting,Zoning restrictions impact,Neutral
+Texas (US),North America,Permitting,Zoning restrictions impact,Moderate
+Texas (US),North America,Permitting,Zoning restrictions impact,Moderate
+Texas (US),North America,Permitting,Zoning restrictions impact,Neutral
+Texas (US),North America,Permitting,Zoning restrictions impact,Neutral
+Texas (US),North America,Legal,Regulatory environment,Favorable
+Texas (US),North America,Legal,Regulatory environment,Neutral
+Texas (US),North America,Legal,Regulatory environment,Highly Favorable
+Texas (US),North America,Legal,Regulatory environment,Favorable
+Texas (US),North America,Legal,Regulatory environment,Highly Favorable
+Texas (US),North America,Legal,Regulatory environment,Favorable
+Texas (US),North America,Legal,Regulatory environment,Favorable
+Texas (US),North America,Legal,Regulatory environment,Neutral
+Texas (US),North America,Legal,Regulatory environment,Favorable
+Texas (US),North America,Legal,Framework evolution outlook,Favorable
+Texas (US),North America,Legal,Framework evolution outlook,Unfavorable
+Texas (US),North America,Legal,Framework evolution outlook,Highly Favorable
+Texas (US),North America,Legal,Framework evolution outlook,Unfavorable
+Texas (US),North America,Legal,Framework evolution outlook,Favorable
+Texas (US),North America,Legal,Framework evolution outlook,Favorable
+Texas (US),North America,Legal,Framework evolution outlook,Favorable
+Texas (US),North America,Legal,Framework evolution outlook,Favorable
+Texas (US),North America,Legal,Framework evolution outlook,Highly Favorable
+Texas (US),North America,Legal,Legislative risk,New pushes to pause or slow data centers or resist their impacts are brewing.
+Texas (US),North America,Legal,Legislative risk,"Recent statements by Trump on data center energy use, ERCOT, FERC"
+Texas (US),North America,Legal,Legislative risk,"National strategic Bitcoin mining, nationalising/sovereign clouds, favouritism of local partners and companies"
+Texas (US),North America,Legal,Legislative risk,ERCOT instituted a $100k fee for initial transmission level load screenings. This negatively impacted fiscal budgeting for on-grid site development.
+Texas (US),North America,Energy,Grid access barriers,6 – 12 months
+Texas (US),North America,Energy,Grid access barriers,18 – 24 months
+Texas (US),North America,Energy,Grid access barriers,> 24 months
+Texas (US),North America,Energy,Grid access barriers,12 – 18 months
+Texas (US),North America,Energy,Grid access barriers,12 – 18 months
+Texas (US),North America,Energy,Grid access barriers,18 – 24 months
+Texas (US),North America,Energy,Grid access barriers,12 – 18 months
+Texas (US),North America,Energy,Grid connection lead time,Lower than the median (<$35/MWh)
+Texas (US),North America,Energy,Grid connection lead time,On par than the median (>$42.5 - 47.5/MWh)
+Texas (US),North America,Energy,Grid connection lead time,Slightly Lower than the median (>$35 - 42.5/MWh)
+Texas (US),North America,Energy,Grid connection lead time,Slightly Lower than the median (>$35 - 42.5/MWh)
+Texas (US),North America,Energy,Grid connection lead time,On par than the median (>$42.5 - 47.5/MWh)
+Texas (US),North America,Energy,Grid connection lead time,On par than the median (>$42.5 - 47.5/MWh)
+Texas (US),North America,Energy,Grid connection lead time,Slightly Lower than the median (>$35 – 42.5/MWh)
+Texas (US),North America,Energy,Grid connection lead time,Slightly Higher than the median (>$47.5 - 55.0/MWh)
+Texas (US),North America,Energy,Electricity price,Neutral
+Texas (US),North America,Energy,Electricity price,Neutral
+Texas (US),North America,Energy,Electricity price,Favorable
+Texas (US),North America,Energy,Electricity price,Neutral
+Texas (US),North America,Energy,Electricity price,Favorable
+Texas (US),North America,Energy,Electricity price,Favorable
+Texas (US),North America,Energy,Electricity price,Unfavorable
+Texas (US),North America,Energy,Regulatory status for miners,Curtailments are extremely lucrative throughout the US
+Texas (US),North America,Energy,Regulatory status for miners,"Yes, any states that have PUCs have tariffs that are publicly posted and process for rate changes. Some states can take 18+ months to change tariffs others are faster. Some tariffs don’t allow for many curtailment based strategies or incentives while others are heavily incentivized. Miners curtailing stabilize grids and reduce loads when needed while allowing utilities to monetize assets they a otherwise bid negative into markets or even run to ground."
+Texas (US),North America,Energy,Regulatory status for miners,"4CP, spinning/non spinning FFR(ancillary services), PPAs, commodity futures"
+Texas (US),North America,Energy,Regulatory status for miners,"Curtailment, neutral carbons…"
+Texas (US),North America,Energy,Regulatory status for miners,ERS and ancillary service participation are two ways to mitigate.
+Texas (US),North America,Energy,Regulatory status for miners,"Curtailment, Time of Use, Co-location with behind the meter generation."
+Texas (US),North America,Energy,Regulatory status for miners,Yes
+Texas (US),North America,Customs,VAT rate,Moderate
+Texas (US),North America,Customs,VAT filing burden,In Canada we are subject to VAT and GST. For self mining you can get one of those back. It’s cumbersome. As a hosting company their is no recovery and has less to hosting companies leaving Canada.
+Texas (US),North America,Customs,VAT filing burden,Not sure
+Texas (US),North America,Customs,ASIC import process,Neutral
+Texas (US),North America,Customs,ASIC import process,Highly Unfavorable
+Texas (US),North America,Customs,ASIC import process,Unfavorable
+Texas (US),North America,Customs,ASIC import process,Neutral
+Texas (US),North America,Customs,ASIC import process,Highly Unfavorable
+Texas (US),North America,Customs,ASIC import process,Neutral
+Texas (US),North America,Customs,ASIC import process,Neutral
+Texas (US),North America,Customs,ASIC import process,Unfavorable
+Texas (US),North America,Customs,ASIC import process,Neutral
+Texas (US),North America,Customs,Electrical infra import,20 -30%
+Texas (US),North America,Customs,Electrical infra import,> 30%
+Texas (US),North America,Customs,Electrical infra import,15 - 20%
+Texas (US),North America,Customs,Electrical infra import,> 30%
+Texas (US),North America,Customs,Electrical infra import,15 - 20%
+Texas (US),North America,Customs,Electrical infra import,10 - 15%
+Texas (US),North America,Customs,Electrical infra import,> 30%
+Texas (US),North America,Customs,Electrical infra import,10 - 15%
+Texas (US),North America,Customs,Tariff on China imports,Highly
+Texas (US),North America,Customs,Tariff on China imports,Highly
+Texas (US),North America,Customs,Tariff on China imports,Highly
+Texas (US),North America,Customs,Tariff on China imports,Highly
+Texas (US),North America,Customs,Tariff on China imports,Highly
+Texas (US),North America,Customs,Tariff on China imports,Slightly
+Texas (US),North America,Customs,Tariff on China imports,Highly
+Texas (US),North America,Customs,Tariff on China imports,Highly
+Texas (US),North America,Customs,Tariff on China imports,Low
+Texas (US),North America,Customs,Procurement lead times,"All of the above, CBP holds, FCC holds, impossible bureaucratic processes, many companies have build businesses around navigating this. Whether we like it or not, everything is made outside the US, China being the largest. It’s not just lower cost but it’s also significantly faster. Today US companies that manufacture electrical infrastructure cannot compete with the speed of Chinese manufacturing. Tariffs on Chinese imports are not moving production to the US or getting China to pay more the prices are pushed to the American consumers. US labor and automation are too expensive and too slow to compete. It should never be more cost or time efficient to put transformers or substations on a boat and ship to the US. 30+ days transit by boat + fuel costs should push their prices above US but it doesn’t and it’s not even close."
+Texas (US),North America,Customs,Procurement lead times,"Custom delays, barring foreign talent from onboarding equipment/skill transfer to local talent, grid connection delays, market overhauls"
+Texas (US),North America,Customs,Procurement lead times,Tensions with US-CN tariff relations have caused significant delays in ASIC imports. This is mostly exclusive to BITMAIN units.
+Texas (US),North America,Customs,Procurement lead times,Rapid swings in US tariffs applied to electrical infrastructure and miners themselves.
+Texas (US),North America,Customs,Procurement lead times,customs brokers
+Texas (US),North America,Customs,Procurement lead times,Sometimes are customs checks that might add a couple weeks
+UAE,Middle East,Fiscal,Taxation environment,Highly Favorable
+UAE,Middle East,Fiscal,Taxation environment,Highly Favorable
+UAE,Middle East,Fiscal,Taxation environment,Highly Favorable
+UAE,Middle East,Fiscal,Taxation environment,Highly Favorable
+UAE,Middle East,Fiscal,Shift profit center possible,Yes
+UAE,Middle East,Fiscal,Shift profit center possible,Yes
+UAE,Middle East,Fiscal,Shift profit center possible,Yes
+UAE,Middle East,Fiscal,Shift profit center possible,Yes
+UAE,Middle East,Fiscal,Electricity tax exposure,No
+UAE,Middle East,Fiscal,Electricity tax exposure,No
+UAE,Middle East,Fiscal,Electricity tax exposure,No
+UAE,Middle East,Fiscal,Electricity tax exposure,No
+UAE,Middle East,Fiscal,Tax abatements available,Yes
+UAE,Middle East,Fiscal,Tax abatements available,Yes
+UAE,Middle East,Fiscal,Tax abatements available,Yes
+UAE,Middle East,Fiscal,Tax abatements available,Yes
+UAE,Middle East,Fiscal,Constraint to access benefits,Neutral
+UAE,Middle East,Fiscal,Constraint to access benefits,Very low – inexistant
+UAE,Middle East,Fiscal,Constraint to access benefits,Low
+UAE,Middle East,Fiscal,Constraint to access benefits,Moderate
+UAE,Middle East,Fiscal,Corporate Income Tax (CIT),9% for Corporate tax rates when selling devices
+UAE,Middle East,Fiscal,Corporate Income Tax (CIT),0% tax on crypto
+UAE,Middle East,Fiscal,Corporate Income Tax (CIT),0
+UAE,Middle East,Fiscal,Corporate Income Tax (CIT),5 - 9%
+UAE,Middle East,Permitting,Operational license timeline,Yes
+UAE,Middle East,Permitting,Operational license timeline,Yes
+UAE,Middle East,Permitting,Operational license timeline,Yes
+UAE,Middle East,Permitting,Operational license timeline,Yes
+UAE,Middle East,Permitting,ASIC import license required,No
+UAE,Middle East,Permitting,ASIC import license required,Yes
+UAE,Middle East,Permitting,ASIC import license required,No
+UAE,Middle East,Permitting,ASIC import license required,No
+UAE,Middle East,Permitting,Construction permit timeline,Less than 3 months
+UAE,Middle East,Permitting,Construction permit timeline,Less than 3 months
+UAE,Middle East,Permitting,Construction permit timeline,More than 12 months
+UAE,Middle East,Permitting,EIA complexity,High
+UAE,Middle East,Permitting,EIA complexity,Low
+UAE,Middle East,Permitting,EIA complexity,Very low
+UAE,Middle East,Permitting,Water permits restrictiveness,Low
+UAE,Middle East,Permitting,Water permits restrictiveness,Low
+UAE,Middle East,Permitting,Heat/noise/emissions regulations,Unsignificant
+UAE,Middle East,Permitting,Heat/noise/emissions regulations,Moderatly Significant
+UAE,Middle East,Permitting,Heat/noise/emissions regulations,Unsignificant
+UAE,Middle East,Permitting,Heat/noise/emissions regulations,Unsignificant
+UAE,Middle East,Permitting,Zoning restrictions impact,Moderate
+UAE,Middle East,Permitting,Zoning restrictions impact,Neutral
+UAE,Middle East,Permitting,Zoning restrictions impact,Low
+UAE,Middle East,Permitting,Zoning restrictions impact,Moderate
+UAE,Middle East,Legal,Regulatory environment,Neutral
+UAE,Middle East,Legal,Regulatory environment,Highly Favorable
+UAE,Middle East,Legal,Regulatory environment,Highly Favorable
+UAE,Middle East,Legal,Regulatory environment,Highly Favorable
+UAE,Middle East,Legal,Framework evolution outlook,Favorable
+UAE,Middle East,Legal,Framework evolution outlook,Highly Favorable
+UAE,Middle East,Legal,Framework evolution outlook,Highly Favorable
+UAE,Middle East,Legal,Framework evolution outlook,Favorable
+UAE,Middle East,Energy,Grid access barriers,< 6 months
+UAE,Middle East,Energy,Grid access barriers,6 – 12 months
+UAE,Middle East,Energy,Grid access barriers,6 – 12 months
+UAE,Middle East,Energy,Grid connection lead time,Higher than the median (>$55.0 - $65.0/MWh)
+UAE,Middle East,Energy,Grid connection lead time,Slightly Higher than the median (>$47.5 - 55/MWh)
+UAE,Middle East,Energy,Grid connection lead time,Slightly Lower than the median (>$35 - 42.5/MWh)
+UAE,Middle East,Energy,Grid connection lead time,Slightly Lower than the median (>$35 - 42.5/MWh)
+UAE,Middle East,Energy,Electricity price,Neutral
+UAE,Middle East,Energy,Electricity price,Favorable
+UAE,Middle East,Energy,Regulatory status for miners,Yes
+UAE,Middle East,Energy,Regulatory status for miners,"Currenly no, but in future yes"
+UAE,Middle East,Energy,Regulatory status for miners,"Yes — through energy procurement strategies, renewable agreements, and flexible load arrangements; no widespread formal curtailment programs documented but possible bilateral agreements."
+UAE,Middle East,Customs,VAT rate,No
+UAE,Middle East,Customs,VAT rate,No
+UAE,Middle East,Customs,VAT filing burden,Low
+UAE,Middle East,Customs,VAT filing burden,Neutral
+UAE,Middle East,Customs,ASIC import process,Favorable
+UAE,Middle East,Customs,ASIC import process,Neutral
+UAE,Middle East,Customs,ASIC import process,Favorable
+UAE,Middle East,Customs,ASIC import process,Neutral
+UAE,Middle East,Customs,Electrical infra import,Unfavorable
+UAE,Middle East,Customs,Electrical infra import,Neutral
+UAE,Middle East,Customs,Electrical infra import,Neutral
+UAE,Middle East,Customs,Electrical infra import,Neutral
+UAE,Middle East,Customs,Procurement lead times,Highly
+UAE,Middle East,Customs,Procurement lead times,Sligthly
+UAE,Middle East,Customs,Procurement lead times,Sligthly
+UAE,Middle East,Customs,Mitigation effectiveness,Highly Effective
+UAE,Middle East,Customs,Mitigation effectiveness,Highly Effective
+UAE,Middle East,Customs,Mitigation effectiveness,Effective
