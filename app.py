@@ -291,8 +291,8 @@ if page == "Overview":
         fig_rank.update_layout(
             height=620,
             margin=dict(l=0, r=50, t=10, b=40),
-            xaxis=dict(range=[0, 1], title="EMI Score", gridcolor='#f3f4f6', zeroline=False, 
-                      titlefont=dict(family="Inter", size=12)),
+            xaxis=dict(range=[0, 1], title=dict(text="EMI Score", font=dict(family="Inter", size=12)), 
+                      gridcolor='#f3f4f6', zeroline=False),
             yaxis=dict(title="", tickfont=dict(family="Inter", size=11)),
             plot_bgcolor='white',
             paper_bgcolor='white',
