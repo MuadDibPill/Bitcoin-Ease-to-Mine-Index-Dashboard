@@ -18,12 +18,12 @@ st.set_page_config(
 # RGB COMPLEMENTARY PALETTE
 # ============================================
 COLORS = {
-    'primary': '#2E5BFF',      # Blue
-    'secondary': '#FF9F2E',    # Orange (complementary)
-    'success': '#2EFF5B',      # Green
-    'danger': '#FF2E5B',       # Red
-    'purple': '#8B2EFF',       # Purple
-    'cyan': '#2EFFFF',         # Cyan
+    'primary': '#2E5BFF',
+    'secondary': '#FF9F2E',
+    'success': '#2EFF5B',
+    'danger': '#FF2E5B',
+    'purple': '#8B2EFF',
+    'cyan': '#2EFFFF',
     'text': '#1E293B',
     'text_muted': '#64748B',
     'border': '#E2E8F0'
@@ -91,6 +91,15 @@ st.markdown("""
         border-top: 1px solid #E2E8F0;
         margin-top: 2rem;
     }
+    
+    .footer a {
+        color: #2E5BFF;
+        text-decoration: none;
+    }
+    
+    .footer a:hover {
+        text-decoration: underline;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -130,38 +139,69 @@ ISO_CODES = {
 }
 
 # ============================================
-# HELPER FUNCTIONS
+# HELPER FUNCTIONS - FIXED COLOR GENERATION
 # ============================================
-def hex_to_rgb(hex_color):
-    hex_color = hex_color.lstrip('#')
-    return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
-
-def rgb_to_hex(rgb):
-    return '#{:02x}{:02x}{:02x}'.format(int(rgb[0]), int(rgb[1]), int(rgb[2]))
-
-def get_score_color(score, min_score, max_score):
-    ratio = (score - min_score) / (max_score - min_score) if max_score > min_score else 0.5
-    if ratio < 0.5:
-        r = 255
-        g = int(46 + (217) * (ratio * 2))
-        b = int(91 + (30 - 91) * (ratio * 2))
+def get_score_color_simple(score, min_score, max_score):
+    """Get color based on score using simple interpolation - returns valid 6-char hex"""
+    if max_score == min_score:
+        ratio = 0.5
     else:
-        adjusted = (ratio - 0.5) * 2
-        r = int(255 - (255 - 46) * adjusted)
-        g = int(217 - (217 - 91) * adjusted)
-        b = int(61 + (255 - 61) * adjusted)
-    return rgb_to_hex((r, g, b))
+        ratio = (score - min_score) / (max_score - min_score)
+    
+    # Clamp ratio between 0 and 1
+    ratio = max(0.0, min(1.0, ratio))
+    
+    # Simple gradient: Red (#FF2E5B) -> Yellow (#FFD93D) -> Blue (#2E5BFF)
+    if ratio < 0.5:
+        # Red to Yellow
+        t = ratio * 2  # 0 to 1
+        r = 255
+        g = int(46 + (217 - 46) * t)
+        b = int(91 + (61 - 91) * t)
+    else:
+        # Yellow to Blue
+        t = (ratio - 0.5) * 2  # 0 to 1
+        r = int(255 + (46 - 255) * t)
+        g = int(217 + (91 - 217) * t)
+        b = int(61 + (255 - 61) * t)
+    
+    # Ensure values are in valid range and convert to hex
+    r = max(0, min(255, int(r)))
+    g = max(0, min(255, int(g)))
+    b = max(0, min(255, int(b)))
+    
+    return f'#{r:02x}{g:02x}{b:02x}'
 
-def generate_gradient_colors(n, start_color="#2E5BFF", end_color="#FF9F2E"):
-    start_rgb = hex_to_rgb(start_color)
-    end_rgb = hex_to_rgb(end_color)
+def generate_gradient_colors_simple(n, start_hex="#2E5BFF", end_hex="#FF9F2E"):
+    """Generate n colors as gradient - returns valid 6-char hex codes"""
+    # Parse start color
+    start_r = int(start_hex[1:3], 16)
+    start_g = int(start_hex[3:5], 16)
+    start_b = int(start_hex[5:7], 16)
+    
+    # Parse end color
+    end_r = int(end_hex[1:3], 16)
+    end_g = int(end_hex[3:5], 16)
+    end_b = int(end_hex[5:7], 16)
+    
     colors = []
     for i in range(n):
-        ratio = i / (n - 1) if n > 1 else 0
-        r = start_rgb[0] + (end_rgb[0] - start_rgb[0]) * ratio
-        g = start_rgb[1] + (end_rgb[1] - start_rgb[1]) * ratio
-        b = start_rgb[2] + (end_rgb[2] - start_rgb[2]) * ratio
-        colors.append(rgb_to_hex((r, g, b)))
+        if n > 1:
+            ratio = i / (n - 1)
+        else:
+            ratio = 0
+        
+        r = int(start_r + (end_r - start_r) * ratio)
+        g = int(start_g + (end_g - start_g) * ratio)
+        b = int(start_b + (end_b - start_b) * ratio)
+        
+        # Ensure valid range
+        r = max(0, min(255, r))
+        g = max(0, min(255, g))
+        b = max(0, min(255, b))
+        
+        colors.append(f'#{r:02x}{g:02x}{b:02x}')
+    
     return colors
 
 # ============================================
@@ -176,6 +216,10 @@ with st.sidebar:
     st.markdown("First Edition 2026")
     st.markdown("")
     st.markdown("Survey of 48 practitioners across 19 jurisdictions.")
+    st.markdown("")
+    st.markdown("**Report Author:**")
+    st.markdown("[Valentin Rousseau](https://x.com/MuadDib_Pill)")
+    st.markdown("[@MuadDib_Pill](https://x.com/MuadDib_Pill)")
     st.markdown("")
     st.markdown("[Hashlabs](https://hashlabs.io)")
 
@@ -227,67 +271,61 @@ if page == "Overview":
     st.markdown("---")
     
     # ========================================
-    # WORLD MAP
+    # WORLD MAP - FLAT PROJECTION WITH FILTER
     # ========================================
     st.markdown('<p class="section-title">EMI Score World Map</p>', unsafe_allow_html=True)
     
-    # Prepare map data - aggregate Canada and US
     df_map = df.copy()
     df_map["ISO"] = df_map["Country"].map(ISO_CODES)
     
-    # For countries with multiple regions (Canada, US), take the average
     df_map_agg = df_map.groupby("ISO").agg({
-        "Index_Score": "mean",
-        "Fiscal": "mean",
-        "Permit_Licensing": "mean",
-        "Legal": "mean",
-        "Energy_Grid": "mean",
-        "Tariff_Import": "mean",
-        "Operating_Conditions": "mean",
+        selected_col: "mean",
         "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]
     }).reset_index()
+    df_map_agg.columns = ["ISO", "Score", "Country"]
     
     fig_map = go.Figure(go.Choropleth(
         locations=df_map_agg["ISO"],
-        z=df_map_agg["Index_Score"],
+        z=df_map_agg["Score"],
         text=df_map_agg["Country"],
         colorscale=[
-            [0, '#FF2E5B'],      # Red (low)
-            [0.25, '#FF9F2E'],   # Orange
-            [0.5, '#FFD93D'],    # Yellow
-            [0.75, '#2EFF5B'],   # Green
-            [1, '#2E5BFF']       # Blue (high)
+            [0, '#FF2E5B'],
+            [0.25, '#FF9F2E'],
+            [0.5, '#FFD93D'],
+            [0.75, '#2EFF5B'],
+            [1, '#2E5BFF']
         ],
         autocolorscale=False,
         marker_line_color='white',
         marker_line_width=0.5,
         colorbar=dict(
-            title=dict(text="EMI Score", side="right", font=dict(family="Inter", size=12)),
+            title=dict(text=score_type, side="right", font=dict(family="Inter", size=12)),
             tickfont=dict(family="Inter"),
             len=0.6,
             thickness=15
         ),
-        hovertemplate="<b>%{text}</b><br>EMI Score: %{z:.2f}<extra></extra>"
+        hovertemplate="<b>%{text}</b><br>" + score_type + ": %{z:.2f}<extra></extra>"
     ))
     
     fig_map.update_layout(
-        height=500,
+        height=450,
         margin=dict(l=0, r=0, t=10, b=0),
         geo=dict(
             showframe=False,
             showcoastlines=True,
-            coastlinecolor="#E2E8F0",
+            coastlinecolor="#94A3B8",
             showland=True,
-            landcolor="#F1F5F9",
+            landcolor="#E2E8F0",
             showocean=True,
-            oceancolor="#E0F2FE",
+            oceancolor="#FFFFFF",
             showlakes=True,
-            lakecolor="#E0F2FE",
+            lakecolor="#FFFFFF",
             showcountries=True,
-            countrycolor="#CBD5E1",
-            projection_type='natural earth'
+            countrycolor="#94A3B8",
+            projection_type='equirectangular',
+            bgcolor='rgba(0,0,0,0)'
         ),
-        paper_bgcolor='white',
+        paper_bgcolor='rgba(0,0,0,0)',
         font=dict(family="Inter")
     )
     
@@ -306,7 +344,9 @@ if page == "Overview":
         df_rank = df.sort_values("Index_Score", ascending=True)
         min_score = df_rank["Index_Score"].min()
         max_score = df_rank["Index_Score"].max()
-        colors = [get_score_color(score, min_score, max_score) for score in df_rank["Index_Score"]]
+        
+        # Generate colors using fixed function
+        colors = [get_score_color_simple(score, min_score, max_score) for score in df_rank["Index_Score"]]
         
         fig_rank = go.Figure(go.Bar(
             x=df_rank["Index_Score"],
@@ -427,7 +467,7 @@ if page == "Overview":
         y=df_hash["Name"],
         x=df_hash["Q1_2025"],
         orientation='h',
-        marker_color=COLORS['secondary'],
+        marker_color='#FF9F2E',
         text=df_hash["Q1_2025"].round(1),
         textposition='outside',
         textfont=dict(size=10, family="Inter")
@@ -438,7 +478,7 @@ if page == "Overview":
         y=df_hash["Name"],
         x=df_hash["Q1_2026"],
         orientation='h',
-        marker_color=COLORS['primary'],
+        marker_color='#2E5BFF',
         text=df_hash["Q1_2026"].round(1),
         textposition='outside',
         textfont=dict(size=10, family="Inter")
@@ -533,6 +573,61 @@ elif page == "Report Methodology":
     st.markdown("---")
     
     # ========================================
+    # WEIGHTING STACKED BAR CHART
+    # ========================================
+    st.markdown('<p class="section-title">Index Weighting by Dimension</p>', unsafe_allow_html=True)
+    
+    # Create stacked horizontal bar for weights
+    fig_weights = go.Figure()
+    
+    weights = [
+        ("Energy & Grid", 25, "#2E5BFF"),
+        ("Fiscal", 20, "#5B8AFF"),
+        ("Legal", 17.5, "#FF9F2E"),
+        ("Permits & Licensing", 17.5, "#FFB85B"),
+        ("Customs & Tariffs", 15, "#2EFF5B"),
+        ("Operating Conditions", 5, "#8B2EFF")
+    ]
+    
+    for name, weight, color in weights:
+        fig_weights.add_trace(go.Bar(
+            name=name,
+            x=[weight],
+            y=["EMI Index"],
+            orientation='h',
+            marker_color=color,
+            text=[f"{name}: {weight}%"],
+            textposition='inside',
+            textfont=dict(size=11, family="Inter", color="white"),
+            hovertemplate=f"<b>{name}</b><br>Weight: {weight}%<extra></extra>"
+        ))
+    
+    fig_weights.update_layout(
+        barmode='stack',
+        height=100,
+        margin=dict(l=0, r=0, t=10, b=10),
+        xaxis=dict(
+            title="",
+            showticklabels=False,
+            showgrid=False,
+            zeroline=False,
+            range=[0, 100]
+        ),
+        yaxis=dict(
+            title="",
+            showticklabels=False
+        ),
+        showlegend=False,
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Inter")
+    )
+    
+    st.plotly_chart(fig_weights, use_container_width=True)
+    
+    st.markdown("---")
+    
+    # ========================================
     # RESPONDENTS PIE CHART
     # ========================================
     st.markdown('<p class="section-title">Survey Respondents by Jurisdiction</p>', unsafe_allow_html=True)
@@ -548,7 +643,8 @@ elif page == "Report Methodology":
         df_resp = df_resp[df_resp["Respondents"] > 0].sort_values("Respondents", ascending=False)
         total_respondents = df_resp["Respondents"].sum()
         
-        pie_colors = generate_gradient_colors(len(df_resp), COLORS['primary'], COLORS['secondary'])
+        # Generate pie colors
+        pie_colors = generate_gradient_colors_simple(len(df_resp), "#2E5BFF", "#FF9F2E")
         
         fig_pie = go.Figure(go.Pie(
             labels=df_resp["Country"],
@@ -563,9 +659,9 @@ elif page == "Report Methodology":
         ))
         
         fig_pie.add_annotation(
-            text=f"<b>{int(total_respondents)}</b><br><span style='font-size:12px'>Total</span>",
+            text=f"<b>{int(total_respondents)}</b><br><span style='font-size:14px'>Total</span>",
             x=0.5, y=0.5,
-            font=dict(size=32, color="#1E293B", family="Inter"),
+            font=dict(size=40, color="#1E293B", family="Inter"),
             showarrow=False
         )
         
@@ -573,7 +669,8 @@ elif page == "Report Methodology":
             height=500,
             margin=dict(l=40, r=40, t=20, b=20),
             showlegend=False,
-            paper_bgcolor='white',
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
             font=dict(family="Inter")
         )
         
@@ -595,15 +692,10 @@ elif page == "Report Methodology":
         
         Online survey conducted between December 2025 and February 2026.
         
-        **Weighting**
+        **Report Author**
         
-        Responses weighted by:
-        - Energy & Grid: 25%
-        - Fiscal: 20%
-        - Legal: 17.5%
-        - Permits: 17.5%
-        - Tariffs: 15%
-        - Climate: 5%
+        [Valentin Rousseau](https://x.com/MuadDib_Pill)
+        [@MuadDib_Pill](https://x.com/MuadDib_Pill)
         """)
     
     st.markdown("---")
@@ -631,6 +723,7 @@ elif page == "Report Methodology":
 st.markdown("""
 <div class="footer">
     <p><strong>Ease to Mine Index (EMI)</strong> - First Edition 2026</p>
+    <p>Report Author: <a href="https://x.com/MuadDib_Pill" target="_blank">Valentin Rousseau - @MuadDib_Pill</a></p>
     <p>Research by <a href="https://hashlabs.io" target="_blank">Hashlabs</a> | 
     Survey of 48 industry practitioners across 19 jurisdictions</p>
 </div>
