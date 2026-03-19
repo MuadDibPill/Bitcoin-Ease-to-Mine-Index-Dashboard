@@ -15,15 +15,30 @@ st.set_page_config(
 )
 
 # ============================================
-# COLOR PALETTE
+# NEW COLOR PALETTE - Green (best) to Red (worst)
 # ============================================
+# Best to worst gradient
+COLOR_SCALE = [
+    [0.0, '#7A3B2E'],    # Worst - Dark red/brown
+    [0.07, '#9E4F36'],
+    [0.14, '#B46A3F'],
+    [0.21, '#C4834A'],
+    [0.28, '#D19F5B'],
+    [0.35, '#DDBB7A'],
+    [0.42, '#E8D3A8'],
+    [0.50, '#F2E9D8'],   # Neutral - Beige
+    [0.57, '#D6E4DD'],
+    [0.64, '#A3CEC0'],
+    [0.71, '#7FB99B'],
+    [0.78, '#5FA382'],
+    [0.85, '#3F8A6A'],
+    [0.92, '#2F6B52'],
+    [1.0, '#1F4D3A']     # Best - Dark green
+]
+
 COLORS = {
-    'primary': '#2E5BFF',
-    'secondary': '#FF9F2E',
-    'success': '#2EFF5B',
-    'danger': '#FF2E5B',
-    'purple': '#8B2EFF',
-    'cyan': '#2EFFFF',
+    'primary': '#1F4D3A',
+    'secondary': '#C4834A',
     'text': '#1E293B',
     'text_muted': '#64748B',
     'border': '#E2E8F0'
@@ -89,7 +104,7 @@ st.markdown("""
     }
     
     [data-testid="stSelectbox"] > div > div:hover {
-        border-color: #2E5BFF !important;
+        border-color: #1F4D3A !important;
     }
     
     [data-testid="stMetricValue"] {
@@ -118,7 +133,7 @@ st.markdown("""
     }
     
     .footer a {
-        color: #2E5BFF;
+        color: #1F4D3A;
         text-decoration: none;
     }
     
@@ -164,10 +179,10 @@ ISO_CODES = {
 }
 
 # ============================================
-# HELPER FUNCTIONS
+# HELPER FUNCTIONS - NEW COLOR PALETTE
 # ============================================
-def get_score_color_bright(score, min_score, max_score):
-    """Get brighter color based on score"""
+def get_score_color(score, min_score, max_score):
+    """Get color based on score using new green-beige-red palette"""
     if max_score == min_score:
         ratio = 0.5
     else:
@@ -175,24 +190,45 @@ def get_score_color_bright(score, min_score, max_score):
     
     ratio = max(0.0, min(1.0, ratio))
     
-    if ratio < 0.5:
-        t = ratio * 2
-        r = 255
-        g = int(46 + (217 - 46) * t)
-        b = int(91 + (61 - 91) * t)
-    else:
-        t = (ratio - 0.5) * 2
-        r = int(255 + (46 - 255) * t)
-        g = int(217 + (91 - 217) * t)
-        b = int(61 + (255 - 61) * t)
+    # Color stops from worst (0) to best (1)
+    color_stops = [
+        (0.00, '#7A3B2E'),
+        (0.07, '#9E4F36'),
+        (0.14, '#B46A3F'),
+        (0.21, '#C4834A'),
+        (0.28, '#D19F5B'),
+        (0.35, '#DDBB7A'),
+        (0.42, '#E8D3A8'),
+        (0.50, '#F2E9D8'),
+        (0.57, '#D6E4DD'),
+        (0.64, '#A3CEC0'),
+        (0.71, '#7FB99B'),
+        (0.78, '#5FA382'),
+        (0.85, '#3F8A6A'),
+        (0.92, '#2F6B52'),
+        (1.00, '#1F4D3A')
+    ]
     
-    r = max(0, min(255, int(r)))
-    g = max(0, min(255, int(g)))
-    b = max(0, min(255, int(b)))
+    # Find the two color stops to interpolate between
+    for i in range(len(color_stops) - 1):
+        if color_stops[i][0] <= ratio <= color_stops[i + 1][0]:
+            t = (ratio - color_stops[i][0]) / (color_stops[i + 1][0] - color_stops[i][0])
+            
+            c1 = color_stops[i][1]
+            c2 = color_stops[i + 1][1]
+            
+            r1, g1, b1 = int(c1[1:3], 16), int(c1[3:5], 16), int(c1[5:7], 16)
+            r2, g2, b2 = int(c2[1:3], 16), int(c2[3:5], 16), int(c2[5:7], 16)
+            
+            r = int(r1 + (r2 - r1) * t)
+            g = int(g1 + (g2 - g1) * t)
+            b = int(b1 + (b2 - b1) * t)
+            
+            return f'#{r:02x}{g:02x}{b:02x}'
     
-    return f'#{r:02x}{g:02x}{b:02x}'
+    return '#F2E9D8'  # Default neutral
 
-def generate_gradient_colors_simple(n, start_hex="#2E5BFF", end_hex="#FF9F2E"):
+def generate_gradient_colors_simple(n, start_hex="#1F4D3A", end_hex="#C4834A"):
     """Generate n colors as gradient"""
     start_r = int(start_hex[1:3], 16)
     start_g = int(start_hex[3:5], 16)
@@ -242,7 +278,7 @@ if page == "Overview":
     st.markdown("Comprehensive analysis of Bitcoin mining regulatory and operating conditions across 19 jurisdictions")
     
     # ========================================
-    # FILTER FOR MAP - Simple selectbox with CSS styling
+    # FILTER FOR MAP
     # ========================================
     col_filter, col_spacer = st.columns([1, 3])
     with col_filter:
@@ -264,7 +300,7 @@ if page == "Overview":
     selected_col = score_map[score_type]
     
     # ========================================
-    # WORLD MAP
+    # WORLD MAP - NEW COLOR SCALE
     # ========================================
     df_map = df.copy()
     df_map["ISO"] = df_map["Country"].map(ISO_CODES)
@@ -279,13 +315,7 @@ if page == "Overview":
         locations=df_map_agg["ISO"],
         z=df_map_agg["Score"],
         text=df_map_agg["Country"],
-        colorscale=[
-            [0, '#FF2E5B'],
-            [0.25, '#FF9F2E'],
-            [0.5, '#FFD93D'],
-            [0.75, '#2EFF5B'],
-            [1, '#2E5BFF']
-        ],
+        colorscale=COLOR_SCALE,
         autocolorscale=False,
         marker_line_color='#4B5563',
         marker_line_width=1,
@@ -328,7 +358,7 @@ if page == "Overview":
     st.markdown("---")
     
     # ========================================
-    # EMI RANKING BAR CHART
+    # EMI RANKING BAR CHART - NEW COLORS
     # ========================================
     st.markdown('<p class="section-title">EMI Ranking</p>', unsafe_allow_html=True)
     
@@ -336,7 +366,7 @@ if page == "Overview":
     
     min_score = df_rank["Index_Score"].min()
     max_score = df_rank["Index_Score"].max()
-    colors = [get_score_color_bright(score, min_score, max_score) for score in df_rank["Index_Score"]]
+    colors = [get_score_color(score, min_score, max_score) for score in df_rank["Index_Score"]]
     
     fig_rank = go.Figure(go.Bar(
         x=df_rank["Index_Score"],
@@ -369,7 +399,7 @@ if page == "Overview":
     st.markdown("---")
     
     # ========================================
-    # HEATMAP
+    # HEATMAP - NEW COLORS
     # ========================================
     st.markdown('<p class="section-title">Score Heatmap by Section</p>', unsafe_allow_html=True)
     
@@ -384,13 +414,7 @@ if page == "Overview":
         z=heatmap_data.values,
         x=heatmap_labels,
         y=heatmap_data.index,
-        colorscale=[
-            [0, '#FF2E5B'],
-            [0.25, '#FF9F2E'],
-            [0.5, '#FFD93D'],
-            [0.75, '#2EFF5B'],
-            [1, '#2E5BFF']
-        ],
+        colorscale=COLOR_SCALE,
         text=np.round(heatmap_data.values, 2),
         texttemplate="%{text}",
         textfont=dict(size=10, color="white", family="Inter"),
@@ -493,7 +517,7 @@ elif page == "Methodology":
     df_resp = df_resp[df_resp["Respondents"] > 0].sort_values("Respondents", ascending=False)
     total_respondents = df_resp["Respondents"].sum()
     
-    pie_colors = generate_gradient_colors_simple(len(df_resp), "#2E5BFF", "#FF9F2E")
+    pie_colors = generate_gradient_colors_simple(len(df_resp), "#1F4D3A", "#C4834A")
     
     fig_pie = go.Figure(go.Pie(
         labels=df_resp["Country"],
@@ -528,25 +552,22 @@ elif page == "Methodology":
     st.markdown("---")
     
     # ========================================
-    # WEIGHTING STACKED BAR CHART - WITH ANNOTATION FOR SMALL SECTION
+    # WEIGHTING STACKED BAR CHART
     # ========================================
     st.markdown('<p class="section-title">Index Weighting by Dimension</p>', unsafe_allow_html=True)
     
     fig_weights = go.Figure()
     
-    # Main weights (without Operating Conditions which is too small)
     weights_main = [
-        ("Energy & Grid", 25, "#2E5BFF", "white"),
-        ("Fiscal", 20, "#5B8AFF", "white"),
-        ("Legal", 17.5, "#FF9F2E", "white"),
-        ("Permits & Licensing", 17.5, "#FFB85B", "black"),
-        ("Customs & Tariffs", 15, "#10B981", "white"),
-        ("Operating Cond.", 5, "#8B5CF6", "white")
+        ("Energy & Grid", 25, "#1F4D3A", "white"),
+        ("Fiscal", 20, "#3F8A6A", "white"),
+        ("Legal", 17.5, "#7FB99B", "black"),
+        ("Permits & Licensing", 17.5, "#D19F5B", "black"),
+        ("Customs & Tariffs", 15, "#B46A3F", "white"),
+        ("Operating Cond.", 5, "#7A3B2E", "white")
     ]
     
-    cumulative_x = 0
     for name, weight, color, text_color in weights_main:
-        # For Operating Conditions, don't show text inside (too small)
         if weight <= 5:
             text_inside = ""
         else:
@@ -564,11 +585,9 @@ elif page == "Methodology":
             textfont=dict(size=11, family="Inter", color=text_color),
             hovertemplate=f"<b>{name}</b><br>Weight: {weight}%<extra></extra>"
         ))
-        cumulative_x += weight
     
-    # Add annotation with arrow for "Operating Conditions" (too small to fit text)
     fig_weights.add_annotation(
-        x=97.5,  # Position at middle of Operating Conditions bar (95 + 5/2)
+        x=97.5,
         y="EMI Index",
         yshift=50,
         text="<b>Operating Conditions: 5%</b>",
@@ -576,12 +595,12 @@ elif page == "Methodology":
         arrowhead=2,
         arrowsize=1,
         arrowwidth=2,
-        arrowcolor="#8B5CF6",
+        arrowcolor="#7A3B2E",
         ax=0,
         ay=-40,
         font=dict(size=11, family="Inter", color="#1E293B"),
         bgcolor="white",
-        bordercolor="#8B5CF6",
+        bordercolor="#7A3B2E",
         borderwidth=1,
         borderpad=4
     )
