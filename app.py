@@ -321,7 +321,10 @@ if page == "Overview":
             textfont=dict(size=9, color="white", family="Inter"),
             hovertemplate="Country: %{y}<br>Section: %{x}<br>Score: %{z:.2f}<extra></extra>",
             showscale=True,
-            colorbar=dict(title="Score", titleside="right", titlefont=dict(family="Inter"), tickfont=dict(family="Inter"))
+            colorbar=dict(
+                title=dict(text="Score", side="right", font=dict(family="Inter")),
+                tickfont=dict(family="Inter")
+            )
         ))
         
         fig_heat.update_layout(
@@ -429,9 +432,7 @@ if page == "Overview":
             paper_bgcolor='white',
             font=dict(family="Inter"),
             coloraxis_colorbar=dict(
-                title="YoY %",
-                titleside="right",
-                titlefont=dict(family="Inter"),
+                title=dict(text="YoY %", side="right", font=dict(family="Inter")),
                 tickfont=dict(family="Inter")
             )
         )
