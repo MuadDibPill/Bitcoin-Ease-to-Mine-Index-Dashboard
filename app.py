@@ -241,14 +241,14 @@ st.markdown("""
     }
     
     .timeline-item {
-        border-left: 3px solid #1D0DED;
+        border-left: 3px solid #002060;
         padding-left: 1rem;
         margin-bottom: 1rem;
     }
     
     .timeline-date {
         font-size: 0.8rem;
-        color: #1D0DED;
+        color: #002060;
         font-weight: 600;
     }
     
@@ -452,7 +452,7 @@ if page == "Overview":
         ))
         
         fig_map.update_layout(
-            height=400,
+            height=480,
             margin=dict(l=0, r=0, t=5, b=0),
             geo=dict(
                 showframe=False,
@@ -494,8 +494,8 @@ if page == "Overview":
                         border-radius: 0 8px 8px 0;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <span style="font-weight: 700; color: #1E293B; font-size: 0.85rem;">#{rank} {row['Country']}</span>
-                        <span style="color: #64748B; font-size: 0.7rem; margin-left: 6px;">{row['Region']}</span>
+                        <span style="font-weight: 700; color: #1E293B; font-size: 0.9rem;">#{rank} {row['Country']}</span>
+                        <span style="color: #64748B; font-size: 0.9rem; margin-left: 6px;">{row['Region']}</span>
                     </div>
                     <div style="font-weight: 700; font-size: 1rem; color: {color};">{score_val:.2f}</div>
                 </div>
@@ -521,8 +521,8 @@ if page == "Overview":
                         border-radius: 0 8px 8px 0;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <span style="font-weight: 700; color: #1E293B; font-size: 0.85rem;">#{rank} {row['Country']}</span>
-                        <span style="color: #64748B; font-size: 0.7rem; margin-left: 6px;">{row['Region']}</span>
+                        <span style="font-weight: 700; color: #1E293B; font-size: 0.9rem;">#{rank} {row['Country']}</span>
+                        <span style="color: #64748B; font-size: 0.9rem; margin-left: 6px;">{row['Region']}</span>
                     </div>
                     <div style="font-weight: 700; font-size: 1rem; color: {color};">{score_val:.2f}</div>
                 </div>
@@ -562,7 +562,7 @@ if page == "Overview":
             marker_color=colors_r,
             text=df_rank[rank_col].round(2),
             textposition='outside',
-            textfont=dict(size=11, family="Inter"),
+            textfont=dict(size=13, family="Inter"),
             name=rank_dimension
         ))
         
@@ -570,7 +570,7 @@ if page == "Overview":
             height=560,
             margin=dict(l=0, r=60, t=10, b=40),
             xaxis=dict(range=[0, 1], title=dict(text=rank_dimension + " Score", font=dict(family="Inter", size=12)), gridcolor='#E2E8F0', zeroline=False),
-            yaxis=dict(title="", tickfont=dict(family="Inter", size=11)),
+            yaxis=dict(title="", tickfont=dict(family="Inter", size=13)),
             plot_bgcolor='rgba(0,0,0,0)',
             paper_bgcolor='rgba(0,0,0,0)',
             font=dict(family="Inter")
@@ -581,7 +581,7 @@ if page == "Overview":
     with col_text:
         st.markdown("""
         <div class="info-box">
-            <div class="info-box-title" style="font-size: 1rem; margin-bottom: 0.75rem;">EMI Description</div>
+            <div class="info-box-title" style="font-size: 1.1rem; margin-bottom: 0.75rem;">EMI Description</div>
             <p>The first edition of the <strong>Ease to Mine Index (EMI)</strong> is a composite framework designed to assess the overall attractiveness of jurisdictions for Bitcoin mining.</p>
             <p style="margin-top: 0.75rem;">The index evaluates a broad set of dimensions:</p>
             <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
@@ -781,7 +781,7 @@ elif page == "Methodology":
         }
         
         # Blue color scheme for Methodology
-        weight_colors = ['#A7BCF7', '#6287F0', '#0D6FFF', '#1D0DED', '#002060', '#002060']
+        weight_colors = ['#A7BCF7', '#6287F0', '#0D6FFF', '#1D0DED', '#002060', '#12E09B']
         
         fig_pie_weight = go.Figure(go.Pie(
             labels=weights_data['Section'],
