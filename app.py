@@ -104,6 +104,14 @@ st.markdown("""
         margin-bottom: 1rem;
     }
     
+    .section-title-small {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #1E293B;
+        margin-bottom: 0.75rem;
+    }
+    
     .map-title {
         font-family: 'Inter', sans-serif;
         font-size: 1.1rem;
@@ -194,22 +202,10 @@ st.markdown("""
         font-size: 1rem;
     }
     
-    .kpi-simple {
-        text-align: center;
-        padding: 1rem;
-    }
-    
-    .kpi-simple-value {
-        font-size: 2.2rem;
-        font-weight: 700;
-        margin-bottom: 0.25rem;
-    }
-    
-    .kpi-simple-label {
-        font-size: 0.85rem;
-        color: #1E293B;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+    .subtitle-text {
+        color: #64748B;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
     }
     
     .methodology-card {
@@ -217,30 +213,25 @@ st.markdown("""
         border: 1px solid #E2E8F0;
         border-radius: 12px;
         padding: 1.5rem;
-        height: 100%;
+        text-align: center;
     }
     
-    .methodology-card-icon {
+    .methodology-card-value {
         font-size: 2rem;
-        margin-bottom: 0.75rem;
+        font-weight: 700;
+        color: #1E293B;
+        margin-bottom: 0.25rem;
     }
     
     .methodology-card-title {
         font-weight: 600;
         color: #1E293B;
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .methodology-card-value {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #1E8449;
+        font-size: 0.95rem;
         margin-bottom: 0.25rem;
     }
     
     .methodology-card-desc {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: #64748B;
     }
     
@@ -336,17 +327,13 @@ def get_score_color(score, min_score, max_score):
     for i in range(len(color_stops) - 1):
         if color_stops[i][0] <= ratio <= color_stops[i + 1][0]:
             t = (ratio - color_stops[i][0]) / (color_stops[i + 1][0] - color_stops[i][0])
-            
             c1 = color_stops[i][1]
             c2 = color_stops[i + 1][1]
-            
             r1, g1, b1 = int(c1[1:3], 16), int(c1[3:5], 16), int(c1[5:7], 16)
             r2, g2, b2 = int(c2[1:3], 16), int(c2[3:5], 16), int(c2[5:7], 16)
-            
             r = int(r1 + (r2 - r1) * t)
             g = int(g1 + (g2 - g1) * t)
             b = int(b1 + (b2 - b1) * t)
-            
             return f'#{r:02x}{g:02x}{b:02x}'
     
     return '#F4D03F'
@@ -355,26 +342,16 @@ def generate_gradient_colors_simple(n, start_hex="#1E8449", end_hex="#E67E22"):
     start_r = int(start_hex[1:3], 16)
     start_g = int(start_hex[3:5], 16)
     start_b = int(start_hex[5:7], 16)
-    
     end_r = int(end_hex[1:3], 16)
     end_g = int(end_hex[3:5], 16)
     end_b = int(end_hex[5:7], 16)
     
     colors = []
     for i in range(n):
-        if n > 1:
-            ratio = i / (n - 1)
-        else:
-            ratio = 0
-        
-        r = int(start_r + (end_r - start_r) * ratio)
-        g = int(start_g + (end_g - start_g) * ratio)
-        b = int(start_b + (end_b - start_b) * ratio)
-        
-        r = max(0, min(255, r))
-        g = max(0, min(255, g))
-        b = max(0, min(255, b))
-        
+        ratio = i / (n - 1) if n > 1 else 0
+        r = max(0, min(255, int(start_r + (end_r - start_r) * ratio)))
+        g = max(0, min(255, int(start_g + (end_g - start_g) * ratio)))
+        b = max(0, min(255, int(start_b + (end_b - start_b) * ratio)))
         colors.append(f'#{r:02x}{g:02x}{b:02x}')
     
     return colors
@@ -521,15 +498,10 @@ if page == "Overview":
                 y=country,
                 text=f"{val:.2f}",
                 showarrow=False,
-                font=dict(
-                    color=get_text_color_for_score(val),
-                    size=10,
-                    family="Inter"
-                )
+                font=dict(color=get_text_color_for_score(val), size=10, family="Inter")
             ))
     
     fig_heat.update_layout(annotations=annotations)
-    
     fig_heat.update_layout(
         height=580,
         margin=dict(l=0, r=0, t=10, b=40),
@@ -578,12 +550,7 @@ if page == "Overview":
         fig_rank.update_layout(
             height=620,
             margin=dict(l=0, r=60, t=10, b=40),
-            xaxis=dict(
-                range=[0, 1], 
-                title=dict(text=rank_dimension + " Score", font=dict(family="Inter", size=12)),
-                gridcolor='#E2E8F0', 
-                zeroline=False
-            ),
+            xaxis=dict(range=[0, 1], title=dict(text=rank_dimension + " Score", font=dict(family="Inter", size=12)), gridcolor='#E2E8F0', zeroline=False),
             yaxis=dict(title="", tickfont=dict(family="Inter", size=11)),
             plot_bgcolor='rgba(0,0,0,0)',
             paper_bgcolor='rgba(0,0,0,0)',
@@ -658,59 +625,11 @@ if page == "Overview":
 # ============================================
 elif page == "Overview (Creative)":
     st.markdown("# Ease to Mine Index Dashboard")
+    st.markdown('<p class="subtitle-text">Comprehensive analysis of Bitcoin mining regulatory and operating conditions across 19 jurisdictions</p>', unsafe_allow_html=True)
     
     df_sorted = df.sort_values("Index_Score", ascending=False)
-    top_country = df_sorted.iloc[0]
-    bottom_country = df_sorted.iloc[-1]
-    avg_score = df["Index_Score"].mean()
-    total_hashrate = df["Hashrate_Q1_26"].sum()
     
-    # KPI Cards - Simple style with colored text
-    col1, col2, col3, col4, col5 = st.columns(5)
-    
-    with col1:
-        st.markdown(f"""
-        <div class="kpi-simple">
-            <div class="kpi-simple-value" style="color: #1E8449;">19</div>
-            <div class="kpi-simple-label">Jurisdictions</div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown(f"""
-        <div class="kpi-simple">
-            <div class="kpi-simple-value" style="color: #1E8449;">{avg_score:.2f}</div>
-            <div class="kpi-simple-label">Average EMI Score</div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown(f"""
-        <div class="kpi-simple">
-            <div class="kpi-simple-value" style="color: #475569;">{total_hashrate:.0f}</div>
-            <div class="kpi-simple-label">Total Hashrate (EH/s)</div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col4:
-        st.markdown(f"""
-        <div class="kpi-simple">
-            <div class="kpi-simple-value" style="color: #1E8449;">{top_country['Index_Score']:.2f}</div>
-            <div class="kpi-simple-label">🏆 {top_country['Country']}</div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col5:
-        st.markdown(f"""
-        <div class="kpi-simple">
-            <div class="kpi-simple-value" style="color: #DC7633;">{bottom_country['Index_Score']:.2f}</div>
-            <div class="kpi-simple-label">⚠️ {bottom_country['Country']}</div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown("")
-    
-    # Map and Top/Bottom 3 - Adjusted column ratio (3:1 instead of 2:1)
+    # Map and Top/Bottom 3
     col_map, col_top = st.columns([3, 1])
     
     with col_map:
@@ -773,7 +692,7 @@ elif page == "Overview (Creative)":
         st.plotly_chart(fig_map, use_container_width=True)
     
     with col_top:
-        st.markdown('<p class="section-title">Top 3 Jurisdictions</p>', unsafe_allow_html=True)
+        st.markdown('<p class="section-title-small">Top 3 Jurisdictions</p>', unsafe_allow_html=True)
         
         for idx, (i, row) in enumerate(df_sorted.head(3).iterrows()):
             rank = idx + 1
@@ -798,7 +717,7 @@ elif page == "Overview (Creative)":
             """, unsafe_allow_html=True)
         
         st.markdown("")
-        st.markdown('<p class="section-title" style="margin-top: 0.75rem;">Bottom 3 Jurisdictions</p>', unsafe_allow_html=True)
+        st.markdown('<p class="section-title-small" style="margin-top: 0.75rem;">Bottom 3 Jurisdictions</p>', unsafe_allow_html=True)
         
         bottom_3 = df_sorted.tail(3).iloc[::-1]
         for idx, (i, row) in enumerate(bottom_3.iterrows()):
@@ -825,154 +744,66 @@ elif page == "Overview (Creative)":
     
     st.markdown("---")
     
-    # Radar + Regional
-    col_radar, col_regional = st.columns([1, 1])
+    # EMI Ranking with text box
+    st.markdown('<p class="section-title">EMI Ranking</p>', unsafe_allow_html=True)
     
-    with col_radar:
-        st.markdown('<p class="section-title">Dimension Comparison: Top 3 vs Bottom 3</p>', unsafe_allow_html=True)
-        
-        categories = ['Fiscal', 'Permits', 'Legal', 'Energy', 'Tariffs', 'Climate']
-        
-        top3_avg = df_sorted.head(3)[["Fiscal", "Permit_Licensing", "Legal", "Energy_Grid", "Tariff_Import", "Operating_Conditions"]].mean().values.tolist()
-        bottom3_avg = df_sorted.tail(3)[["Fiscal", "Permit_Licensing", "Legal", "Energy_Grid", "Tariff_Import", "Operating_Conditions"]].mean().values.tolist()
-        
-        fig_radar = go.Figure()
-        
-        fig_radar.add_trace(go.Scatterpolar(
-            r=top3_avg + [top3_avg[0]],
-            theta=categories + [categories[0]],
-            fill='toself',
-            fillcolor='rgba(30, 132, 73, 0.2)',
-            line=dict(color='#1E8449', width=2),
-            name='Top 3 Average'
-        ))
-        
-        fig_radar.add_trace(go.Scatterpolar(
-            r=bottom3_avg + [bottom3_avg[0]],
-            theta=categories + [categories[0]],
-            fill='toself',
-            fillcolor='rgba(146, 43, 33, 0.2)',
-            line=dict(color='#922B21', width=2),
-            name='Bottom 3 Average'
-        ))
-        
-        fig_radar.update_layout(
-            polar=dict(
-                radialaxis=dict(
-                    visible=True,
-                    range=[0, 1],
-                    tickfont=dict(size=10),
-                    gridcolor='#E2E8F0'
-                ),
-                angularaxis=dict(tickfont=dict(size=11, family="Inter"))
-            ),
-            showlegend=True,
-            legend=dict(
-                orientation="h",
-                yanchor="bottom",
-                y=-0.15,
-                xanchor="center",
-                x=0.5,
-                font=dict(size=11)
-            ),
-            height=380,
-            margin=dict(l=60, r=60, t=30, b=60),
-            paper_bgcolor='rgba(0,0,0,0)',
-            font=dict(family="Inter")
+    col_rank_filter_c, col_rank_spacer_c = st.columns([1, 3])
+    with col_rank_filter_c:
+        rank_dimension_c = st.selectbox(
+            "Select category",
+            ["Overall Index", "Fiscal", "Permits & Licensing", "Legal", "Energy & Grid", "Customs & Tariffs", "Operating Conditions"],
+            key="rank_filter_creative"
         )
-        
-        st.plotly_chart(fig_radar, use_container_width=True)
     
-    with col_regional:
-        st.markdown('<p class="section-title">Average EMI Score by Region</p>', unsafe_allow_html=True)
-        
-        df_regional = df.groupby("Region").agg({
-            "Index_Score": "mean",
-            "Country": "count",
-            "Hashrate_Q1_26": "sum"
-        }).reset_index()
-        df_regional.columns = ["Region", "Avg_Score", "Count", "Total_Hashrate"]
-        df_regional = df_regional.sort_values("Avg_Score", ascending=True)
-        
-        colors_regional = [get_score_color(s, df_regional["Avg_Score"].min(), df_regional["Avg_Score"].max()) for s in df_regional["Avg_Score"]]
-        
-        fig_regional = go.Figure(go.Bar(
-            x=df_regional["Avg_Score"],
-            y=df_regional["Region"],
+    rank_col_c = score_map[rank_dimension_c]
+    df_rank_c = df.sort_values(rank_col_c, ascending=True).copy()
+    
+    min_score_c = df_rank_c[rank_col_c].min()
+    max_score_c = df_rank_c[rank_col_c].max()
+    colors_c = [get_score_color(score, min_score_c, max_score_c) for score in df_rank_c[rank_col_c]]
+    
+    col_chart_c, col_text_c = st.columns([2, 1])
+    
+    with col_chart_c:
+        fig_rank_c = go.Figure(go.Bar(
+            x=df_rank_c[rank_col_c],
+            y=df_rank_c["Country"],
             orientation='h',
-            marker_color=colors_regional,
-            text=[f"{s:.2f}" for s in df_regional["Avg_Score"]],
+            marker_color=colors_c,
+            text=df_rank_c[rank_col_c].round(2),
             textposition='outside',
-            textfont=dict(size=12, family="Inter"),
-            hovertemplate="<b>%{y}</b><br>Avg Score: %{x:.2f}<extra></extra>"
+            textfont=dict(size=11, family="Inter"),
+            name=rank_dimension_c
         ))
         
-        fig_regional.update_layout(
-            height=380,
-            margin=dict(l=0, r=50, t=30, b=40),
-            xaxis=dict(
-                range=[0, 0.85],
-                title="",
-                gridcolor='#E2E8F0',
-                zeroline=False,
-                showticklabels=False
-            ),
-            yaxis=dict(title="", tickfont=dict(family="Inter", size=12)),
+        fig_rank_c.update_layout(
+            height=620,
+            margin=dict(l=0, r=60, t=10, b=40),
+            xaxis=dict(range=[0, 1], title=dict(text=rank_dimension_c + " Score", font=dict(family="Inter", size=12)), gridcolor='#E2E8F0', zeroline=False),
+            yaxis=dict(title="", tickfont=dict(family="Inter", size=11)),
             plot_bgcolor='rgba(0,0,0,0)',
             paper_bgcolor='rgba(0,0,0,0)',
             font=dict(family="Inter")
         )
         
-        st.plotly_chart(fig_regional, use_container_width=True)
+        st.plotly_chart(fig_rank_c, use_container_width=True)
     
-    st.markdown("---")
-    
-    # Bubble Chart
-    st.markdown('<p class="section-title">Hashrate vs EMI Score by Jurisdiction</p>', unsafe_allow_html=True)
-    
-    df_bubble = df.copy()
-    df_bubble["color"] = [get_score_color(s, df["Index_Score"].min(), df["Index_Score"].max()) for s in df["Index_Score"]]
-    
-    fig_bubble = go.Figure()
-    
-    for _, row in df_bubble.iterrows():
-        fig_bubble.add_trace(go.Scatter(
-            x=[row["Index_Score"]],
-            y=[row["Hashrate_Q1_26"]],
-            mode='markers+text',
-            marker=dict(
-                size=max(15, min(60, row["Hashrate_Q1_26"] / 5)),
-                color=row["color"],
-                opacity=0.7,
-                line=dict(width=1, color='white')
-            ),
-            text=[row["Country"]],
-            textposition="top center",
-            textfont=dict(size=9, family="Inter"),
-            hovertemplate=f"<b>{row['Country']}</b><br>EMI Score: {row['Index_Score']:.2f}<br>Hashrate: {row['Hashrate_Q1_26']:.1f} EH/s<extra></extra>",
-            showlegend=False
-        ))
-    
-    fig_bubble.update_layout(
-        height=450,
-        margin=dict(l=60, r=40, t=20, b=60),
-        xaxis=dict(
-            title=dict(text="EMI Score", font=dict(family="Inter", size=12)),
-            range=[0.2, 0.85],
-            gridcolor='#E2E8F0',
-            zeroline=False
-        ),
-        yaxis=dict(
-            title=dict(text="Hashrate Q1-26 (EH/s)", font=dict(family="Inter", size=12)),
-            gridcolor='#E2E8F0',
-            zeroline=False
-        ),
-        plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='rgba(0,0,0,0)',
-        font=dict(family="Inter")
-    )
-    
-    st.plotly_chart(fig_bubble, use_container_width=True)
+    with col_text_c:
+        st.markdown("""
+        <div class="info-box">
+            <p>The first edition of the <strong>Ease to Mine Index (EMI)</strong> is a composite framework designed to assess the overall attractiveness of jurisdictions for Bitcoin mining.</p>
+            <p style="margin-top: 0.75rem;">The index evaluates a broad set of dimensions:</p>
+            <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                <li>Legal and fiscal frameworks</li>
+                <li>Permitting and licensing conditions</li>
+                <li>Energy market structure and grid access</li>
+                <li>Climate characteristics</li>
+                <li>Tariff and import environments</li>
+            </ul>
+            <p style="margin-top: 0.75rem;">While mining analysis traditionally emphasizes operational metrics (power costs, hashprice), regulatory conditions are often underweighted. By integrating both perspectives, the EMI provides a more holistic assessment of mining sustainability.</p>
+            <p style="margin-top: 0.75rem;"><strong>Coverage:</strong> 18 countries spanning established and emerging mining regions — 19 jurisdictions (where Texas serves as a proxy of U.S., and Alberta and Québec for Canada).</p>
+        </div>
+        """, unsafe_allow_html=True)
     
     st.markdown("---")
     
@@ -1012,7 +843,6 @@ elif page == "Overview (Creative)":
             ))
     
     fig_heat.update_layout(annotations=annotations)
-    
     fig_heat.update_layout(
         height=550,
         margin=dict(l=0, r=0, t=10, b=40),
@@ -1024,6 +854,50 @@ elif page == "Overview (Creative)":
     )
     
     st.plotly_chart(fig_heat, use_container_width=True)
+    
+    st.markdown("---")
+    
+    # Full Data Table
+    st.markdown('<p class="section-title">Full Data Table</p>', unsafe_allow_html=True)
+    
+    df_display_c = df.copy()
+    df_display_c = df_display_c.rename(columns={
+        "Index_Score": "EMI Score",
+        "Permit_Licensing": "Permits",
+        "Energy_Grid": "Energy",
+        "Tariff_Import": "Tariffs",
+        "Operating_Conditions": "Climate",
+        "Hashrate_Q1_25": "Hashrate Q1-25 (EH/s)",
+        "Hashrate_Q1_26": "Hashrate Q1-26 (EH/s)"
+    })
+    
+    numeric_cols_c = ["EMI Score", "Fiscal", "Permits", "Legal", "Energy", "Tariffs", "Climate"]
+    for col in numeric_cols_c:
+        df_display_c[col] = df_display_c[col].round(2)
+    
+    df_display_c = df_display_c.sort_values("EMI Score", ascending=False)
+    display_cols_c = ["Country", "Region", "EMI Score", "Fiscal", "Permits", "Legal", "Energy", "Tariffs", "Climate", "Hashrate Q1-25 (EH/s)", "Hashrate Q1-26 (EH/s)"]
+    
+    st.dataframe(
+        df_display_c[display_cols_c],
+        use_container_width=True,
+        hide_index=True,
+        height=550,
+        column_config={
+            "EMI Score": st.column_config.ProgressColumn("EMI Score", format="%.2f", min_value=0, max_value=1),
+            "Fiscal": st.column_config.NumberColumn(format="%.2f"),
+            "Permits": st.column_config.NumberColumn(format="%.2f"),
+            "Legal": st.column_config.NumberColumn(format="%.2f"),
+            "Energy": st.column_config.NumberColumn(format="%.2f"),
+            "Tariffs": st.column_config.NumberColumn(format="%.2f"),
+            "Climate": st.column_config.NumberColumn(format="%.2f"),
+            "Hashrate Q1-25 (EH/s)": st.column_config.NumberColumn(format="%.1f"),
+            "Hashrate Q1-26 (EH/s)": st.column_config.NumberColumn(format="%.1f"),
+        }
+    )
+    
+    csv_c = df_display_c[display_cols_c].to_csv(index=False)
+    st.download_button(label="Download Data (CSV)", data=csv_c, file_name="emi_data_export.csv", mime="text/csv", key="download_creative")
 
 # ============================================
 # METHODOLOGY PAGE (ORIGINAL)
@@ -1134,17 +1008,8 @@ elif page == "Methodology":
         barmode='stack',
         height=120,
         margin=dict(l=0, r=0, t=20, b=20),
-        xaxis=dict(
-            title="",
-            showticklabels=False,
-            showgrid=False,
-            zeroline=False,
-            range=[0, 100]
-        ),
-        yaxis=dict(
-            title="",
-            showticklabels=False
-        ),
+        xaxis=dict(title="", showticklabels=False, showgrid=False, zeroline=False, range=[0, 100]),
+        yaxis=dict(title="", showticklabels=False),
         showlegend=False,
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
@@ -1181,13 +1046,12 @@ elif page == "Methodology (Creative)":
     
     st.markdown("")
     
-    # Key Stats Cards
+    # Key Stats Cards - No icons, black numbers
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         st.markdown("""
         <div class="methodology-card">
-            <div class="methodology-card-icon">👥</div>
             <div class="methodology-card-value">48</div>
             <div class="methodology-card-title">Respondents</div>
             <div class="methodology-card-desc">Industry practitioners surveyed</div>
@@ -1197,7 +1061,6 @@ elif page == "Methodology (Creative)":
     with col2:
         st.markdown("""
         <div class="methodology-card">
-            <div class="methodology-card-icon">📝</div>
             <div class="methodology-card-value">55</div>
             <div class="methodology-card-title">Responses</div>
             <div class="methodology-card-desc">Total survey submissions</div>
@@ -1207,7 +1070,6 @@ elif page == "Methodology (Creative)":
     with col3:
         st.markdown("""
         <div class="methodology-card">
-            <div class="methodology-card-icon">🌍</div>
             <div class="methodology-card-value">19</div>
             <div class="methodology-card-title">Jurisdictions</div>
             <div class="methodology-card-desc">Countries & regions covered</div>
@@ -1217,7 +1079,6 @@ elif page == "Methodology (Creative)":
     with col4:
         st.markdown("""
         <div class="methodology-card">
-            <div class="methodology-card-icon">❓</div>
             <div class="methodology-card-value">33</div>
             <div class="methodology-card-title">Questions</div>
             <div class="methodology-card-desc">Across 5 survey sections</div>
@@ -1226,8 +1087,8 @@ elif page == "Methodology (Creative)":
     
     st.markdown("---")
     
-    # Two columns: Timeline + Respondent Profile
-    col_timeline, col_profile = st.columns([1, 1])
+    # Timeline + Weighting Pie Chart
+    col_timeline, col_pie_weight = st.columns([1, 1])
     
     with col_timeline:
         st.markdown('<p class="section-title">Survey Timeline</p>', unsafe_allow_html=True)
@@ -1257,164 +1118,54 @@ elif page == "Methodology (Creative)":
             <div class="timeline-desc">EMI V2 released with comprehensive analysis across 19 jurisdictions</div>
         </div>
         """, unsafe_allow_html=True)
-        
-        st.markdown("")
-        st.markdown("""
-        <div style="background-color: #FEF3C7; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
-            <p style="font-size: 0.85rem; color: #92400E; margin: 0;"><strong>Note:</strong> The Climate Operating Conditions (C.O.C.) section is beyond survey scope and based on internal analysis.</p>
-        </div>
-        """, unsafe_allow_html=True)
     
-    with col_profile:
-        st.markdown('<p class="section-title">Respondent Profile</p>', unsafe_allow_html=True)
+    with col_pie_weight:
+        st.markdown('<p class="section-title">Index Weighting</p>', unsafe_allow_html=True)
         
-        # Respondent types donut
-        respondent_types = {
-            "Industrial Miners": 60,
-            "Mining Associations": 15,
-            "Industry Journalists": 10,
-            "Other Experts": 15
+        weights_data = {
+            'Section': ['Energy & Grid', 'Fiscal', 'Legal', 'Permits & Licensing', 'Customs & Tariffs', 'C.O.C.'],
+            'Weight': [25, 20, 17.5, 17.5, 15, 5]
         }
         
-        fig_types = go.Figure(go.Pie(
-            labels=list(respondent_types.keys()),
-            values=list(respondent_types.values()),
-            hole=0.6,
-            marker=dict(colors=['#1E8449', '#28B463', '#7DCEA0', '#A9DFBF']),
+        fig_pie_weight = go.Figure(go.Pie(
+            labels=weights_data['Section'],
+            values=weights_data['Weight'],
+            hole=0.5,
+            marker=dict(colors=['#1E8449', '#28B463', '#7DCEA0', '#F4D03F', '#E67E22', '#922B21']),
             textinfo='percent',
             textposition='outside',
-            textfont=dict(size=11, family="Inter"),
-            hovertemplate="<b>%{label}</b><br>Share: %{percent}<extra></extra>"
+            textfont=dict(size=10, family="Inter"),
+            hovertemplate="<b>%{label}</b><br>Weight: %{value}%<extra></extra>"
         ))
         
-        fig_types.add_annotation(
-            text="<b>Respondent</b><br><span style='font-size:11px'>Types</span>",
+        fig_pie_weight.add_annotation(
+            text="<b>Weight</b><br><span style='font-size:11px'>(%)</span>",
             x=0.5, y=0.5,
             font=dict(size=14, color="#1E293B", family="Inter"),
             showarrow=False
         )
         
-        fig_types.update_layout(
-            height=280,
-            margin=dict(l=20, r=20, t=20, b=20),
+        fig_pie_weight.update_layout(
+            height=320,
+            margin=dict(l=20, r=120, t=20, b=20),
             showlegend=True,
             legend=dict(
-                orientation="h",
-                yanchor="bottom",
-                y=-0.2,
-                xanchor="center",
-                x=0.5,
-                font=dict(size=10)
+                orientation="v",
+                yanchor="middle",
+                y=0.5,
+                xanchor="left",
+                x=1.02,
+                font=dict(size=10, family="Inter")
             ),
             paper_bgcolor='rgba(0,0,0,0)',
             font=dict(family="Inter")
         )
         
-        st.plotly_chart(fig_types, use_container_width=True)
+        st.plotly_chart(fig_pie_weight, use_container_width=True)
     
     st.markdown("---")
     
-    # Survey Sections and Weighting
-    st.markdown('<p class="section-title">Index Composition & Weighting</p>', unsafe_allow_html=True)
-    
-    col_sections, col_weight_chart = st.columns([1, 1])
-    
-    with col_sections:
-        sections_data = [
-            ("⚡", "Energy & Grid", "25.0%", "Grid access, power costs, curtailment exposure"),
-            ("💰", "Fiscal", "20.0%", "Tax regime, incentives, profit center flexibility"),
-            ("⚖️", "Legal", "17.5%", "Regulatory framework, policy stability"),
-            ("📋", "Permits & Licensing", "17.5%", "Construction permits, zoning, compliance"),
-            ("🚢", "Customs & Tariffs", "15.0%", "Import duties, VAT, procedures"),
-            ("🌡️", "C.O.C.", "5.0%", "Temperature, humidity, altitude (internal analysis)")
-        ]
-        
-        for icon, name, weight, desc in sections_data:
-            st.markdown(f"""
-            <div style="display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #E2E8F0;">
-                <div style="font-size: 1.5rem; margin-right: 12px;">{icon}</div>
-                <div style="flex: 1;">
-                    <div style="font-weight: 600; color: #1E293B;">{name}</div>
-                    <div style="font-size: 0.8rem; color: #64748B;">{desc}</div>
-                </div>
-                <div style="font-weight: 700; color: #1E8449; font-size: 1.1rem;">{weight}</div>
-            </div>
-            """, unsafe_allow_html=True)
-    
-    with col_weight_chart:
-        weights_df = pd.DataFrame({
-            'Section': ['Energy & Grid', 'Fiscal', 'Legal', 'Permits', 'Tariffs', 'C.O.C.'],
-            'Weight': [25, 20, 17.5, 17.5, 15, 5]
-        })
-        
-        fig_weight = go.Figure(go.Bar(
-            x=weights_df['Weight'],
-            y=weights_df['Section'],
-            orientation='h',
-            marker_color=['#1E8449', '#28B463', '#52BE80', '#7DCEA0', '#A9DFBF', '#D5F5E3'],
-            text=[f"{w}%" for w in weights_df['Weight']],
-            textposition='inside',
-            textfont=dict(size=12, family="Inter", color="white"),
-            hovertemplate="<b>%{y}</b><br>Weight: %{x}%<extra></extra>"
-        ))
-        
-        fig_weight.update_layout(
-            height=320,
-            margin=dict(l=0, r=40, t=20, b=20),
-            xaxis=dict(
-                title="Weight (%)",
-                range=[0, 30],
-                gridcolor='#E2E8F0'
-            ),
-            yaxis=dict(title="", autorange="reversed"),
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            font=dict(family="Inter")
-        )
-        
-        st.plotly_chart(fig_weight, use_container_width=True)
-    
-    st.markdown("---")
-    
-    # Geographic Distribution
-    st.markdown('<p class="section-title">Geographic Distribution of Respondents</p>', unsafe_allow_html=True)
-    
-    df_resp = df.copy()
-    canada_resp = df_resp[df_resp["Country"].isin(["Alberta (CA)", "Quebec (CA)"])]["Respondents"].sum()
-    df_resp = df_resp[~df_resp["Country"].isin(["Alberta (CA)", "Quebec (CA)"])]
-    df_resp = pd.concat([df_resp, pd.DataFrame([{"Country": "Canada", "Respondents": canada_resp, "Region": "North America"}])], ignore_index=True)
-    df_resp = df_resp[df_resp["Respondents"] > 0].sort_values("Respondents", ascending=False)
-    
-    # Bar chart of respondents
-    fig_resp_bar = go.Figure(go.Bar(
-        x=df_resp["Respondents"],
-        y=df_resp["Country"],
-        orientation='h',
-        marker_color=generate_gradient_colors_simple(len(df_resp), "#1E8449", "#E67E22"),
-        text=df_resp["Respondents"],
-        textposition='outside',
-        textfont=dict(size=11, family="Inter"),
-        hovertemplate="<b>%{y}</b><br>Respondents: %{x}<extra></extra>"
-    ))
-    
-    fig_resp_bar.update_layout(
-        height=450,
-        margin=dict(l=0, r=60, t=20, b=40),
-        xaxis=dict(
-            title="Number of Respondents",
-            gridcolor='#E2E8F0'
-        ),
-        yaxis=dict(title="", autorange="reversed", tickfont=dict(family="Inter", size=11)),
-        plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='rgba(0,0,0,0)',
-        font=dict(family="Inter")
-    )
-    
-    st.plotly_chart(fig_resp_bar, use_container_width=True)
-    
-    st.markdown("---")
-    
-    # Data Quality Box
+    # Data Quality & Validation
     st.markdown('<p class="section-title">Data Quality & Validation</p>', unsafe_allow_html=True)
     
     col_qual1, col_qual2, col_qual3 = st.columns(3)
@@ -1440,6 +1191,55 @@ elif page == "Methodology (Creative)":
         <div class="info-box" style="height: 100%;">
             <div class="info-box-title">✓ Expert Validation</div>
             <p>Semi-structured interviews with selected respondents to validate findings and clarify country-specific nuances.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Geographic Distribution + Survey Methodology Box
+    st.markdown('<p class="section-title">Geographic Distribution of Respondents</p>', unsafe_allow_html=True)
+    
+    df_resp = df.copy()
+    canada_resp = df_resp[df_resp["Country"].isin(["Alberta (CA)", "Quebec (CA)"])]["Respondents"].sum()
+    df_resp = df_resp[~df_resp["Country"].isin(["Alberta (CA)", "Quebec (CA)"])]
+    df_resp = pd.concat([df_resp, pd.DataFrame([{"Country": "Canada", "Respondents": canada_resp, "Region": "North America"}])], ignore_index=True)
+    df_resp = df_resp[df_resp["Respondents"] > 0].sort_values("Respondents", ascending=False)
+    total_respondents = df_resp["Respondents"].sum()
+    
+    col_bar, col_method_box = st.columns([1, 1])
+    
+    with col_bar:
+        fig_resp_bar = go.Figure(go.Bar(
+            x=df_resp["Respondents"],
+            y=df_resp["Country"],
+            orientation='h',
+            marker_color=generate_gradient_colors_simple(len(df_resp), "#1E8449", "#E67E22"),
+            text=df_resp["Respondents"],
+            textposition='outside',
+            textfont=dict(size=11, family="Inter"),
+            hovertemplate="<b>%{y}</b><br>Respondents: %{x}<extra></extra>"
+        ))
+        
+        fig_resp_bar.update_layout(
+            height=450,
+            margin=dict(l=0, r=60, t=20, b=40),
+            xaxis=dict(title="Number of Respondents", gridcolor='#E2E8F0'),
+            yaxis=dict(title="", autorange="reversed", tickfont=dict(family="Inter", size=11)),
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            font=dict(family="Inter")
+        )
+        
+        st.plotly_chart(fig_resp_bar, use_container_width=True)
+    
+    with col_method_box:
+        st.markdown("""
+        <div class="info-box" style="height: 100%;">
+            <div class="method-box-title">Survey Methodology</div>
+            <p>Between December 2025 and February 2026, Hashlabs conducted an online survey targeting stakeholders within the Bitcoin mining ecosystem, including industrial miners, mining associations, industry journalists, and other experts.</p>
+            <p style="margin-top: 0.75rem;"><strong>Survey scope:</strong> 5 sections covering legal, fiscal, energy & electricity grids, permitting & licensing, and tariffs & customs procedures. A total of 33 questions combined quantitative metrics with qualitative assessments.</p>
+            <p style="margin-top: 0.75rem;"><strong>Data validation:</strong> Responses were reviewed for internal consistency and potential reporting bias. Follow-up semi-structured interviews were conducted with selected respondents to validate findings and clarify country-specific conditions.</p>
+            <p style="margin-top: 0.75rem; padding: 0.5rem; background-color: #FEF3C7; border-radius: 4px; font-size: 0.85rem;"><strong>Note:</strong> The Climate Operating Conditions (C.O.C.) section is beyond survey scope and based on internal analysis.</p>
         </div>
         """, unsafe_allow_html=True)
 
