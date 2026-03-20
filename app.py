@@ -241,14 +241,14 @@ st.markdown("""
     }
     
     .timeline-item {
-        border-left: 3px solid #1E8449;
+        border-left: 3px solid #1D0DED;
         padding-left: 1rem;
         margin-bottom: 1rem;
     }
     
     .timeline-date {
         font-size: 0.8rem;
-        color: #1E8449;
+        color: #1D0DED;
         font-weight: 600;
     }
     
@@ -581,6 +581,7 @@ if page == "Overview":
     with col_text:
         st.markdown("""
         <div class="info-box">
+            <div class="info-box-title" style="font-size: 1rem; margin-bottom: 0.75rem;">EMI Description</div>
             <p>The first edition of the <strong>Ease to Mine Index (EMI)</strong> is a composite framework designed to assess the overall attractiveness of jurisdictions for Bitcoin mining.</p>
             <p style="margin-top: 0.75rem;">The index evaluates a broad set of dimensions:</p>
             <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
@@ -629,15 +630,15 @@ if page == "Overview":
                 y=country,
                 text=f"{val:.2f}",
                 showarrow=False,
-                font=dict(color=get_text_color_for_score(val), size=10, family="Inter")
+                font=dict(color=get_text_color_for_score(val), size=12, family="Inter")
             ))
     
     fig_heat.update_layout(annotations=annotations)
     fig_heat.update_layout(
         height=550,
         margin=dict(l=0, r=0, t=10, b=40),
-        xaxis=dict(title="", tickangle=0, side="bottom", tickfont=dict(family="Inter", size=11)),
-        yaxis=dict(title="", autorange="reversed", tickfont=dict(family="Inter", size=11)),
+        xaxis=dict(title="", tickangle=0, side="bottom", tickfont=dict(family="Inter", size=13)),
+        yaxis=dict(title="", autorange="reversed", tickfont=dict(family="Inter", size=13)),
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
         font=dict(family="Inter")
@@ -779,8 +780,8 @@ elif page == "Methodology":
             'Weight': [25, 20, 17.5, 17.5, 15, 5]
         }
         
-        # Blue/Gold color scheme for Methodology
-        weight_colors = ['#6287F0', '#0D6FFF', '#1D0DED', '#002060', '#F3B11D', '#002060']
+        # Blue color scheme for Methodology
+        weight_colors = ['#A7BCF7', '#6287F0', '#0D6FFF', '#1D0DED', '#002060', '#002060']
         
         fig_pie_weight = go.Figure(go.Pie(
             labels=weights_data['Section'],
@@ -790,6 +791,7 @@ elif page == "Methodology":
             textinfo='percent',
             textposition='outside',
             textfont=dict(size=12, family="Inter"),
+            texttemplate='%{percent:.1%}',
             hovertemplate="<b>%{label}</b><br>Weight: %{value}%<extra></extra>"
         ))
         
