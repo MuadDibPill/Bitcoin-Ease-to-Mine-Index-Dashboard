@@ -15,7 +15,7 @@ st.set_page_config(
 )
 
 # ============================================
-# COLOR PALETTE - Green (best) to Red (worst)
+# COLOR PALETTE
 # ============================================
 COLOR_SCALE = [
     [0.00, '#922B21'],
@@ -35,14 +35,6 @@ COLOR_SCALE = [
     [1.00, '#1E8449']
 ]
 
-COLORS = {
-    'primary': '#1E8449',
-    'secondary': '#E67E22',
-    'text': '#1E293B',
-    'text_muted': '#64748B',
-    'border': '#E2E8F0'
-}
-
 # ============================================
 # CUSTOM CSS
 # ============================================
@@ -56,14 +48,34 @@ st.markdown("""
     }
     
     [data-testid="stSidebar"] {
-        width: 255px !important;
-        min-width: 255px !important;
+        width: 270px !important;
+        min-width: 270px !important;
         background-color: #FAFAFA;
         border-right: 1px solid #E2E8F0;
     }
     
     [data-testid="stSidebar"] > div:first-child {
-        width: 255px !important;
+        width: 270px !important;
+    }
+    
+    /* Hide radio button circles */
+    [data-testid="stSidebar"] .stRadio > div {
+        gap: 0 !important;
+    }
+    
+    [data-testid="stSidebar"] .stRadio > div > label {
+        background: transparent !important;
+        border: none !important;
+        padding: 8px 0 !important;
+        cursor: pointer;
+    }
+    
+    [data-testid="stSidebar"] .stRadio > div > label:hover {
+        color: #1E8449 !important;
+    }
+    
+    [data-testid="stSidebar"] .stRadio > div > label > div:first-child {
+        display: none !important;
     }
     
     .block-container {
@@ -135,6 +147,37 @@ st.markdown("""
     
     .footer a:hover {
         text-decoration: underline;
+    }
+    
+    .sidebar-author {
+        font-size: 0.8rem;
+        color: #64748B;
+        line-height: 1.5;
+    }
+    
+    .sidebar-author a {
+        color: #1E8449;
+        text-decoration: none;
+    }
+    
+    .sidebar-author a:hover {
+        text-decoration: underline;
+    }
+    
+    .info-box {
+        background-color: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 8px;
+        padding: 1rem;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: #475569;
+    }
+    
+    .info-box-title {
+        font-weight: 600;
+        color: #1E293B;
+        margin-bottom: 0.5rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -265,7 +308,13 @@ with st.sidebar:
     st.markdown("**Ease to Mine Index (EMI)**")
     st.markdown("March 2026")
     st.markdown("")
-    st.markdown("[E2C Partners](https://www.e2cpartners.com/insights/global-bitcoin-mining-report-the-ease-to-mine-index)")
+    st.markdown("""
+    <p class="sidebar-author">
+    A report by <strong>Valentin Rousseau</strong><br>
+    <a href="https://x.com/MuadDib_Pill" target="_blank">@MuadDib_Pill</a><br><br>
+    Provided by <a href="https://www.e2cpartners.com/insights/global-bitcoin-mining-report-the-ease-to-mine-index" target="_blank">E2C Partners</a>
+    </p>
+    """, unsafe_allow_html=True)
 
 # ============================================
 # OVERVIEW PAGE
@@ -297,7 +346,7 @@ if page == "Overview":
     selected_col = score_map[score_type]
     
     # ========================================
-    # WORLD MAP - HEIGHT 720px
+    # WORLD MAP - REDUCED TO 520px
     # ========================================
     df_map = df.copy()
     df_map["ISO"] = df_map["Country"].map(ISO_CODES)
@@ -326,7 +375,7 @@ if page == "Overview":
     ))
     
     fig_map.update_layout(
-        height=720,
+        height=520,
         margin=dict(l=0, r=0, t=10, b=0),
         geo=dict(
             showframe=False,
@@ -355,7 +404,7 @@ if page == "Overview":
     st.markdown("---")
     
     # ========================================
-    # HEATMAP FIRST (swapped position)
+    # HEATMAP
     # ========================================
     st.markdown('<p class="section-title">Score Heatmap by Section</p>', unsafe_allow_html=True)
     
@@ -379,7 +428,6 @@ if page == "Overview":
         )
     ))
     
-    # Add annotations for custom text colors
     annotations = []
     for i, country in enumerate(heatmap_data.index):
         for j, section in enumerate(heatmap_labels):
@@ -413,7 +461,7 @@ if page == "Overview":
     st.markdown("---")
     
     # ========================================
-    # EMI RANKING BAR CHART SECOND (swapped position)
+    # EMI RANKING WITH TEXT SECTION
     # ========================================
     st.markdown('<p class="section-title">EMI Ranking</p>', unsafe_allow_html=True)
     
@@ -432,33 +480,55 @@ if page == "Overview":
     max_score = df_rank[rank_col].max()
     colors = [get_score_color(score, min_score, max_score) for score in df_rank[rank_col]]
     
-    fig_rank = go.Figure(go.Bar(
-        x=df_rank[rank_col],
-        y=df_rank["Country"],
-        orientation='h',
-        marker_color=colors,
-        text=df_rank[rank_col].round(2),
-        textposition='outside',
-        textfont=dict(size=11, family="Inter"),
-        name=rank_dimension
-    ))
+    # Two columns: chart + text
+    col_chart, col_text = st.columns([2, 1])
     
-    fig_rank.update_layout(
-        height=620,
-        margin=dict(l=0, r=60, t=10, b=40),
-        xaxis=dict(
-            range=[0, 1], 
-            title=dict(text=rank_dimension + " Score", font=dict(family="Inter", size=12)),
-            gridcolor='#E2E8F0', 
-            zeroline=False
-        ),
-        yaxis=dict(title="", tickfont=dict(family="Inter", size=11)),
-        plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='rgba(0,0,0,0)',
-        font=dict(family="Inter")
-    )
+    with col_chart:
+        fig_rank = go.Figure(go.Bar(
+            x=df_rank[rank_col],
+            y=df_rank["Country"],
+            orientation='h',
+            marker_color=colors,
+            text=df_rank[rank_col].round(2),
+            textposition='outside',
+            textfont=dict(size=11, family="Inter"),
+            name=rank_dimension
+        ))
+        
+        fig_rank.update_layout(
+            height=620,
+            margin=dict(l=0, r=60, t=10, b=40),
+            xaxis=dict(
+                range=[0, 1], 
+                title=dict(text=rank_dimension + " Score", font=dict(family="Inter", size=12)),
+                gridcolor='#E2E8F0', 
+                zeroline=False
+            ),
+            yaxis=dict(title="", tickfont=dict(family="Inter", size=11)),
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            font=dict(family="Inter")
+        )
+        
+        st.plotly_chart(fig_rank, use_container_width=True)
     
-    st.plotly_chart(fig_rank, use_container_width=True)
+    with col_text:
+        st.markdown("""
+        <div class="info-box">
+            <div class="info-box-title">About the Ease to Mine Index</div>
+            <p>The first edition of the <strong>Ease to Mine Index (EMI)</strong> is a composite framework designed to assess the overall attractiveness of jurisdictions for Bitcoin mining.</p>
+            <p>The index evaluates a broad set of dimensions:</p>
+            <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                <li>Legal and fiscal frameworks</li>
+                <li>Permitting and licensing conditions</li>
+                <li>Energy market structure and grid access</li>
+                <li>Climate characteristics</li>
+                <li>Tariff and import environments</li>
+            </ul>
+            <p>While mining analysis traditionally emphasizes operational metrics (power costs, hashprice), regulatory conditions are often underweighted. By integrating both perspectives, the EMI provides a more holistic assessment of mining sustainability.</p>
+            <p style="margin-top: 0.75rem;"><strong>Coverage:</strong> 18 countries spanning established mining regions (excluding China) and emerging markets such as DRC, Kenya, and Chile.</p>
+        </div>
+        """, unsafe_allow_html=True)
     
     st.markdown("---")
     
@@ -527,54 +597,68 @@ elif page == "Methodology":
     st.markdown("---")
     
     # ========================================
-    # RESPONDENTS PIE CHART
+    # RESPONDENTS PIE CHART WITH TEXT
     # ========================================
     st.markdown('<p class="section-title">Survey Respondents by Jurisdiction</p>', unsafe_allow_html=True)
     
-    df_resp = df.copy()
-    canada_resp = df_resp[df_resp["Country"].isin(["Alberta (CA)", "Quebec (CA)"])]["Respondents"].sum()
-    df_resp = df_resp[~df_resp["Country"].isin(["Alberta (CA)", "Quebec (CA)"])]
-    df_resp = pd.concat([df_resp, pd.DataFrame([{"Country": "Canada", "Respondents": canada_resp}])], ignore_index=True)
+    col_pie, col_method = st.columns([1, 1])
     
-    df_resp = df_resp[df_resp["Respondents"] > 0].sort_values("Respondents", ascending=False)
-    total_respondents = df_resp["Respondents"].sum()
+    with col_pie:
+        df_resp = df.copy()
+        canada_resp = df_resp[df_resp["Country"].isin(["Alberta (CA)", "Quebec (CA)"])]["Respondents"].sum()
+        df_resp = df_resp[~df_resp["Country"].isin(["Alberta (CA)", "Quebec (CA)"])]
+        df_resp = pd.concat([df_resp, pd.DataFrame([{"Country": "Canada", "Respondents": canada_resp}])], ignore_index=True)
+        
+        df_resp = df_resp[df_resp["Respondents"] > 0].sort_values("Respondents", ascending=False)
+        total_respondents = df_resp["Respondents"].sum()
+        
+        pie_colors = generate_gradient_colors_simple(len(df_resp), "#1E8449", "#E67E22")
+        
+        fig_pie = go.Figure(go.Pie(
+            labels=df_resp["Country"],
+            values=df_resp["Respondents"],
+            hole=0.55,
+            marker=dict(colors=pie_colors),
+            textinfo='label+value',
+            textposition='outside',
+            textfont=dict(size=10, family="Inter"),
+            hovertemplate="<b>%{label}</b><br>Respondents: %{value}<br>Share: %{percent}<extra></extra>",
+            pull=[0.02] * len(df_resp)
+        ))
+        
+        fig_pie.add_annotation(
+            text="<b>55</b><br><span style='font-size:12px'>Total<br>responses</span>",
+            x=0.5, y=0.5,
+            font=dict(size=32, color="#1E293B", family="Inter"),
+            showarrow=False
+        )
+        
+        fig_pie.update_layout(
+            height=420,
+            margin=dict(l=40, r=40, t=20, b=20),
+            showlegend=False,
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            font=dict(family="Inter")
+        )
+        
+        st.plotly_chart(fig_pie, use_container_width=True)
     
-    pie_colors = generate_gradient_colors_simple(len(df_resp), "#1E8449", "#E67E22")
-    
-    fig_pie = go.Figure(go.Pie(
-        labels=df_resp["Country"],
-        values=df_resp["Respondents"],
-        hole=0.55,
-        marker=dict(colors=pie_colors),
-        textinfo='label+value',
-        textposition='outside',
-        textfont=dict(size=10, family="Inter"),
-        hovertemplate="<b>%{label}</b><br>Respondents: %{value}<br>Share: %{percent}<extra></extra>",
-        pull=[0.02] * len(df_resp)
-    ))
-    
-    fig_pie.add_annotation(
-        text=f"<b>{int(total_respondents)}</b><br><span style='font-size:14px'>Total</span>",
-        x=0.5, y=0.5,
-        font=dict(size=40, color="#1E293B", family="Inter"),
-        showarrow=False
-    )
-    
-    fig_pie.update_layout(
-        height=450,
-        margin=dict(l=40, r=40, t=20, b=20),
-        showlegend=False,
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(family="Inter")
-    )
-    
-    st.plotly_chart(fig_pie, use_container_width=True)
+    with col_method:
+        st.markdown("""
+        <div class="info-box">
+            <div class="info-box-title">Survey Methodology</div>
+            <p>Between December 2025 and February 2026, Hashlabs conducted an online survey targeting stakeholders within the Bitcoin mining ecosystem, including industrial miners, mining associations, industry journalists, and other experts.</p>
+            <p style="margin-top: 0.75rem;"><strong>Survey scope:</strong> 5 sections covering legal, fiscal, energy & electricity grids, permitting & licensing, and tariffs & customs procedures. A total of 33 questions combined quantitative metrics with qualitative assessments.</p>
+            <p style="margin-top: 0.75rem;"><strong>Data validation:</strong> Responses were reviewed for internal consistency and potential reporting bias. Follow-up semi-structured interviews were conducted with selected respondents to validate findings and clarify country-specific conditions.</p>
+            <p style="margin-top: 0.75rem; padding: 0.5rem; background-color: #FEF3C7; border-radius: 4px; font-size: 0.85rem;"><strong>Note:</strong> The Climate Operating Conditions section is beyond survey scope and based on internal analysis.</p>
+        </div>
+        """, unsafe_allow_html=True)
     
     st.markdown("---")
     
     # ========================================
-    # WEIGHTING STACKED BAR CHART - FIXED ANNOTATION
+    # WEIGHTING STACKED BAR CHART - LARGER
     # ========================================
     st.markdown('<p class="section-title">Index Weighting by Dimension</p>', unsafe_allow_html=True)
     
@@ -604,15 +688,14 @@ elif page == "Methodology":
             text=[text_inside],
             textposition='inside',
             insidetextanchor='middle',
-            textfont=dict(size=11, family="Inter", color=text_color),
+            textfont=dict(size=13, family="Inter", color=text_color),
             hovertemplate=f"<b>{name}</b><br>Weight: {weight}%<extra></extra>"
         ))
     
-    # Fixed annotation with BLACK text color
     fig_weights.add_annotation(
         x=97.5,
         y="EMI Index",
-        yshift=55,
+        yshift=70,
         text="<b>Operating Conditions: 5%</b>",
         showarrow=True,
         arrowhead=2,
@@ -620,18 +703,18 @@ elif page == "Methodology":
         arrowwidth=2,
         arrowcolor="#922B21",
         ax=0,
-        ay=-45,
-        font=dict(size=12, family="Inter", color="#1E293B"),
+        ay=-55,
+        font=dict(size=13, family="Inter", color="#1E293B"),
         bgcolor="#FFFFFF",
         bordercolor="#922B21",
         borderwidth=2,
-        borderpad=6
+        borderpad=8
     )
     
     fig_weights.update_layout(
         barmode='stack',
-        height=150,
-        margin=dict(l=0, r=0, t=70, b=10),
+        height=180,
+        margin=dict(l=0, r=0, t=90, b=20),
         xaxis=dict(
             title="",
             showticklabels=False,
@@ -674,11 +757,12 @@ elif page == "Methodology":
     )
 
 # ============================================
-# FOOTER
+# FOOTER - BOTH PAGES
 # ============================================
 st.markdown("""
 <div class="footer">
     <p><strong>Ease to Mine Index (EMI)</strong> - March 2026</p>
+    <p>Report Author: <strong>Valentin Rousseau</strong> - <a href="https://x.com/MuadDib_Pill" target="_blank">@MuadDib_Pill</a></p>
     <p>Research by <a href="https://www.e2cpartners.com/insights/global-bitcoin-mining-report-the-ease-to-mine-index" target="_blank">E2C Partners</a> | 
     Survey of 48 industry practitioners across 19 jurisdictions</p>
 </div>
