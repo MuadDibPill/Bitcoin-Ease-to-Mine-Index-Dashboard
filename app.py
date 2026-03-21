@@ -452,7 +452,7 @@ if page == "Overview":
         ))
         
         fig_map.update_layout(
-            height=540,
+            height=520,
             margin=dict(l=0, r=0, t=5, b=0),
             geo=dict(
                 showframe=False,
@@ -464,10 +464,8 @@ if page == "Overview":
                 oceancolor="#FFFFFF",
                 showcountries=True,
                 countrycolor="#94A3B8",
-                projection_type='equirectangular',
-                bgcolor='rgba(0,0,0,0)',
-                lonaxis=dict(range=[-180, 180]),
-                lataxis=dict(range=[-55, 85])
+                projection_type='natural earth',
+                bgcolor='rgba(0,0,0,0)'
             ),
             paper_bgcolor='rgba(0,0,0,0)',
             font=dict(family="Inter")
@@ -592,7 +590,6 @@ if page == "Overview":
                 <li>Climate characteristics</li>
                 <li>Tariff and import environments</li>
             </ul>
-            <p style="margin-top: 0.75rem;">While mining analysis traditionally emphasizes operational metrics (power costs, hashprice), regulatory conditions are often underweighted. By integrating both perspectives, the EMI provides a more holistic assessment of mining sustainability.</p>
             <p style="margin-top: 0.75rem;"><strong>Coverage:</strong> 18 countries spanning established and emerging mining regions — 19 jurisdictions (where Texas serves as a proxy of U.S., and Alberta and Québec for Canada).</p>
         </div>
         """, unsafe_allow_html=True)
@@ -717,7 +714,7 @@ elif page == "Methodology":
         <div class="methodology-card">
             <div class="methodology-card-value">55</div>
             <div class="methodology-card-title">Responses</div>
-            <div class="methodology-card-desc">Total survey submissions</div>
+            <div class="methodology-card-desc">Total survey submissions<br>&nbsp;</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -735,7 +732,7 @@ elif page == "Methodology":
         <div class="methodology-card">
             <div class="methodology-card-value">33</div>
             <div class="methodology-card-title">Questions</div>
-            <div class="methodology-card-desc">Across 5 survey sections</div>
+            <div class="methodology-card-desc">Across 5 survey sections<br>&nbsp;</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -804,7 +801,7 @@ elif page == "Methodology":
         )
         
         fig_pie_weight.update_layout(
-            height=340,
+            height=300,
             margin=dict(l=20, r=140, t=20, b=20),
             showlegend=True,
             legend=dict(
@@ -880,7 +877,7 @@ elif page == "Methodology":
         ))
         
         fig_resp_bar.update_layout(
-            height=450,
+            height=520,
             margin=dict(l=0, r=60, t=20, b=40),
             xaxis=dict(title="Number of Respondents", gridcolor='#E2E8F0'),
             yaxis=dict(title="", autorange="reversed", tickfont=dict(family="Inter", size=12)),
