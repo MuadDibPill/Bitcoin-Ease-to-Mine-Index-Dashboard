@@ -452,7 +452,7 @@ if page == "Overview":
         ))
         
         fig_map.update_layout(
-            height=480,
+            height=540,
             margin=dict(l=0, r=0, t=5, b=0),
             geo=dict(
                 showframe=False,
@@ -508,9 +508,10 @@ if page == "Overview":
         st.markdown("")
         st.markdown('<p class="section-title-small" style="margin-top: 0.5rem;">Bottom 3 Jurisdictions</p>', unsafe_allow_html=True)
         
-        bottom_3 = df_sorted.tail(3).iloc[::-1]
+        # Bottom 3 in order 17, 18, 19 (from best to worst among bottom)
+        bottom_3 = df_sorted.tail(3)
         for idx, (i, row) in enumerate(bottom_3.iterrows()):
-            rank = 19 - idx
+            rank = 17 + idx
             score_val = row[selected_col_main]
             color = get_score_color(score_val, min_score_dim, max_score_dim)
             st.markdown(f"""
