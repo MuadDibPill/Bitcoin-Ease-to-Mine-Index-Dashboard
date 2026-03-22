@@ -18,288 +18,65 @@ st.set_page_config(
 # COLOR PALETTE
 # ============================================
 COLOR_SCALE = [
-    [0.00, '#922B21'],
-    [0.07, '#C0392B'],
-    [0.14, '#CD6155'],
-    [0.21, '#DC7633'],
-    [0.28, '#E67E22'],
-    [0.35, '#EB984E'],
-    [0.42, '#F5B041'],
-    [0.50, '#F4D03F'],
-    [0.57, '#F7DC6F'],
-    [0.64, '#A9DFBF'],
-    [0.71, '#7DCEA0'],
-    [0.78, '#52BE80'],
-    [0.85, '#28B463'],
-    [0.92, '#239B56'],
-    [1.00, '#1E8449']
+    [0.00, '#922B21'], [0.07, '#C0392B'], [0.14, '#CD6155'],
+    [0.21, '#DC7633'], [0.28, '#E67E22'], [0.35, '#EB984E'],
+    [0.42, '#F5B041'], [0.50, '#F4D03F'], [0.57, '#F7DC6F'],
+    [0.64, '#A9DFBF'], [0.71, '#7DCEA0'], [0.78, '#52BE80'],
+    [0.85, '#28B463'], [0.92, '#239B56'], [1.00, '#1E8449']
 ]
 
 # ============================================
-# CUSTOM CSS - Using Forma DJR-like font (Barlow as fallback)
+# CUSTOM CSS
 # ============================================
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&display=swap');
     
-    * {
-        font-family: 'Barlow', 'Forma DJR', -apple-system, BlinkMacSystemFont, sans-serif !important;
-    }
+    * { font-family: 'Barlow', 'Forma DJR', -apple-system, BlinkMacSystemFont, sans-serif !important; }
+    .stApp { font-family: 'Barlow', 'Forma DJR', sans-serif; background-color: #FFFFFF; }
     
-    .stApp {
-        font-family: 'Barlow', 'Forma DJR', -apple-system, BlinkMacSystemFont, sans-serif;
-        background-color: #FFFFFF;
-    }
+    [data-testid="stSidebar"] { width: 270px !important; min-width: 270px !important; background-color: #FAFAFA; border-right: 1px solid #E2E8F0; }
+    [data-testid="stSidebar"] > div:first-child { width: 270px !important; }
+    [data-testid="stSidebar"] .stRadio > div { gap: 0 !important; }
+    [data-testid="stSidebar"] .stRadio > div > label { background: transparent !important; border: none !important; padding: 8px 0 !important; cursor: pointer; }
+    [data-testid="stSidebar"] .stRadio > div > label:hover { color: #1E8449 !important; }
+    [data-testid="stSidebar"] .stRadio > div > label > div:first-child { display: none !important; }
     
-    [data-testid="stSidebar"] {
-        width: 270px !important;
-        min-width: 270px !important;
-        background-color: #FAFAFA;
-        border-right: 1px solid #E2E8F0;
-    }
+    .block-container { padding-top: 2.5rem !important; }
     
-    [data-testid="stSidebar"] > div:first-child {
-        width: 270px !important;
-    }
+    h1 { font-family: 'Barlow', sans-serif !important; font-weight: 700 !important; font-size: 2rem !important; color: #1E293B !important; margin-top: 0 !important; }
+    h2, h3 { font-family: 'Barlow', sans-serif !important; font-weight: 600 !important; color: #1E293B !important; }
     
-    [data-testid="stSidebar"] .stRadio > div {
-        gap: 0 !important;
-    }
+    .section-title { font-family: 'Barlow', sans-serif; font-size: 1.1rem; font-weight: 600; color: #1E293B; margin-bottom: 1rem; }
+    .section-title-small { font-family: 'Barlow', sans-serif; font-size: 0.9rem; font-weight: 600; color: #1E293B; margin-bottom: 0.6rem; }
     
-    [data-testid="stSidebar"] .stRadio > div > label {
-        background: transparent !important;
-        border: none !important;
-        padding: 8px 0 !important;
-        cursor: pointer;
-    }
+    [data-testid="stSelectbox"] > div > div { border: 2px solid #E2E8F0 !important; border-radius: 8px !important; background-color: #F8FAFC !important; font-size: 0.85rem !important; }
+    [data-testid="stSelectbox"] > div > div:hover { border-color: #1E8449 !important; }
     
-    [data-testid="stSidebar"] .stRadio > div > label:hover {
-        color: #1E8449 !important;
-    }
+    .footer { font-family: 'Barlow', sans-serif; text-align: center; color: #64748B; padding: 2rem; font-size: 0.85rem; border-top: 1px solid #E2E8F0; margin-top: 2rem; }
+    .footer a { color: #1E8449; text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
     
-    [data-testid="stSidebar"] .stRadio > div > label > div:first-child {
-        display: none !important;
-    }
+    .sidebar-author { font-size: 0.8rem; color: #64748B; line-height: 1.5; }
+    .sidebar-author a { color: #1E8449; text-decoration: none; }
     
-    .block-container {
-        padding-top: 2.5rem !important;
-    }
+    .info-box { background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 1rem; font-size: 0.9rem; line-height: 1.6; color: #475569; }
+    .info-box-title { font-weight: 600; color: #1E293B; margin-bottom: 0.5rem; }
+    .method-box-title { font-weight: 600; color: #1E293B; margin-bottom: 0.5rem; font-size: 1rem; }
     
-    h1 {
-        font-family: 'Barlow', 'Forma DJR', sans-serif !important;
-        font-weight: 700 !important;
-        font-size: 2rem !important;
-        color: #1E293B !important;
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-    }
+    .subtitle-text { color: #64748B; font-size: 1rem; margin-bottom: 1.5rem; }
     
-    h2, h3 {
-        font-family: 'Barlow', 'Forma DJR', sans-serif !important;
-        font-weight: 600 !important;
-        color: #1E293B !important;
-    }
+    .methodology-card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.5rem; text-align: center; min-height: 140px; display: flex; flex-direction: column; justify-content: center; }
+    .methodology-card-value { font-size: 2rem; font-weight: 700; color: #1E293B; margin-bottom: 0.25rem; }
+    .methodology-card-title { font-weight: 600; color: #1E293B; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .methodology-card-desc { font-size: 0.8rem; color: #64748B; min-height: 2.4em; }
     
-    .section-title {
-        font-family: 'Barlow', 'Forma DJR', sans-serif;
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #1E293B;
-        margin-bottom: 1rem;
-    }
+    .timeline-item { border-left: 3px solid #002060; padding-left: 1rem; margin-bottom: 1rem; }
+    .timeline-date { font-size: 0.8rem; color: #002060; font-weight: 600; }
+    .timeline-title { font-weight: 600; color: #1E293B; margin: 0.25rem 0; }
+    .timeline-desc { font-size: 0.85rem; color: #64748B; }
     
-    .section-title-small {
-        font-family: 'Barlow', 'Forma DJR', sans-serif;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #1E293B;
-        margin-bottom: 0.6rem;
-    }
-    
-    .map-title {
-        font-family: 'Barlow', 'Forma DJR', sans-serif;
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #1E293B;
-        margin-bottom: 0.5rem;
-    }
-    
-    [data-testid="stSelectbox"] > div > div {
-        border: 2px solid #E2E8F0 !important;
-        border-radius: 8px !important;
-        background-color: #F8FAFC !important;
-        font-size: 0.85rem !important;
-    }
-    
-    [data-testid="stSelectbox"] > div > div:hover {
-        border-color: #1E8449 !important;
-    }
-    
-    [data-testid="stSelectbox"] > div > div > div {
-        font-size: 0.85rem !important;
-    }
-    
-    [data-testid="stMetricValue"] {
-        font-family: 'Barlow', 'Forma DJR', sans-serif !important;
-        font-weight: 700 !important;
-        font-size: 1.6rem !important;
-        color: #1E293B !important;
-    }
-    
-    [data-testid="stMetricLabel"] {
-        font-family: 'Barlow', 'Forma DJR', sans-serif !important;
-        font-weight: 500 !important;
-        font-size: 0.75rem !important;
-        color: #64748B !important;
-        text-transform: uppercase !important;
-    }
-    
-    .footer {
-        font-family: 'Barlow', 'Forma DJR', sans-serif;
-        text-align: center;
-        color: #64748B;
-        padding: 2rem;
-        font-size: 0.85rem;
-        border-top: 1px solid #E2E8F0;
-        margin-top: 2rem;
-    }
-    
-    .footer a {
-        color: #1E8449;
-        text-decoration: none;
-    }
-    
-    .footer a:hover {
-        text-decoration: underline;
-    }
-    
-    .sidebar-author {
-        font-size: 0.8rem;
-        color: #64748B;
-        line-height: 1.5;
-    }
-    
-    .sidebar-author a {
-        color: #1E8449;
-        text-decoration: none;
-    }
-    
-    .sidebar-author a:hover {
-        text-decoration: underline;
-    }
-    
-    .info-box {
-        background-color: #F8FAFC;
-        border: 1px solid #E2E8F0;
-        border-radius: 8px;
-        padding: 1rem;
-        font-size: 0.9rem;
-        line-height: 1.6;
-        color: #475569;
-    }
-    
-    .info-box-title {
-        font-weight: 600;
-        color: #1E293B;
-        margin-bottom: 0.5rem;
-    }
-    
-    .method-box-title {
-        font-weight: 600;
-        color: #1E293B;
-        margin-bottom: 0.5rem;
-        font-size: 1rem;
-    }
-    
-    .subtitle-text {
-        color: #64748B;
-        font-size: 1rem;
-        margin-bottom: 1.5rem;
-    }
-    
-    .methodology-card {
-        background: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-radius: 12px;
-        padding: 1.5rem;
-        text-align: center;
-        min-height: 140px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    
-    .methodology-card-value {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #1E293B;
-        margin-bottom: 0.25rem;
-    }
-    
-    .methodology-card-title {
-        font-weight: 600;
-        color: #1E293B;
-        font-size: 0.95rem;
-        margin-bottom: 0.25rem;
-    }
-    
-    .methodology-card-desc {
-        font-size: 0.8rem;
-        color: #64748B;
-        min-height: 2.4em;
-    }
-    
-    .timeline-item {
-        border-left: 3px solid #002060;
-        padding-left: 1rem;
-        margin-bottom: 1rem;
-    }
-    
-    .timeline-date {
-        font-size: 0.8rem;
-        color: #002060;
-        font-weight: 600;
-    }
-    
-    .timeline-title {
-        font-weight: 600;
-        color: #1E293B;
-        margin: 0.25rem 0;
-    }
-    
-    .timeline-desc {
-        font-size: 0.85rem;
-        color: #64748B;
-    }
-    
-    .country-card {
-        background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
-        border: 1px solid #E2E8F0;
-        border-radius: 12px;
-        padding: 1.25rem;
-        margin-bottom: 1rem;
-    }
-    
-    .country-score-big {
-        font-size: 3rem;
-        font-weight: 700;
-        line-height: 1;
-    }
-    
-    .country-label {
-        font-size: 0.85rem;
-        color: #64748B;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .comparison-vs {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #64748B;
-        text-align: center;
-        padding: 1rem;
-    }
+    .comparison-vs { font-size: 1.5rem; font-weight: 700; color: #64748B; text-align: center; padding: 1rem; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -308,13 +85,12 @@ st.markdown("""
 # ============================================
 @st.cache_data
 def load_data():
-    df = pd.read_csv("data/emi_data.csv")
-    return df
+    return pd.read_csv("data/emi_data.csv")
 
 df = load_data()
 
 # ============================================
-# ISO CODES FOR MAP
+# ISO CODES & COUNTRY SUMMARIES
 # ============================================
 ISO_CODES = {
     "Oman": "OMN", "UAE": "ARE", "Iceland": "ISL", "Argentina": "ARG",
@@ -325,9 +101,6 @@ ISO_CODES = {
     "Chile": "CHL", "Sweden": "SWE", "Australia": "AUS"
 }
 
-# ============================================
-# COUNTRY SUMMARIES
-# ============================================
 COUNTRY_SUMMARIES = {
     "Oman": "Oman leads the EMI ranking with an extremely favorable regulatory and fiscal framework designed to incentivize mining data centers, including direct state participation and free economic zones offering tax advantages. Grid access presents moderate barriers with connection lead times of 6-12 months and electricity costs of $38.5-$45.0/MWh.",
     "UAE": "UAE ranks second with highly favorable conditions. The country offers substantial fiscal incentives through free zones, no electricity tax, and ability to shift profit centers abroad. Construction permits are secured within 4 months, and zoning restrictions have very low impact on land availability.",
@@ -382,35 +155,23 @@ def get_text_color_for_score(score):
     return "black" if 0.37 <= score <= 0.64 else "white"
 
 # ============================================
-# SIDEBAR NAVIGATION
+# SIDEBAR
 # ============================================
 with st.sidebar:
     st.markdown("### Navigation")
-    page = st.radio("", ["Overview", "Overview (Minimal)", "Country", "Methodology"], label_visibility="collapsed")
+    page = st.radio("", ["Overview", "Jurisdiction", "Methodology"], label_visibility="collapsed")
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
     st.markdown("March 2026")
     st.markdown("")
-    st.markdown("""
-    <p class="sidebar-author">
-    A report by <strong>Valentin Rousseau</strong><br>
+    st.markdown("""<p class="sidebar-author">A report by <strong>Valentin Rousseau</strong><br>
     <a href="https://x.com/MuadDib_Pill" target="_blank">@MuadDib_Pill</a><br><br>
-    Provided by <a href="https://www.e2cpartners.com/insights/global-bitcoin-mining-report-the-ease-to-mine-index" target="_blank">E2C Partners</a>
-    </p>
-    """, unsafe_allow_html=True)
+    Provided by <a href="https://www.e2cpartners.com/insights/global-bitcoin-mining-report-the-ease-to-mine-index" target="_blank">E2C Partners</a></p>""", unsafe_allow_html=True)
 
-# ============================================
-# SCORE MAP FOR FILTERS
-# ============================================
 score_map = {
-    "Overall Index": "Index_Score",
-    "Fiscal": "Fiscal",
-    "Permits & Licensing": "Permit_Licensing",
-    "Legal": "Legal",
-    "Energy & Grid": "Energy_Grid",
-    "Customs & Tariffs": "Tariff_Import",
-    "Operating Conditions": "Operating_Conditions"
+    "Overall Index": "Index_Score", "Fiscal": "Fiscal", "Permits & Licensing": "Permit_Licensing",
+    "Legal": "Legal", "Energy & Grid": "Energy_Grid", "Customs & Tariffs": "Tariff_Import", "Operating Conditions": "Operating_Conditions"
 }
 
 # ============================================
@@ -420,85 +181,81 @@ if page == "Overview":
     st.markdown("# Ease to Mine Index Dashboard")
     st.markdown('<p class="subtitle-text">Comprehensive analysis of Bitcoin mining regulatory and operating conditions across 19 jurisdictions</p>', unsafe_allow_html=True)
     
-    col_filter_main, col_spacer_main = st.columns([1, 3])
-    with col_filter_main:
-        score_type_main = st.selectbox("Select category", list(score_map.keys()), key="score_filter_main")
+    col_filter, _ = st.columns([1, 3])
+    with col_filter:
+        score_type = st.selectbox("Select category", list(score_map.keys()), key="score_filter_main")
     
-    selected_col_main = score_map[score_type_main]
-    df_sorted = df.sort_values(selected_col_main, ascending=False)
+    selected_col = score_map[score_type]
+    df_sorted = df.sort_values(selected_col, ascending=False)
     
     col_map, col_top = st.columns([3, 1])
     
     with col_map:
         st.markdown('<p class="section-title">Ease to Mine Index Map</p>', unsafe_allow_html=True)
-        
         df_map = df.copy()
         df_map["ISO"] = df_map["Country"].map(ISO_CODES)
-        df_map_agg = df_map.groupby("ISO").agg({selected_col_main: "mean", "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]}).reset_index()
+        df_map_agg = df_map.groupby("ISO").agg({selected_col: "mean", "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]}).reset_index()
         df_map_agg.columns = ["ISO", "Score", "Country"]
         
         fig_map = go.Figure(go.Choropleth(
             locations=df_map_agg["ISO"], z=df_map_agg["Score"], text=df_map_agg["Country"],
-            colorscale=COLOR_SCALE, autocolorscale=False,
-            marker_line_color='#4B5563', marker_line_width=1,
+            colorscale=COLOR_SCALE, autocolorscale=False, marker_line_color='#4B5563', marker_line_width=1,
             colorbar=dict(title=dict(text="Score", side="right", font=dict(family="Barlow", size=11)), tickfont=dict(family="Barlow", size=10), len=0.8, thickness=12),
-            hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"
-        ))
+            hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"))
         fig_map.update_layout(height=520, margin=dict(l=0, r=0, t=5, b=0),
             geo=dict(showframe=False, showcoastlines=True, coastlinecolor="#94A3B8", showland=True, landcolor="#E2E8F0",
-                showocean=True, oceancolor="#FFFFFF", showcountries=True, countrycolor="#94A3B8",
-                projection_type='natural earth', bgcolor='rgba(0,0,0,0)'),
+                showocean=True, oceancolor="#FFFFFF", showcountries=True, countrycolor="#94A3B8", projection_type='natural earth', bgcolor='rgba(0,0,0,0)'),
             paper_bgcolor='rgba(0,0,0,0)', font=dict(family="Barlow"))
         st.plotly_chart(fig_map, use_container_width=True)
     
     with col_top:
         st.markdown('<p class="section-title-small">Top 3 Jurisdictions</p>', unsafe_allow_html=True)
-        min_score_dim, max_score_dim = df[selected_col_main].min(), df[selected_col_main].max()
+        min_s, max_s = df[selected_col].min(), df[selected_col].max()
         
         for idx, (i, row) in enumerate(df_sorted.head(3).iterrows()):
-            rank, score_val = idx + 1, row[selected_col_main]
-            color = get_score_color(score_val, min_score_dim, max_score_dim)
+            rank, score = idx + 1, row[selected_col]
+            color = get_score_color(score, min_s, max_s)
             st.markdown(f"""<div style="background: linear-gradient(90deg, {color}22 0%, transparent 100%); border-left: 4px solid {color}; padding: 10px 12px; margin-bottom: 8px; border-radius: 0 8px 8px 0;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div><span style="font-weight: 700; color: #1E293B; font-size: 0.9rem;">#{rank} {row['Country']}</span><span style="color: #64748B; font-size: 0.9rem; margin-left: 6px;">{row['Region']}</span></div>
-                    <div style="font-weight: 700; font-size: 1rem; color: {color};">{score_val:.2f}</div>
+                    <div style="font-weight: 700; font-size: 1rem; color: {color};">{score:.2f}</div>
                 </div>
-                <div style="font-size: 0.7rem; color: #64748B; margin-top: 2px;">Hashrate: {row['Hashrate_Q1_26']:.1f} EH/s</div>
+                <div style="font-size: 0.7rem; color: #64748B; margin-top: 2px;">Hashrate Q1-26: {row['Hashrate_Q1_26']:.1f} EH/s</div>
             </div>""", unsafe_allow_html=True)
         
         st.markdown("")
         st.markdown('<p class="section-title-small" style="margin-top: 0.5rem;">Bottom 3 Jurisdictions</p>', unsafe_allow_html=True)
         
         for idx, (i, row) in enumerate(df_sorted.tail(3).iterrows()):
-            rank, score_val = 17 + idx, row[selected_col_main]
-            color = get_score_color(score_val, min_score_dim, max_score_dim)
+            rank, score = 17 + idx, row[selected_col]
+            color = get_score_color(score, min_s, max_s)
             st.markdown(f"""<div style="background: linear-gradient(90deg, {color}22 0%, transparent 100%); border-left: 4px solid {color}; padding: 10px 12px; margin-bottom: 8px; border-radius: 0 8px 8px 0;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div><span style="font-weight: 700; color: #1E293B; font-size: 0.9rem;">#{rank} {row['Country']}</span><span style="color: #64748B; font-size: 0.9rem; margin-left: 6px;">{row['Region']}</span></div>
-                    <div style="font-weight: 700; font-size: 1rem; color: {color};">{score_val:.2f}</div>
+                    <div style="font-weight: 700; font-size: 1rem; color: {color};">{score:.2f}</div>
                 </div>
-                <div style="font-size: 0.7rem; color: #64748B; margin-top: 2px;">Hashrate: {row['Hashrate_Q1_26']:.1f} EH/s</div>
+                <div style="font-size: 0.7rem; color: #64748B; margin-top: 2px;">Hashrate Q1-26: {row['Hashrate_Q1_26']:.1f} EH/s</div>
             </div>""", unsafe_allow_html=True)
     
     st.markdown("---")
     
     # EMI Ranking
     st.markdown('<p class="section-title">EMI Ranking</p>', unsafe_allow_html=True)
-    col_rank_filter, _ = st.columns([1, 3])
-    with col_rank_filter:
-        rank_dimension = st.selectbox("Select category", list(score_map.keys()), key="rank_filter")
+    col_rf, _ = st.columns([1, 3])
+    with col_rf:
+        rank_dim = st.selectbox("Select category", list(score_map.keys()), key="rank_filter")
     
-    rank_col = score_map[rank_dimension]
+    rank_col = score_map[rank_dim]
     df_rank = df.sort_values(rank_col, ascending=True).copy()
-    min_score_r, max_score_r = df_rank[rank_col].min(), df_rank[rank_col].max()
-    colors_r = [get_score_color(s, min_score_r, max_score_r) for s in df_rank[rank_col]]
+    min_r, max_r = df_rank[rank_col].min(), df_rank[rank_col].max()
+    colors_r = [get_score_color(s, min_r, max_r) for s in df_rank[rank_col]]
     
     col_chart, col_text = st.columns([2, 1])
     with col_chart:
         fig_rank = go.Figure(go.Bar(x=df_rank[rank_col], y=df_rank["Country"], orientation='h', marker_color=colors_r,
             text=df_rank[rank_col].round(2), textposition='outside', textfont=dict(size=13, family="Barlow")))
         fig_rank.update_layout(height=560, margin=dict(l=0, r=60, t=10, b=40),
-            xaxis=dict(range=[0, 1], title=dict(text=rank_dimension + " Score", font=dict(family="Barlow", size=12)), gridcolor='#E2E8F0', zeroline=False),
+            xaxis=dict(range=[0, 1], title=dict(text=rank_dim + " Score", font=dict(family="Barlow", size=12)), gridcolor='#E2E8F0', zeroline=False),
             yaxis=dict(title="", tickfont=dict(family="Barlow", size=13)), plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(family="Barlow"))
         st.plotly_chart(fig_rank, use_container_width=True)
     
@@ -524,7 +281,6 @@ if page == "Overview":
     fig_heat = go.Figure(go.Heatmap(z=heatmap_data.values, x=heatmap_labels, y=heatmap_data.index, colorscale=COLOR_SCALE,
         hovertemplate="Country: %{y}<br>Section: %{x}<br>Score: %{z:.2f}<extra></extra>", showscale=True,
         colorbar=dict(title=dict(text="Score", side="right", font=dict(family="Barlow")), tickfont=dict(family="Barlow"))))
-    
     annotations = [dict(x=heatmap_labels[j], y=heatmap_data.index[i], text=f"{heatmap_data.iloc[i, j]:.2f}", showarrow=False,
         font=dict(color=get_text_color_for_score(heatmap_data.iloc[i, j]), size=12, family="Barlow"))
         for i in range(len(heatmap_data.index)) for j in range(len(heatmap_labels))]
@@ -550,46 +306,18 @@ if page == "Overview":
     st.download_button(label="Download Data (CSV)", data=csv, file_name="emi_data_export.csv", mime="text/csv")
 
 # ============================================
-# OVERVIEW MINIMAL PAGE
+# JURISDICTION PAGE
 # ============================================
-elif page == "Overview (Minimal)":
-    st.markdown("# Ease to Mine Index")
-    st.markdown("")
-    
-    df_sorted = df.sort_values("Index_Score", ascending=False)
-    
-    # Simple ranking list
-    for idx, (i, row) in enumerate(df_sorted.iterrows()):
-        rank = idx + 1
-        score = row["Index_Score"]
-        color = get_score_color(score, df["Index_Score"].min(), df["Index_Score"].max())
-        
-        col1, col2, col3 = st.columns([0.5, 3, 1])
-        with col1:
-            st.markdown(f"<p style='font-size: 1.2rem; font-weight: 700; color: #64748B; margin: 0;'>#{rank}</p>", unsafe_allow_html=True)
-        with col2:
-            st.markdown(f"<p style='font-size: 1.1rem; font-weight: 600; color: #1E293B; margin: 0;'>{row['Country']} <span style='color: #94A3B8; font-weight: 400;'>• {row['Region']}</span></p>", unsafe_allow_html=True)
-        with col3:
-            st.markdown(f"<p style='font-size: 1.3rem; font-weight: 700; color: {color}; margin: 0; text-align: right;'>{score:.2f}</p>", unsafe_allow_html=True)
-        
-        if rank < 19:
-            st.markdown("<hr style='margin: 0.5rem 0; border: none; border-top: 1px solid #E2E8F0;'>", unsafe_allow_html=True)
-
-# ============================================
-# COUNTRY PAGE
-# ============================================
-elif page == "Country":
-    st.markdown("# Country Analysis")
+elif page == "Jurisdiction":
+    st.markdown("# Jurisdiction Analysis")
     st.markdown('<p class="subtitle-text">Detailed breakdown by jurisdiction</p>', unsafe_allow_html=True)
     
-    # Country selector
-    col_country, col_spacer = st.columns([1, 2])
+    col_country, _ = st.columns([1, 2])
     with col_country:
-        selected_country = st.selectbox("Select country", df["Country"].tolist(), key="country_select")
+        selected_country = st.selectbox("Select jurisdiction", df["Country"].tolist(), key="country_select")
     
     country_data = df[df["Country"] == selected_country].iloc[0]
     
-    # Score cards
     st.markdown("---")
     st.markdown('<p class="section-title">Score Overview</p>', unsafe_allow_html=True)
     
@@ -610,25 +338,23 @@ elif page == "Country":
     
     st.markdown("---")
     
-    # Radar chart + Summary
     col_radar, col_summary = st.columns([1, 1])
     
     with col_radar:
         st.markdown('<p class="section-title">Dimension Profile</p>', unsafe_allow_html=True)
-        
         categories = ['Fiscal', 'Permits', 'Legal', 'Energy', 'Tariffs', 'Climate']
         values = [country_data["Fiscal"], country_data["Permit_Licensing"], country_data["Legal"], 
                   country_data["Energy_Grid"], country_data["Tariff_Import"], country_data["Operating_Conditions"]]
         
         fig_radar = go.Figure(go.Scatterpolar(r=values + [values[0]], theta=categories + [categories[0]], fill='toself',
-            fillcolor='rgba(30, 132, 73, 0.2)', line=dict(color='#1E8449', width=2), name=selected_country))
+            fillcolor='rgba(13, 111, 255, 0.2)', line=dict(color='#0D6FFF', width=2), name=selected_country))
         fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 1], tickfont=dict(size=10), gridcolor='#E2E8F0'),
             angularaxis=dict(tickfont=dict(size=12, family="Barlow"))), showlegend=False, height=350, margin=dict(l=60, r=60, t=30, b=30),
             paper_bgcolor='rgba(0,0,0,0)', font=dict(family="Barlow"))
         st.plotly_chart(fig_radar, use_container_width=True)
     
     with col_summary:
-        st.markdown('<p class="section-title">Country Summary</p>', unsafe_allow_html=True)
+        st.markdown('<p class="section-title">Jurisdiction Summary</p>', unsafe_allow_html=True)
         summary = COUNTRY_SUMMARIES.get(selected_country, "Detailed analysis available in the full report.")
         st.markdown(f"""<div class="info-box"><p>{summary}</p>
             <p style="margin-top: 1rem;"><strong>Hashrate Q1-26:</strong> {country_data['Hashrate_Q1_26']:.1f} EH/s</p>
@@ -637,35 +363,31 @@ elif page == "Country":
     
     st.markdown("---")
     
-    # Comparison Section
-    st.markdown('<p class="section-title">Country Comparison</p>', unsafe_allow_html=True)
+    # Comparison
+    st.markdown('<p class="section-title">Jurisdiction Comparison</p>', unsafe_allow_html=True)
     
     col_c1, col_vs, col_c2 = st.columns([2, 1, 2])
-    
     with col_c1:
-        country1 = st.selectbox("Country 1", df["Country"].tolist(), index=0, key="compare1")
+        country1 = st.selectbox("Jurisdiction 1", df["Country"].tolist(), index=0, key="compare1")
     with col_vs:
         st.markdown('<div class="comparison-vs">VS</div>', unsafe_allow_html=True)
     with col_c2:
-        country2 = st.selectbox("Country 2", df["Country"].tolist(), index=1, key="compare2")
+        country2 = st.selectbox("Jurisdiction 2", df["Country"].tolist(), index=1, key="compare2")
     
     c1_data, c2_data = df[df["Country"] == country1].iloc[0], df[df["Country"] == country2].iloc[0]
     
-    # Comparison bar chart
     compare_dims = ["Index_Score", "Fiscal", "Permit_Licensing", "Legal", "Energy_Grid", "Tariff_Import", "Operating_Conditions"]
     compare_labels = ["Overall", "Fiscal", "Permits", "Legal", "Energy", "Tariffs", "Climate"]
     
     fig_compare = go.Figure()
-    fig_compare.add_trace(go.Bar(name=country1, x=compare_labels, y=[c1_data[d] for d in compare_dims], marker_color='#1E8449'))
-    fig_compare.add_trace(go.Bar(name=country2, x=compare_labels, y=[c2_data[d] for d in compare_dims], marker_color='#E67E22'))
+    fig_compare.add_trace(go.Bar(name=country1, x=compare_labels, y=[c1_data[d] for d in compare_dims], marker_color='#6287F0'))
+    fig_compare.add_trace(go.Bar(name=country2, x=compare_labels, y=[c2_data[d] for d in compare_dims], marker_color='#1D0DED'))
     fig_compare.update_layout(barmode='group', height=350, margin=dict(l=0, r=0, t=30, b=40),
         yaxis=dict(range=[0, 1], title="Score", gridcolor='#E2E8F0'),
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
         plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(family="Barlow"))
     st.plotly_chart(fig_compare, use_container_width=True)
     
-    # Comparison table
-    st.markdown("")
     comp_df = pd.DataFrame({
         "Dimension": compare_labels,
         country1: [f"{c1_data[d]:.2f}" for d in compare_dims],
@@ -682,9 +404,7 @@ elif page == "Methodology":
     st.markdown("How we built the Ease to Mine Index")
     st.markdown("")
     
-    # Key Stats Cards
     col1, col2, col3, col4 = st.columns(4)
-    
     with col1:
         st.markdown("""<div class="methodology-card"><div class="methodology-card-value">48</div>
             <div class="methodology-card-title">Respondents</div>
@@ -704,7 +424,6 @@ elif page == "Methodology":
     
     st.markdown("---")
     
-    # Timeline + Weighting Pie
     col_timeline, col_pie = st.columns([1, 1])
     
     with col_timeline:
@@ -735,22 +454,20 @@ elif page == "Methodology":
     
     st.markdown("---")
     
-    # Data Quality
     st.markdown('<p class="section-title">Data Quality & Validation</p>', unsafe_allow_html=True)
     col_q1, col_q2, col_q3 = st.columns(3)
     with col_q1:
-        st.markdown("""<div class="info-box" style="height: 120px;"><div class="info-box-title">✓ Internal Consistency</div>
+        st.markdown("""<div class="info-box"><div class="info-box-title">✓ Internal Consistency</div>
             <p>All responses reviewed for logical consistency and cross-validated against publicly available data sources.</p></div>""", unsafe_allow_html=True)
     with col_q2:
-        st.markdown("""<div class="info-box" style="height: 120px;"><div class="info-box-title">✓ Bias Detection</div>
+        st.markdown("""<div class="info-box"><div class="info-box-title">✓ Bias Detection</div>
             <p>Responses screened for potential reporting bias. Outliers flagged and verified through follow-up interviews.</p></div>""", unsafe_allow_html=True)
     with col_q3:
-        st.markdown("""<div class="info-box" style="height: 120px;"><div class="info-box-title">✓ Expert Validation</div>
+        st.markdown("""<div class="info-box"><div class="info-box-title">✓ Expert Validation</div>
             <p>Semi-structured interviews with selected respondents to validate findings and clarify country-specific nuances.</p></div>""", unsafe_allow_html=True)
     
     st.markdown("---")
     
-    # Geographic Distribution
     st.markdown('<p class="section-title">Geographic Distribution of Respondents</p>', unsafe_allow_html=True)
     
     df_resp = df.copy()
