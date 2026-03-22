@@ -77,6 +77,11 @@ st.markdown("""
     .timeline-desc { font-size: 0.85rem; color: #64748B; }
     
     .comparison-vs { font-size: 1.5rem; font-weight: 700; color: #64748B; text-align: center; padding: 1rem; }
+    
+    .tldr-box { background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 1rem; font-size: 0.85rem; line-height: 1.5; color: #475569; height: 100%; }
+    .tldr-section { margin-bottom: 0.75rem; }
+    .tldr-section-title { font-weight: 700; color: #1E293B; font-size: 0.85rem; }
+    .tldr-item { margin-left: 0; color: #64748B; font-size: 0.8rem; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -90,7 +95,7 @@ def load_data():
 df = load_data()
 
 # ============================================
-# ISO CODES & COUNTRY SUMMARIES
+# ISO CODES
 # ============================================
 ISO_CODES = {
     "Oman": "OMN", "UAE": "ARE", "Iceland": "ISL", "Argentina": "ARG",
@@ -101,26 +106,205 @@ ISO_CODES = {
     "Chile": "CHL", "Sweden": "SWE", "Australia": "AUS"
 }
 
+# ============================================
+# EXTENDED COUNTRY SUMMARIES
+# ============================================
 COUNTRY_SUMMARIES = {
-    "Oman": "Oman leads the EMI ranking with an extremely favorable regulatory and fiscal framework designed to incentivize mining data centers, including direct state participation and free economic zones offering tax advantages. Grid access presents moderate barriers with connection lead times of 6-12 months and electricity costs of $38.5-$45.0/MWh.",
-    "UAE": "UAE ranks second with highly favorable conditions. The country offers substantial fiscal incentives through free zones, no electricity tax, and ability to shift profit centers abroad. Construction permits are secured within 4 months, and zoning restrictions have very low impact on land availability.",
-    "Iceland": "Iceland offers highly favorable climate conditions with low temperatures and modest diurnal variation. However, political opposition and incoming zoning laws may constrain new data center development. Electricity costs are below $35.0/MWh but grid connection lead times range 18-24 months.",
-    "Argentina": "Argentina presents neutral conditions with no specific mining framework but legal operations. Off-grid flare gas projects in Vaca Muerta provide competitive rates (<$35.0/MWh), while grid-connected power is above median ($47.5-55.0/MWh). Recent tariff reductions have improved the import framework.",
-    "Paraguay": "Paraguay is entirely powered by hydropower from the Itaipu Dam. Approximately 90% of production is exported to Brazil at ~$10.0/MWh. Miners cluster near Itaipu for abundant, low-cost electricity. Construction permits require 6-9 months.",
-    "Texas (US)": "Texas ranks 4th for legal framework. Despite increasing zoning restrictions and ERCOT's $100,000 interconnection screening fee, the regulatory framework remains favorable. The state accounts for 37.5% of global hashrate in Q1-2026.",
-    "Quebec (CA)": "Quebec offers low electricity rates but has historically halted crypto mining projects and may raise fees. Hydro-Quebec maintains strict oversight. The province represents a significant portion of Canada's mining capacity.",
-    "Brazil": "Brazil's hashrate more than doubled YoY, rising from 1.5 EH to 4.0 EH in Q1-2026. Large-scale renewable build-outs, particularly low-cost wind, create favorable conditions. The REDATA tax incentive exempts federal taxes on ICT equipment for data centers using low-emission energy.",
-    "Alberta (CA)": "Alberta offers deregulated energy markets with direct contracts available with producers. The province has favorable conditions for mining but faces competition from AI data centers. Corporate tax rates are competitive within Canada.",
-    "Russia": "Russia accounts for approximately 16.4% of global hashrate. The country offers abundant, low-cost energy but faces regulatory uncertainty. International sanctions have complicated equipment imports and financial operations.",
-    "Norway": "Norway leads Nordic countries with 16.0 EH in Q1-2026 (+23% YoY). However, electricity tax of $14.7/MWh (up from $0.56/MWh in 2022) and extended grid connection lead times (18-24 months) could slow growth.",
-    "Ethiopia": "Ethiopia offers highly favorable energy conditions with electricity costs of $25.0-$32.5/MWh. The country jumped from 12 EH to 27.5 EH (+129% YoY). However, political instability and grid infrastructure challenges remain concerns.",
-    "Kazakhstan": "Kazakhstan historically attracted miners post-China ban but has faced regulatory crackdowns. The country froze millions in crypto and banned some exchanges. A $1B national crypto reserve proposal is under consideration.",
-    "Finland": "Finland's regulatory framework has become restrictive for data centers. Electricity taxes increased from €0.5/MWh to €22.4/MWh in 2026. Miners reusing heat via district systems are exempted from the tax hike.",
-    "Kenya": "Kenya offers potential with renewable energy resources but limited infrastructure. High altitude (~2,400m) requires careful ASIC management. The regulatory framework remains underdeveloped for large-scale mining.",
-    "DRC": "DRC presents significant challenges including political instability and infrastructure limitations. While energy potential exists, the operating environment remains highly unfavorable across most dimensions.",
-    "Chile": "Chile scores 0.44 with critical barriers: grid connection lead times exceed 24 months and electricity costs range $55.0-$65.0/MWh. The Atacama desert offers mild temperatures but dust and high altitude present challenges.",
-    "Sweden": "Sweden has become hostile to mining. The electricity tax increased from $0.6/MWh to $39.9/MWh in 2023 following political opposition. The ministry of Finance previously pushed for an EU-wide mining ban.",
-    "Australia": "Australia ranks last (18th) for permits & licensing with a score of 0.19. Construction permits require 9-12 months, grid connection 12-18 months. The New Data Centre Panel mandates PUE <1.4 and net-zero roadmaps."
+    "Oman": """Oman leads the EMI ranking (0.75) with a highly favorable environment. The state actively supports mining through direct ownership of facilities in the Salalah Free Zone and Oman Vision 2040's diversification strategy. Free zones offer tax exemptions including 0% corporate tax and no import tariffs on ASICs. Grid connection timelines are favorable at 6-12 months with electricity costs of $38.5-$45.0/MWh. Permitting constraints are minimal with low environmental and zoning restrictions. Climate conditions are challenging with summer temperatures exceeding 35°C requiring adapted cooling infrastructure.""",
+    
+    "UAE": """UAE ranks second (0.71) with a highly favorable framework. Mining benefits from strong government support through VARA regulation and state-backed initiatives. Free zones (DMCC, ADGM) provide 0% corporate tax, 5% VAT only, and no tariffs on imports. Grid connection is achievable in 6-12 months with electricity at $42.5-$47.5/MWh. Construction permits secured in under 3 months with minimal zoning restrictions. Climate is challenging with summer temperatures exceeding 40°C and significant dust exposure requiring hydro or immersion cooling.""",
+    
+    "Iceland": """Iceland scores 0.60 with favorable conditions. Climate is highly favorable with temperatures of -8°C to 8°C and low diurnal variation (13°C). Electricity costs below $35.0/MWh from abundant hydro and geothermal. However, political opposition is growing with incoming zoning laws constraining new data centers. Grid connection lead times extend to 18-24 months. No electricity tax but 25% VAT on imports. No operating license required but competition from AI data centers intensifying given limited power expansion capacity.""",
+    
+    "Argentina": """Argentina scores 0.57 with moderately favorable conditions. No specific mining framework but operations are tolerated, particularly off-grid flare gas projects in Vaca Muerta. Off-grid electricity below $35.0/MWh, grid-connected at $47.5-55.0/MWh. Grid connection in 9-15 months. Neutral tax regime with ability to shift profit center abroad. 27% VAT on imports (refundable), 11% tariff. No operating license but mandatory AFIP registration. Construction permits in 6 months. Zoning restrictions vary by province.""",
+    
+    "Paraguay": """Paraguay scores 0.57, powered entirely by hydropower from Itaipu Dam. Electricity at $42.5-$55.0/MWh via 5-year PPAs with ANDE. Grid connection in 5-10 months. Slightly favorable legal framework but electricity tariff increases expected in 2026. 10% VAT (can be exempted), 4-10% tariffs. No license required but mandatory registration with authorities. Construction permits in 6-9 months. Emissions and noise restrictions significant. Climate neutral with summer temperatures reaching 35°C.""",
+    
+    "Texas (US)": """Texas scores 0.56 with favorable legal and fiscal frameworks. Deregulated ERCOT market with electricity at $35.0-$47.5/MWh. However, grid connection now takes 16-22 months due to AI competition. No electricity tax with available incentives. 10-30% tariffs on ASICs depending on origin and mitigation. No license required. Construction permits variable. Zoning moderately affects land availability; noise restrictions significant. Climate challenging with hot summers and wide diurnal spread (27°C).""",
+    
+    "Quebec (CA)": """Quebec scores 0.55 with neutral conditions. Hydro-Quebec provides electricity at $42.5-$47.5/MWh but historically halted crypto projects. Grid connection in 9-15 months. Electricity tax applies. 5% GST (refundable), 0% tariff. No license but mandatory reporting. Construction permits in 8 months. Zoning highly restricts land availability. Climate favorable despite cold winters (-28°C) and high humidity (83.5%). GST on electricity purchases can be claimed back.""",
+    
+    "Brazil": """Brazil scores 0.54 with improving conditions. Hashrate doubled YoY to 4.0 EH driven by wind and solar build-out. Electricity at $47.5-55.0/MWh on-grid, lower off-grid. Grid connection in 12 months. REDATA incentive exempts federal taxes for low-emission data centers. High VAT layers 30-35% (some exemptions). No license but mandatory registration. Construction permits in 3-6 months. EIA and water permits burdensome. Climate neutral with summer temperatures above 30°C.""",
+    
+    "Alberta (CA)": """Alberta scores 0.53 with neutral conditions. Deregulated market with direct producer contracts. Electricity at $42.5-$47.5/MWh. Grid connection exceeds 24 months. Carbon tax applies but no electricity tax. 5% GST (refundable), 2% tariff. Operating license required (3-6 months). Construction permits in 3-6 months. Zoning highly restricts land availability. Climate favorable but extreme cold in winter and high diurnal spread (28°C).""",
+    
+    "Russia": """Russia scores 0.51 with neutral environment transitioning from favorable. Electricity at $55.0-$65.0/MWh, up from median levels. Grid connection in 12 months. Since 2024, mining restricted to Russian entities with multiple regional bans. No electricity tax. 22% VAT, no tariff but FSB license required for ASIC imports. Operating license required (under 3 months). Construction permits 3-12 months. Climate favorable with 86% humidity.""",
+    
+    "Norway": """Norway scores 0.51 with neutral but deteriorating conditions. Leading Nordic hashrate at 16.0 EH. Electricity below $35.0/MWh but electricity tax at $14.7/MWh (up from $0.56 in 2022). Grid connection 18-24 months. Political opposition growing with incoming zoning restrictions. 25% VAT, no tariff, no license. Construction permits 3-6 months. Climate highly favorable with low temperatures and modest diurnal spread despite 86% humidity.""",
+    
+    "Ethiopia": """Ethiopia scores 0.51, shifting from favorable. Hashrate surged to 27.5 EH (+129% YoY) but new permits suspended since February 2024. Electricity historically at $22.0/MWh but tariff increases enacted through 2028 to $35.0-$42.5/MWh. Grid connection 6-12 months but new connections frozen. 15% VAT (not yet enforced), 3-15% tariff. License required (under 3 months when available). Climate favorable but altitude (~2,400m) affects ASIC performance.""",
+    
+    "Kazakhstan": """Kazakhstan scores 0.47 with neutral but improving framework. Post-crackdown regulatory stabilization. Electricity at $55.0-$65.0/MWh on-grid, reduced off-grid. Grid connection exceeds 24 months. Electricity tax at $4.0/MWh ($2.0 off-grid renewables). 16% VAT (increased from 12%), no tariff but license required. Operating license in 3-5 weeks. Construction permits 2-6 months. Climate slightly unfavorable with hot summers and pronounced diurnal variation.""",
+    
+    "Finland": """Finland scores 0.47 with restrictive framework. Electricity tax increased from €0.5 to €22.4/MWh in 2026 (miners with heat reuse exempted). Electricity at median rates. Grid connection 12-18 months. 25.5% VAT with VAT reclaim issues for miners. No license required. Construction permits 3-6 months. Climate highly favorable with low temperatures despite 85% humidity. Tax authorities reclaiming VAT on previous imports.""",
+    
+    "Kenya": """Kenya scores 0.47 with limited infrastructure. Off-grid installations offer below $35.0/MWh but scale limited. Grid connection 6-12 months. 16% VAT, 14% tariff. Operating license required. Climate favorable (13-28°C, 61% humidity) but altitude (~1,900m) requires careful ASIC management. Regulatory framework underdeveloped for large-scale operations.""",
+    
+    "DRC": """DRC scores 0.46 with significant challenges. Off-grid power below $35.0/MWh but infrastructure unreliable with only 51% electrification. Import process highly unfavorable with 15% tariff. Political instability a key concern. Climate favorable with stable temperatures (15-27°C) but humidity at 84% and altitude (~1,200m) require attention.""",
+    
+    "Chile": """Chile scores 0.44 with critical barriers. Grid connection exceeds 24 months. Electricity at $55.0-$65.0/MWh. Favorable tax regime with ability to shift profit abroad. No electricity tax. 19% VAT, 10% tariff. License required (6-9 months). Construction permits 6-9 months. EIA highly burdensome. Climate neutral in Atacama but dust and altitude present challenges.""",
+    
+    "Sweden": """Sweden scores 0.45, hostile to mining. Electricity tax at $39.9/MWh (up from $0.6/MWh in 2017). Electricity at $35.0-$42.5/MWh but tax erases advantage. Grid connection 12-18 months. 25% VAT with mining excluded from VAT reclaim. Ministry of Finance previously pushed for EU-wide ban. Climate highly favorable with low temperatures and modest diurnal spread (21°C).""",
+    
+    "Australia": """Australia scores 0.28, lowest in index. Stringent environmental regulations. Electricity at $55.0-$65.0/MWh. Grid connection 12-18 months. 30% corporate tax with no profit center shift allowed. 10% GST. Construction permits 9-12 months. Strict heat, noise, emissions thresholds. Zoning highly restrictive. PUE <1.4 and net-zero roadmap mandated for data centers."""
+}
+
+# ============================================
+# TLDR DATA BY COUNTRY
+# ============================================
+COUNTRY_TLDR = {
+    "Oman": {
+        "Legal": "Highly favorable • Future: stable",
+        "Fiscal": "0% corporate tax in free zones • No electricity tax • Low constraint to mitigate taxes",
+        "Permits": "License required (>12 months) • Construction 6-9 months • Low EIA burden • Zoning: low impact",
+        "Energy": "Grid connection 6-12 months • Power cost $38.5-$45.0/MWh • Moderate entry barriers",
+        "Tariffs": "5% VAT • No tariff • No license required • Highly favorable import process",
+        "Climate": "Summer >35°C • Low diurnal spread (15.6°C) • Dust exposure"
+    },
+    "UAE": {
+        "Legal": "Highly favorable • Future: stable • State ownership of mining facilities",
+        "Fiscal": "0% corporate in free zones • 5% VAT only • No electricity tax • Low tax constraints",
+        "Permits": "License <3 months • Construction <3 months • Low EIA burden • Zoning: neutral",
+        "Energy": "Grid connection 6-12 months • Power cost $42.5-$47.5/MWh • Moderate entry barriers",
+        "Tariffs": "5% VAT • No tariff • License required • Favorable import process",
+        "Climate": "Summer >40°C • Diurnal spread 19.1°C • 40% humidity • Significant dust"
+    },
+    "Iceland": {
+        "Legal": "Neutral • Future: worsening • Political opposition growing • Zoning laws incoming",
+        "Fiscal": "Neutral tax regime • Profit center shift allowed • No electricity tax • High constraints",
+        "Permits": "No license required • Construction 3-6 months • Water permits restrictive • Zoning: high impact",
+        "Energy": "Grid connection 18-24 months • Power cost <$35.0/MWh • Moderate entry barriers",
+        "Tariffs": "25% VAT • No tariff • License required • Favorable import process",
+        "Climate": "Highly favorable temps (-8°C to 8°C) • Low diurnal spread (13°C) • 85% humidity"
+    },
+    "Argentina": {
+        "Legal": "Neutral • Future: improving • No specific framework but tolerated • Off-grid flare gas active",
+        "Fiscal": "Neutral regime • Profit center shift allowed • No electricity tax • Moderate constraints",
+        "Permits": "No license but AFIP registration • Construction 6 months • Low EIA • Zoning: variable",
+        "Energy": "Grid connection 9-15 months • Off-grid <$35.0/MWh, Grid $47.5-55.0/MWh • High barriers",
+        "Tariffs": "27% VAT (refundable) • 11% tariff • License required • Unfavorable process",
+        "Climate": "Neutral • Summer >30°C • Wide diurnal spread • Hot summers in Vaca Muerta"
+    },
+    "Paraguay": {
+        "Legal": "Slightly favorable • Future: neutral • Tariff increases expected • Registration mandatory",
+        "Fiscal": "Favorable regime • Profit center shift allowed • Electricity tax expected to increase • Neutral constraints",
+        "Permits": "No license but registration required • Construction 6-9 months • Neutral EIA • Emissions significant",
+        "Energy": "Grid connection 5-10 months • Power cost $42.5-$55.0/MWh • Neutral barriers • 5-year PPAs",
+        "Tariffs": "10% VAT (exemptable) • 4-10% tariff • No license • Marginally favorable process",
+        "Climate": "Neutral • Summer ≥35°C • Diurnal spread 22.1°C • Humidity 38-84%"
+    },
+    "Texas (US)": {
+        "Legal": "Favorable • Future: stable • Potential zoning pressure from AI data centers",
+        "Fiscal": "Slightly favorable • Profit center shift allowed • No electricity tax • Incentives available",
+        "Permits": "No license required • Construction variable • Moderate EIA • Zoning: moderate impact • Noise significant",
+        "Energy": "Grid connection 16-22 months • Power cost $35.0-$47.5/MWh • High entry barriers (ERCOT)",
+        "Tariffs": "No VAT • 10-30% tariff depending on origin • No license • Unfavorable process",
+        "Climate": "Unfavorable • Hot summers • Wide diurnal spread (27°C) • 58% humidity"
+    },
+    "Quebec (CA)": {
+        "Legal": "Neutral • Future: neutral • Hydro-Quebec strict oversight • Historical project halts",
+        "Fiscal": "Unfavorable in Quebec • Profit center shift allowed • Electricity tax applies • GST reclaimable",
+        "Permits": "No license but reporting mandatory • Construction 8 months • Moderate EIA • Zoning: high impact",
+        "Energy": "Grid connection 9-15 months • Power cost $42.5-$47.5/MWh • High entry barriers",
+        "Tariffs": "5% GST (refundable) • 0% tariff • No license • Slightly favorable process",
+        "Climate": "Favorable • Cold winters (-28°C) • High diurnal spread (28°C) • 83.5% humidity"
+    },
+    "Brazil": {
+        "Legal": "Slightly favorable • Future: mixed • REDATA incentive for low-emission data centers",
+        "Fiscal": "Unfavorable regime • Profit center shift allowed • No electricity tax • High constraints",
+        "Permits": "No license but registration • Construction 3-6 months • EIA burdensome • Zoning: low impact",
+        "Energy": "Grid connection 12 months • Power cost $47.5-55.0/MWh • Neutral barriers • Behind-meter opportunity",
+        "Tariffs": "30-35% VAT layers • Tariffs suspended • No license • Neutral process",
+        "Climate": "Neutral • Summer >30°C • Low diurnal spread (18-31°C) • 76-87% humidity"
+    },
+    "Alberta (CA)": {
+        "Legal": "Favorable • Future: stable • Deregulated market • Direct producer contracts available",
+        "Fiscal": "Neutral • Profit center shift allowed • Carbon tax (no electricity tax) • Moderate constraints",
+        "Permits": "License required (3-6 months) • Construction 3-6 months • Moderate EIA • Zoning: high impact",
+        "Energy": "Grid connection >24 months • Power cost $42.5-$47.5/MWh • High entry barriers",
+        "Tariffs": "5% GST (refundable) • 2% tariff • No license • Neutral process",
+        "Climate": "Favorable • Extreme cold winters • High diurnal spread (28°C) • 83.5% humidity"
+    },
+    "Russia": {
+        "Legal": "Favorable but worsening • Mining restricted to Russian entities since 2024 • Regional bans",
+        "Fiscal": "Neutral regime • Cannot shift profit center • No electricity tax • High constraints",
+        "Permits": "License <3 months • Construction 3-12 months • Neutral EIA • Zoning: neutral impact",
+        "Energy": "Grid connection 12 months • Power cost $55.0-$65.0/MWh • Moderate barriers",
+        "Tariffs": "22% VAT • No tariff • FSB license required for ASICs • Neutral process",
+        "Climate": "Favorable • Modest temps • Diurnal spread moderate • 86% humidity"
+    },
+    "Norway": {
+        "Legal": "Neutral • Future: worsening • Political opposition • Zoning restrictions incoming",
+        "Fiscal": "Neutral regime • Profit center shift allowed • Electricity tax $14.7/MWh • High constraints",
+        "Permits": "No license required • Construction 3-6 months • Water permits restrictive • Zoning: high impact",
+        "Energy": "Grid connection 18-24 months • Power cost <$35.0/MWh • Moderate barriers",
+        "Tariffs": "25% VAT • No tariff • License required • Favorable process",
+        "Climate": "Highly favorable • Low temps (5-24°C) • Modest diurnal spread • 86% humidity"
+    },
+    "Ethiopia": {
+        "Legal": "Slightly unfavorable • Future: worsening • New permits frozen since Feb 2024",
+        "Fiscal": "Slightly unfavorable • Cannot shift profit center • Power rate hikes enacted through 2028",
+        "Permits": "License <3 months (when available) • Construction 8 months • Low EIA • Zoning: neutral",
+        "Energy": "Grid connection 6-12 months (frozen) • Power cost $35.0-$42.5/MWh (rising) • High barriers",
+        "Tariffs": "15% VAT (not enforced) • 3-15% tariff • License required • Unfavorable process",
+        "Climate": "Favorable temps • Low diurnal spread (17.3°C) • Altitude ~2,400m affects ASICs"
+    },
+    "Kazakhstan": {
+        "Legal": "Slightly favorable • Future: improving • Post-crackdown stabilization",
+        "Fiscal": "Favorable regime • Profit center shift allowed • Electricity tax $4.0/MWh • Moderate constraints",
+        "Permits": "License 3-5 weeks • Construction 2-6 months • Low EIA • Zoning: neutral impact",
+        "Energy": "Grid connection >24 months • Power cost $55.0-$65.0/MWh • High entry barriers",
+        "Tariffs": "16% VAT • No tariff • License required • Neutral process",
+        "Climate": "Slightly unfavorable • Hot summers • Pronounced diurnal variation"
+    },
+    "Finland": {
+        "Legal": "Unfavorable • Future: unfavorable • Data center concerns driving policy",
+        "Fiscal": "Unfavorable • Profit center shift allowed • Electricity tax €22.4/MWh (heat reuse exempt) • High constraints",
+        "Permits": "No license required • Construction 3-6 months • Moderate EIA • Zoning: neutral impact",
+        "Energy": "Grid connection 12-18 months • Power cost at median • Neutral barriers",
+        "Tariffs": "25.5% VAT • No tariff • No license • Neutral process • VAT reclaim issues",
+        "Climate": "Highly favorable • Low temps • Modest diurnal spread • 85% humidity"
+    },
+    "Kenya": {
+        "Legal": "Neutral • Future: neutral • Framework underdeveloped for large-scale",
+        "Fiscal": "Neutral regime • Profit center shift allowed • No electricity tax • Moderate constraints",
+        "Permits": "License required • Construction 6-9 months • Moderate EIA • Zoning: neutral",
+        "Energy": "Grid connection 6-12 months • Off-grid <$35.0/MWh • High barriers • Limited scale",
+        "Tariffs": "16% VAT • 14% tariff • License required • Unfavorable process",
+        "Climate": "Favorable (13-28°C) • Low diurnal spread (14.3°C) • 61% humidity • Altitude ~1,900m"
+    },
+    "DRC": {
+        "Legal": "Neutral • Future: uncertain • Political instability • Only 51% electrification",
+        "Fiscal": "Neutral regime • Profit center shift allowed • No electricity tax",
+        "Permits": "License required • Construction 6+ months • Low EIA • Infrastructure unreliable",
+        "Energy": "Grid connection uncertain • Off-grid <$35.0/MWh but limited scale • High barriers",
+        "Tariffs": "15% tariff • Import process unfavorable • Customs delays weeks to months",
+        "Climate": "Favorable temps (15-27°C) • Low diurnal spread • 84% humidity • Altitude ~1,200m"
+    },
+    "Chile": {
+        "Legal": "Neutral • Future: neutral • No specific mining framework • Data center-friendly policies",
+        "Fiscal": "Favorable regime • Profit center shift allowed • No electricity tax • Neutral constraints",
+        "Permits": "License 6-9 months • Construction 6-9 months • EIA highly burdensome • Zoning: low impact",
+        "Energy": "Grid connection >24 months • Power cost $55.0-$65.0/MWh • Moderate barriers • High curtailment",
+        "Tariffs": "19% VAT • 10% tariff • No license • No mitigation impact",
+        "Climate": "Neutral in Atacama • Mild temps but dust exposure • High altitude challenges"
+    },
+    "Sweden": {
+        "Legal": "Unfavorable • Future: unfavorable • Ministry pushed for EU ban • Hostile environment",
+        "Fiscal": "Highly unfavorable • Cannot shift profit center • Electricity tax $39.9/MWh • High constraints",
+        "Permits": "No license required • Construction 3-6 months • Neutral EIA • Zoning: neutral impact",
+        "Energy": "Grid connection 12-18 months • Power cost $35.0-$42.5/MWh • Neutral barriers",
+        "Tariffs": "25% VAT • No tariff • No license • Mining excluded from VAT reclaim",
+        "Climate": "Highly favorable • Low temps • Diurnal spread 21°C • 89% humidity"
+    },
+    "Australia": {
+        "Legal": "Highly unfavorable • Future: unfavorable • Stringent environmental regulations",
+        "Fiscal": "Unfavorable • 30% CIT • Cannot shift profit center • No incentives",
+        "Permits": "License required • Construction 9-12 months • EIA strict • Zoning: highly restrictive",
+        "Energy": "Grid connection 12-18 months • Power cost $55.0-$65.0/MWh • High barriers (NEM)",
+        "Tariffs": "10% GST • Import process unfavorable",
+        "Climate": "Unfavorable • High temps • PUE <1.4 mandated • Net-zero roadmap required"
+    }
 }
 
 # ============================================
@@ -356,7 +540,7 @@ elif page == "Jurisdiction":
     with col_summary:
         st.markdown('<p class="section-title">Jurisdiction Summary</p>', unsafe_allow_html=True)
         summary = COUNTRY_SUMMARIES.get(selected_country, "Detailed analysis available in the full report.")
-        st.markdown(f"""<div class="info-box"><p>{summary}</p>
+        st.markdown(f"""<div class="info-box" style="height: 350px; overflow-y: auto;"><p style="font-size: 0.85rem;">{summary}</p>
             <p style="margin-top: 1rem;"><strong>Hashrate Q1-26:</strong> {country_data['Hashrate_Q1_26']:.1f} EH/s</p>
             <p><strong>Region:</strong> {country_data['Region']}</p>
         </div>""", unsafe_allow_html=True)
@@ -388,6 +572,38 @@ elif page == "Jurisdiction":
         plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(family="Barlow"))
     st.plotly_chart(fig_compare, use_container_width=True)
     
+    # TLDR Comparison boxes
+    st.markdown("")
+    tldr1 = COUNTRY_TLDR.get(country1, {})
+    tldr2 = COUNTRY_TLDR.get(country2, {})
+    
+    col_tldr1, col_tldr2 = st.columns(2)
+    
+    with col_tldr1:
+        st.markdown(f"""<div class="tldr-box">
+            <div style="font-weight: 700; color: #1E293B; font-size: 1rem; margin-bottom: 0.75rem; border-bottom: 2px solid #6287F0; padding-bottom: 0.5rem;">{country1}</div>
+            <div class="tldr-section"><span class="tldr-section-title">Legal:</span> <span class="tldr-item">{tldr1.get('Legal', 'N/A')}</span></div>
+            <div class="tldr-section"><span class="tldr-section-title">Fiscal:</span> <span class="tldr-item">{tldr1.get('Fiscal', 'N/A')}</span></div>
+            <div class="tldr-section"><span class="tldr-section-title">Permits:</span> <span class="tldr-item">{tldr1.get('Permits', 'N/A')}</span></div>
+            <div class="tldr-section"><span class="tldr-section-title">Energy:</span> <span class="tldr-item">{tldr1.get('Energy', 'N/A')}</span></div>
+            <div class="tldr-section"><span class="tldr-section-title">Tariffs:</span> <span class="tldr-item">{tldr1.get('Tariffs', 'N/A')}</span></div>
+            <div class="tldr-section"><span class="tldr-section-title">Climate:</span> <span class="tldr-item">{tldr1.get('Climate', 'N/A')}</span></div>
+        </div>""", unsafe_allow_html=True)
+    
+    with col_tldr2:
+        st.markdown(f"""<div class="tldr-box">
+            <div style="font-weight: 700; color: #1E293B; font-size: 1rem; margin-bottom: 0.75rem; border-bottom: 2px solid #1D0DED; padding-bottom: 0.5rem;">{country2}</div>
+            <div class="tldr-section"><span class="tldr-section-title">Legal:</span> <span class="tldr-item">{tldr2.get('Legal', 'N/A')}</span></div>
+            <div class="tldr-section"><span class="tldr-section-title">Fiscal:</span> <span class="tldr-item">{tldr2.get('Fiscal', 'N/A')}</span></div>
+            <div class="tldr-section"><span class="tldr-section-title">Permits:</span> <span class="tldr-item">{tldr2.get('Permits', 'N/A')}</span></div>
+            <div class="tldr-section"><span class="tldr-section-title">Energy:</span> <span class="tldr-item">{tldr2.get('Energy', 'N/A')}</span></div>
+            <div class="tldr-section"><span class="tldr-section-title">Tariffs:</span> <span class="tldr-item">{tldr2.get('Tariffs', 'N/A')}</span></div>
+            <div class="tldr-section"><span class="tldr-section-title">Climate:</span> <span class="tldr-item">{tldr2.get('Climate', 'N/A')}</span></div>
+        </div>""", unsafe_allow_html=True)
+    
+    st.markdown("")
+    
+    # Data table
     comp_df = pd.DataFrame({
         "Dimension": compare_labels,
         country1: [f"{c1_data[d]:.2f}" for d in compare_dims],
