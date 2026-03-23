@@ -1097,7 +1097,7 @@ elif page == "Fiscal":
     # =====================
     st.markdown('<p class="section-title">Corporate Income Tax (CIT) Rates by Jurisdiction</p>', unsafe_allow_html=True)
     
-    # CIT rates data (standard corporate tax rates)
+    # CIT rates data (standard corporate tax rates) - Without Texas (US)
     CIT_RATES = {
         "UAE": 9.0,
         "Paraguay": 10.0,
@@ -1107,7 +1107,6 @@ elif page == "Fiscal":
         "Finland": 20.0,
         "Sweden": 20.6,
         "Kazakhstan": 20.0,
-        "Texas (US)": 21.0,
         "Quebec (CA)": 26.5,
         "Alberta (CA)": 23.0,
         "Norway": 22.0,
@@ -1120,6 +1119,19 @@ elif page == "Fiscal":
         "Australia": 30.0
     }
     
+    # Color function based on CIT rate brackets
+    def get_cit_color(rate):
+        if rate < 11.0:
+            return '#12E09B'  # Green
+        elif rate < 20.0:
+            return '#B66DFF'  # Light purple
+        elif rate <= 25.0:
+            return '#8205FF'  # Purple
+        elif rate <= 30.0:
+            return '#F3B11D'  # Orange
+        else:
+            return '#fc7a53'  # Red-orange
+    
     # Create CIT dataframe
     cit_data = [{"Country": k, "CIT_Rate": v} for k, v in CIT_RATES.items()]
     df_cit = pd.DataFrame(cit_data)
@@ -1128,10 +1140,8 @@ elif page == "Fiscal":
     # Add asterisk to Ethiopia
     df_cit["Display_Country"] = df_cit["Country"].apply(lambda x: x + "*" if x == "Ethiopia" else x)
     
-    # Color gradient based on CIT rate (lower is better = greener)
-    max_cit = df_cit["CIT_Rate"].max()
-    min_cit = df_cit["CIT_Rate"].min()
-    colors_cit = [get_score_color(1 - (rate - min_cit) / (max_cit - min_cit), 0, 1) for rate in df_cit["CIT_Rate"]]
+    # Color based on brackets
+    colors_cit = [get_cit_color(rate) for rate in df_cit["CIT_Rate"]]
     
     fig_cit = go.Figure(go.Bar(
         x=df_cit["CIT_Rate"],
@@ -1144,7 +1154,7 @@ elif page == "Fiscal":
     ))
     
     fig_cit.update_layout(
-        height=550,
+        height=520,
         margin=dict(l=0, r=60, t=10, b=60),
         xaxis=dict(
             title="Corporate Income Tax Rate (%)",
@@ -1162,6 +1172,17 @@ elif page == "Fiscal":
         font=dict(family="Barlow")
     )
     st.plotly_chart(fig_cit, use_container_width=True)
+    
+    # Legend for CIT color brackets
+    st.markdown("""
+    <div style="display: flex; justify-content: center; gap: 1.5rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
+        <span><strong style="color: #12E09B; font-size: 1.1rem;">●</strong> &lt;11%</span>
+        <span><strong style="color: #B66DFF; font-size: 1.1rem;">●</strong> 11-19%</span>
+        <span><strong style="color: #8205FF; font-size: 1.1rem;">●</strong> 20-25%</span>
+        <span><strong style="color: #F3B11D; font-size: 1.1rem;">●</strong> 26-30%</span>
+        <span><strong style="color: #fc7a53; font-size: 1.1rem;">●</strong> &gt;30%</span>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Note for Ethiopia
     st.markdown("""
