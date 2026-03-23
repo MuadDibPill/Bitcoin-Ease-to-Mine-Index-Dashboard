@@ -914,66 +914,70 @@ elif page == "Fiscal":
     df_fiscal["ISO"] = df_fiscal["Country"].map(ISO_CODES)
     
     # =====================
-    # SECTION 1: Two bar charts for Q1 and Q6
+    # SECTION 1: Scatter plot - Taxation Environment vs Constraints
     # =====================
-    st.markdown('<p class="section-title">Taxation Environment Overview</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-title">Taxation Environment vs Constraints to Access Benefits</p>', unsafe_allow_html=True)
     
-    col_chart1, col_chart2 = st.columns(2)
+    fig_scatter = go.Figure()
     
-    with col_chart1:
-        st.markdown('<p class="section-title-small">Current Taxation Environment</p>', unsafe_allow_html=True)
-        df_q1 = df_fiscal.sort_values("Q1_Taxation", ascending=True)
-        colors_q1 = [get_score_color(s, df_q1["Q1_Taxation"].min(), df_q1["Q1_Taxation"].max()) for s in df_q1["Q1_Taxation"]]
-        
-        fig_q1 = go.Figure(go.Bar(
-            x=df_q1["Q1_Taxation"],
-            y=df_q1["Country"],
-            orientation='h',
-            marker_color=colors_q1,
-            text=df_q1["Q1_Taxation"].round(2),
-            textposition='outside',
-            textfont=dict(size=10, family="Barlow")
-        ))
-        fig_q1.update_layout(
-            height=500,
-            margin=dict(l=0, r=40, t=10, b=40),
-            xaxis=dict(range=[0, 1.1], title="Score", gridcolor='#E2E8F0', tickfont=dict(family="Barlow", size=10)),
-            yaxis=dict(title="", tickfont=dict(family="Barlow", size=11)),
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            font=dict(family="Barlow")
-        )
-        st.plotly_chart(fig_q1, use_container_width=True)
+    # Add scatter points
+    fig_scatter.add_trace(go.Scatter(
+        x=df_fiscal["Q6_Constraints"],
+        y=df_fiscal["Q1_Taxation"],
+        mode='markers+text',
+        marker=dict(
+            size=12,
+            color=[get_score_color((row["Q1_Taxation"] + row["Q6_Constraints"]) / 2, 0, 1) for _, row in df_fiscal.iterrows()],
+            line=dict(width=1, color='#4B5563')
+        ),
+        text=df_fiscal["Country"],
+        textposition='top center',
+        textfont=dict(size=9, family="Barlow"),
+        hovertemplate="<b>%{text}</b><br>Taxation: %{y:.2f}<br>Constraints: %{x:.2f}<extra></extra>"
+    ))
     
-    with col_chart2:
-        st.markdown('<p class="section-title-small">Constraints to Access Tax Benefits</p>', unsafe_allow_html=True)
-        df_q6 = df_fiscal.sort_values("Q6_Constraints", ascending=True)
-        colors_q6 = [get_score_color(s, df_q6["Q6_Constraints"].min(), df_q6["Q6_Constraints"].max()) for s in df_q6["Q6_Constraints"]]
-        
-        fig_q6 = go.Figure(go.Bar(
-            x=df_q6["Q6_Constraints"],
-            y=df_q6["Country"],
-            orientation='h',
-            marker_color=colors_q6,
-            text=df_q6["Q6_Constraints"].round(2),
-            textposition='outside',
-            textfont=dict(size=10, family="Barlow")
-        ))
-        fig_q6.update_layout(
-            height=500,
-            margin=dict(l=0, r=40, t=10, b=40),
-            xaxis=dict(range=[0, 1.1], title="Score", gridcolor='#E2E8F0', tickfont=dict(family="Barlow", size=10)),
-            yaxis=dict(title="", tickfont=dict(family="Barlow", size=11)),
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            font=dict(family="Barlow")
-        )
-        st.plotly_chart(fig_q6, use_container_width=True)
+    # Add quadrant lines
+    fig_scatter.add_hline(y=0.5, line_dash="dash", line_color="#94A3B8", line_width=1)
+    fig_scatter.add_vline(x=0.5, line_dash="dash", line_color="#94A3B8", line_width=1)
+    
+    # Add quadrant labels
+    fig_scatter.add_annotation(x=0.25, y=0.95, text="High Tax / Low Access", showarrow=False,
+        font=dict(size=10, color="#922B21", family="Barlow"), xanchor="center")
+    fig_scatter.add_annotation(x=0.75, y=0.95, text="High Tax / Easy Access", showarrow=False,
+        font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
+    fig_scatter.add_annotation(x=0.25, y=0.05, text="Low Tax / Low Access", showarrow=False,
+        font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
+    fig_scatter.add_annotation(x=0.75, y=0.05, text="Low Tax / Easy Access", showarrow=False,
+        font=dict(size=10, color="#1E8449", family="Barlow"), xanchor="center")
+    
+    fig_scatter.update_layout(
+        height=550,
+        margin=dict(l=60, r=40, t=40, b=60),
+        xaxis=dict(
+            title="Constraints to Access Tax Benefits",
+            range=[-0.05, 1.05],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12)
+        ),
+        yaxis=dict(
+            title="Taxation Environment",
+            range=[-0.05, 1.05],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12)
+        ),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow"),
+        showlegend=False
+    )
+    st.plotly_chart(fig_scatter, use_container_width=True)
     
     st.markdown("---")
     
     # =====================
-    # SECTION 2: Map with filter for Q4 and Q5
+    # SECTION 2: Map with filter for Q4 and Q5 (Yes/No binary)
     # =====================
     st.markdown('<p class="section-title">Fiscal Incentives Map</p>', unsafe_allow_html=True)
     
@@ -988,31 +992,40 @@ elif page == "Fiscal":
     if fiscal_map_question == "Is there a power tax?":
         map_col = "Q4_Electricity_Tax"
         map_title = "Power Tax Exposure"
+        # For power tax: low score = Yes (there is a tax), high score = No (no tax)
+        # Invert logic: score < 0.5 means Yes (tax exists), score >= 0.5 means No (no tax)
+        df_fiscal["Binary"] = df_fiscal[map_col].apply(lambda x: 0 if x < 0.5 else 1)
+        yes_label = "Yes (tax exists)"
+        no_label = "No (no tax)"
     else:
         map_col = "Q5_Subsidies"
         map_title = "Access to Subsidies or Abatements"
+        # For subsidies: high score = Yes (access exists), low score = No
+        df_fiscal["Binary"] = df_fiscal[map_col].apply(lambda x: 1 if x >= 0.5 else 0)
+        yes_label = "Yes (access exists)"
+        no_label = "No (no access)"
     
     df_fiscal_agg = df_fiscal.groupby("ISO").agg({
-        map_col: "mean",
+        "Binary": "mean",
         "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]
     }).reset_index()
     df_fiscal_agg.columns = ["ISO", "Score", "Country"]
+    
+    # Binary colorscale: 0 = No (#F3B11D), 1 = Yes (#12E09B)
+    binary_colorscale = [[0, '#F3B11D'], [1, '#12E09B']]
     
     fig_fiscal_map = go.Figure(go.Choropleth(
         locations=df_fiscal_agg["ISO"],
         z=df_fiscal_agg["Score"],
         text=df_fiscal_agg["Country"],
-        colorscale=COLOR_SCALE,
+        colorscale=binary_colorscale,
         autocolorscale=False,
+        zmin=0,
+        zmax=1,
         marker_line_color='#4B5563',
         marker_line_width=1,
-        colorbar=dict(
-            title=dict(text="Score", side="right", font=dict(family="Barlow", size=11)),
-            tickfont=dict(family="Barlow", size=10),
-            len=0.8,
-            thickness=12
-        ),
-        hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"
+        showscale=False,
+        hovertemplate="<b>%{text}</b><extra></extra>"
     ))
     fig_fiscal_map.update_layout(
         height=450,
@@ -1041,65 +1054,13 @@ elif page == "Fiscal":
     )
     st.plotly_chart(fig_fiscal_map, use_container_width=True)
     
-    # Score interpretation legend
-    st.markdown("""
-    <div style="display: flex; justify-content: center; gap: 2rem; margin: 1rem 0; font-size: 0.85rem;">
-        <span><strong style="color: #1E8449;">●</strong> Highly Favorable (≥0.75)</span>
-        <span><strong style="color: #28B463;">●</strong> Favorable (0.60-0.74)</span>
-        <span><strong style="color: #F4D03F;">●</strong> Neutral (0.40-0.59)</span>
-        <span><strong style="color: #E67E22;">●</strong> Unfavorable (0.25-0.39)</span>
-        <span><strong style="color: #922B21;">●</strong> Highly Unfavorable (<0.25)</span>
+    # Binary legend Yes/No
+    st.markdown(f"""
+    <div style="display: flex; justify-content: center; gap: 3rem; margin: 1rem 0; font-size: 0.9rem;">
+        <span><strong style="color: #12E09B; font-size: 1.2rem;">●</strong> Yes</span>
+        <span><strong style="color: #F3B11D; font-size: 1.2rem;">●</strong> No</span>
     </div>
     """, unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    # =====================
-    # SECTION 3: Data table
-    # =====================
-    st.markdown('<p class="section-title">Fiscal Framework Data</p>', unsafe_allow_html=True)
-    
-    df_fiscal_display = df_fiscal[["Country", "Region", "Q1_Taxation", "Q4_Electricity_Tax", "Q5_Subsidies", "Q6_Constraints"]].copy()
-    df_fiscal_display = df_fiscal_display.rename(columns={
-        "Q1_Taxation": "Taxation Environment",
-        "Q4_Electricity_Tax": "Power Tax",
-        "Q5_Subsidies": "Subsidies Access",
-        "Q6_Constraints": "Tax Constraints"
-    })
-    df_fiscal_display = df_fiscal_display.sort_values("Taxation Environment", ascending=False)
-    
-    st.dataframe(
-        df_fiscal_display,
-        use_container_width=True,
-        hide_index=True,
-        height=500,
-        column_config={
-            "Taxation Environment": st.column_config.ProgressColumn(
-                "Taxation Environment",
-                format="%.2f",
-                min_value=0,
-                max_value=1
-            ),
-            "Power Tax": st.column_config.ProgressColumn(
-                "Power Tax",
-                format="%.2f",
-                min_value=0,
-                max_value=1
-            ),
-            "Subsidies Access": st.column_config.ProgressColumn(
-                "Subsidies Access",
-                format="%.2f",
-                min_value=0,
-                max_value=1
-            ),
-            "Tax Constraints": st.column_config.ProgressColumn(
-                "Tax Constraints",
-                format="%.2f",
-                min_value=0,
-                max_value=1
-            )
-        }
-    )
 
 # ============================================
 # METHODOLOGY PAGE
