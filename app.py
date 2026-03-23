@@ -308,6 +308,31 @@ COUNTRY_TLDR = {
 }
 
 # ============================================
+# LEGAL SECTION DATA FROM EXCEL (Q18 & Q19)
+# ============================================
+LEGAL_SCORES = {
+    "UAE": {"Q18": 0.875, "Q19": 0.875},
+    "Oman": {"Q18": 0.875, "Q19": 0.875},
+    "Alberta (CA)": {"Q18": 0.75, "Q19": 0.85},
+    "Texas (US)": {"Q18": 0.75, "Q19": 0.694},
+    "Iceland": {"Q18": 0.75, "Q19": 0.75},
+    "Russia": {"Q18": 0.667, "Q19": 0.333},
+    "Argentina": {"Q18": 0.625, "Q19": 0.75},
+    "Paraguay": {"Q18": 0.607, "Q19": 0.50},
+    "Kazakhstan": {"Q18": 0.583, "Q19": 0.667},
+    "Brazil": {"Q18": 0.583, "Q19": 0.50},
+    "Quebec (CA)": {"Q18": 0.50, "Q19": 0.50},
+    "DRC": {"Q18": 0.50, "Q19": 0.50},
+    "Norway": {"Q18": 0.50, "Q19": 0.25},
+    "Chile": {"Q18": 0.50, "Q19": 0.50},
+    "Kenya": {"Q18": 0.50, "Q19": 0.50},
+    "Ethiopia": {"Q18": 0.40, "Q19": 0.35},
+    "Australia": {"Q18": 0.25, "Q19": 0.00},
+    "Finland": {"Q18": 0.25, "Q19": 0.25},
+    "Sweden": {"Q18": 0.25, "Q19": 0.25}
+}
+
+# ============================================
 # HELPER FUNCTIONS
 # ============================================
 def get_score_color(score, min_score, max_score):
@@ -343,7 +368,7 @@ def get_text_color_for_score(score):
 # ============================================
 with st.sidebar:
     st.markdown("### Navigation")
-    page = st.radio("", ["Overview", "Jurisdiction", "Methodology"], label_visibility="collapsed")
+    page = st.radio("", ["Overview", "Jurisdiction", "Legal", "Methodology"], label_visibility="collapsed")
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
@@ -611,6 +636,253 @@ elif page == "Jurisdiction":
         "Difference": [f"{c1_data[d] - c2_data[d]:+.2f}" for d in compare_dims]
     })
     st.dataframe(comp_df, use_container_width=True, hide_index=True)
+
+# ============================================
+# LEGAL PAGE
+# ============================================
+elif page == "Legal":
+    st.markdown("# Legal Framework Analysis")
+    st.markdown('<p class="subtitle-text">Regulatory environment assessment based on Q18 (current) and Q19 (future outlook) survey responses</p>', unsafe_allow_html=True)
+    
+    # Create Legal DataFrame
+    legal_data = []
+    for country, scores in LEGAL_SCORES.items():
+        q18 = scores["Q18"]
+        q19 = scores["Q19"]
+        evolution = q19 - q18
+        legal_data.append({
+            "Country": country,
+            "Q18_Current": q18,
+            "Q19_Future": q19,
+            "Evolution": evolution
+        })
+    df_legal = pd.DataFrame(legal_data)
+    df_legal = df_legal.merge(df[["Country", "Region"]], on="Country", how="left")
+    df_legal["ISO"] = df_legal["Country"].map(ISO_CODES)
+    
+    # Filter selection
+    col_filter, _ = st.columns([1, 3])
+    with col_filter:
+        legal_view = st.selectbox(
+            "Select metric",
+            ["Q18: Current regulatory environment", "Q19: Future regulatory outlook"],
+            key="legal_filter"
+        )
+    
+    selected_legal_col = "Q18_Current" if "Q18" in legal_view else "Q19_Future"
+    
+    # Map
+    st.markdown('<p class="section-title">Regulatory Environment Map</p>', unsafe_allow_html=True)
+    
+    df_legal_agg = df_legal.groupby("ISO").agg({
+        selected_legal_col: "mean",
+        "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]
+    }).reset_index()
+    df_legal_agg.columns = ["ISO", "Score", "Country"]
+    
+    fig_legal_map = go.Figure(go.Choropleth(
+        locations=df_legal_agg["ISO"],
+        z=df_legal_agg["Score"],
+        text=df_legal_agg["Country"],
+        colorscale=COLOR_SCALE,
+        autocolorscale=False,
+        marker_line_color='#4B5563',
+        marker_line_width=1,
+        colorbar=dict(
+            title=dict(text="Score", side="right", font=dict(family="Barlow", size=11)),
+            tickfont=dict(family="Barlow", size=10),
+            len=0.8,
+            thickness=12
+        ),
+        hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"
+    ))
+    fig_legal_map.update_layout(
+        height=450,
+        margin=dict(l=0, r=0, t=5, b=0),
+        geo=dict(
+            showframe=False,
+            showcoastlines=True,
+            coastlinecolor="#94A3B8",
+            showland=True,
+            landcolor="#E2E8F0",
+            showocean=True,
+            oceancolor="#FFFFFF",
+            showcountries=True,
+            countrycolor="#94A3B8",
+            projection_type='natural earth',
+            bgcolor='rgba(0,0,0,0)'
+        ),
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow")
+    )
+    st.plotly_chart(fig_legal_map, use_container_width=True)
+    
+    # Score interpretation legend
+    st.markdown("""
+    <div style="display: flex; justify-content: center; gap: 2rem; margin: 1rem 0; font-size: 0.85rem;">
+        <span><strong style="color: #1E8449;">●</strong> Highly Favorable (≥0.75)</span>
+        <span><strong style="color: #28B463;">●</strong> Favorable (0.60-0.74)</span>
+        <span><strong style="color: #F4D03F;">●</strong> Neutral (0.40-0.59)</span>
+        <span><strong style="color: #E67E22;">●</strong> Unfavorable (0.25-0.39)</span>
+        <span><strong style="color: #922B21;">●</strong> Highly Unfavorable (<0.25)</span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Grouped bar chart - Current vs Future with Evolution
+    st.markdown('<p class="section-title">Current vs Future Regulatory Outlook</p>', unsafe_allow_html=True)
+    
+    df_legal_sorted = df_legal.sort_values("Evolution", ascending=False)
+    
+    fig_legal_bar = go.Figure()
+    
+    # Q18 bars
+    fig_legal_bar.add_trace(go.Bar(
+        name="Q18: Current",
+        x=df_legal_sorted["Country"],
+        y=df_legal_sorted["Q18_Current"],
+        marker_color='#6287F0',
+        text=df_legal_sorted["Q18_Current"].round(2),
+        textposition='outside',
+        textfont=dict(size=10, family="Barlow")
+    ))
+    
+    # Q19 bars
+    fig_legal_bar.add_trace(go.Bar(
+        name="Q19: Future",
+        x=df_legal_sorted["Country"],
+        y=df_legal_sorted["Q19_Future"],
+        marker_color='#1D0DED',
+        text=df_legal_sorted["Q19_Future"].round(2),
+        textposition='outside',
+        textfont=dict(size=10, family="Barlow")
+    ))
+    
+    # Add evolution annotations
+    annotations = []
+    for idx, row in df_legal_sorted.iterrows():
+        evo = row["Evolution"]
+        if evo > 0:
+            color = "#1E8449"
+            symbol = "↑"
+        elif evo < 0:
+            color = "#922B21"
+            symbol = "↓"
+        else:
+            color = "#64748B"
+            symbol = "→"
+        
+        annotations.append(dict(
+            x=row["Country"],
+            y=max(row["Q18_Current"], row["Q19_Future"]) + 0.12,
+            text=f"{symbol} {evo:+.2f}",
+            showarrow=False,
+            font=dict(size=9, color=color, family="Barlow"),
+            xanchor="center"
+        ))
+    
+    fig_legal_bar.update_layout(
+        barmode='group',
+        height=600,
+        margin=dict(l=0, r=0, t=30, b=100),
+        xaxis=dict(
+            title="",
+            tickangle=-45,
+            tickfont=dict(family="Barlow", size=11)
+        ),
+        yaxis=dict(
+            range=[0, 1.15],
+            title="Score",
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11)
+        ),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5,
+            font=dict(family="Barlow")
+        ),
+        annotations=annotations,
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow")
+    )
+    st.plotly_chart(fig_legal_bar, use_container_width=True)
+    
+    st.markdown("---")
+    
+    # Insight boxes
+    st.markdown('<p class="section-title">Regulatory Outlook Insights</p>', unsafe_allow_html=True)
+    
+    improving = df_legal[df_legal["Evolution"] > 0.05].sort_values("Evolution", ascending=False)
+    worsening = df_legal[df_legal["Evolution"] < -0.05].sort_values("Evolution", ascending=True)
+    stable = df_legal[(df_legal["Evolution"] >= -0.05) & (df_legal["Evolution"] <= 0.05)]
+    
+    col_imp, col_wor, col_sta = st.columns(3)
+    
+    with col_imp:
+        improving_list = ", ".join(improving["Country"].tolist()) if len(improving) > 0 else "None"
+        st.markdown(f"""<div class="info-box" style="border-left: 4px solid #1E8449;">
+            <div class="info-box-title" style="color: #1E8449;">↑ Improving Outlook</div>
+            <p><strong>{len(improving)}</strong> jurisdictions expect regulatory improvement</p>
+            <p style="font-size: 0.85rem; margin-top: 0.5rem;">{improving_list}</p>
+        </div>""", unsafe_allow_html=True)
+    
+    with col_wor:
+        worsening_list = ", ".join(worsening["Country"].tolist()) if len(worsening) > 0 else "None"
+        st.markdown(f"""<div class="info-box" style="border-left: 4px solid #922B21;">
+            <div class="info-box-title" style="color: #922B21;">↓ Worsening Outlook</div>
+            <p><strong>{len(worsening)}</strong> jurisdictions expect regulatory deterioration</p>
+            <p style="font-size: 0.85rem; margin-top: 0.5rem;">{worsening_list}</p>
+        </div>""", unsafe_allow_html=True)
+    
+    with col_sta:
+        stable_list = ", ".join(stable["Country"].tolist()) if len(stable) > 0 else "None"
+        st.markdown(f"""<div class="info-box" style="border-left: 4px solid #64748B;">
+            <div class="info-box-title" style="color: #64748B;">→ Stable Outlook</div>
+            <p><strong>{len(stable)}</strong> jurisdictions expect no significant change</p>
+            <p style="font-size: 0.85rem; margin-top: 0.5rem;">{stable_list}</p>
+        </div>""", unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Data table
+    st.markdown('<p class="section-title">Legal Framework Data</p>', unsafe_allow_html=True)
+    
+    df_legal_display = df_legal[["Country", "Region", "Q18_Current", "Q19_Future", "Evolution"]].copy()
+    df_legal_display = df_legal_display.rename(columns={
+        "Q18_Current": "Q18: Current",
+        "Q19_Future": "Q19: Future"
+    })
+    df_legal_display = df_legal_display.sort_values("Q18: Current", ascending=False)
+    
+    st.dataframe(
+        df_legal_display,
+        use_container_width=True,
+        hide_index=True,
+        height=500,
+        column_config={
+            "Q18: Current": st.column_config.ProgressColumn(
+                "Q18: Current",
+                format="%.2f",
+                min_value=0,
+                max_value=1
+            ),
+            "Q19: Future": st.column_config.ProgressColumn(
+                "Q19: Future",
+                format="%.2f",
+                min_value=0,
+                max_value=1
+            ),
+            "Evolution": st.column_config.NumberColumn(
+                "Evolution",
+                format="%+.2f"
+            )
+        }
+    )
 
 # ============================================
 # METHODOLOGY PAGE
