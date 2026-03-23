@@ -363,6 +363,38 @@ FISCAL_SCORES = {
 }
 
 # ============================================
+# PERMITS & LICENSES SECTION DATA FROM EXCEL
+# ============================================
+# Q10: Timeline to obtain operational license (Row 19)
+# Q11: ASIC imports licensing requirements (Row 20)
+# Q12: Timeline to secure construction permits (Row 21)
+# Q13: EIA required before construction (Row 22)
+# Q14: Water-use permits (Row 23)
+# Q15: Regulations heat, noise, emissions (Row 24)
+# Q16: Zoning restrictions land availability (Row 25)
+PERMIT_SCORES = {
+    "Argentina": {"Q10_Op_License": 0.70, "Q11_Import_License": 0.35, "Q12_Construction": 0.50, "Q13_EIA": 0.75, "Q14_Water": 0.15, "Q15_Emissions": 0.57, "Q16_Zoning": 0.90},
+    "Quebec (CA)": {"Q10_Op_License": 0.70, "Q11_Import_License": 0.70, "Q12_Construction": 0.50, "Q13_EIA": 0.30, "Q14_Water": 0.50, "Q15_Emissions": 0.25, "Q16_Zoning": 0.22},
+    "Alberta (CA)": {"Q10_Op_License": 0.35, "Q11_Import_License": 0.70, "Q12_Construction": 0.70, "Q13_EIA": 0.30, "Q14_Water": 0.30, "Q15_Emissions": 0.25, "Q16_Zoning": 0.15},
+    "Brazil": {"Q10_Op_License": 0.70, "Q11_Import_License": 0.70, "Q12_Construction": 0.80, "Q13_EIA": 0.30, "Q14_Water": 0.30, "Q15_Emissions": 0.68, "Q16_Zoning": 0.70},
+    "Chile": {"Q10_Op_License": 0.35, "Q11_Import_License": 0.70, "Q12_Construction": 0.30, "Q13_EIA": 0.15, "Q14_Water": 0.30, "Q15_Emissions": 0.55, "Q16_Zoning": 0.90},
+    "Ethiopia": {"Q10_Op_License": 0.35, "Q11_Import_License": 0.35, "Q12_Construction": 0.24, "Q13_EIA": 0.95, "Q14_Water": 1.00, "Q15_Emissions": 0.78, "Q16_Zoning": 0.43},
+    "Finland": {"Q10_Op_License": 0.70, "Q11_Import_License": 0.70, "Q12_Construction": 0.50, "Q13_EIA": 0.75, "Q14_Water": 0.40, "Q15_Emissions": 0.50, "Q16_Zoning": 0.50},
+    "Iceland": {"Q10_Op_License": 0.70, "Q11_Import_License": 0.70, "Q12_Construction": 0.67, "Q13_EIA": 0.50, "Q14_Water": 0.67, "Q15_Emissions": 0.72, "Q16_Zoning": 0.40},
+    "Kazakhstan": {"Q10_Op_License": 0.35, "Q11_Import_License": 0.35, "Q12_Construction": 0.90, "Q13_EIA": 0.75, "Q14_Water": 0.75, "Q15_Emissions": 0.57, "Q16_Zoning": 0.57},
+    "Kenya": {"Q10_Op_License": 0.70, "Q11_Import_License": 0.70, "Q12_Construction": 0.70, "Q13_EIA": 0.30, "Q14_Water": 0.50, "Q15_Emissions": 0.55, "Q16_Zoning": 0.90},
+    "Norway": {"Q10_Op_License": 0.70, "Q11_Import_License": 0.58, "Q12_Construction": 0.70, "Q13_EIA": 0.50, "Q14_Water": 0.55, "Q15_Emissions": 0.30, "Q16_Zoning": 0.20},
+    "Oman": {"Q10_Op_License": 0.35, "Q11_Import_License": 0.70, "Q12_Construction": 0.85, "Q13_EIA": 0.95, "Q14_Water": 0.70, "Q15_Emissions": 0.90, "Q16_Zoning": 0.70},
+    "Paraguay": {"Q10_Op_License": 0.70, "Q11_Import_License": 0.70, "Q12_Construction": 0.43, "Q13_EIA": 0.45, "Q14_Water": 0.50, "Q15_Emissions": 0.46, "Q16_Zoning": 0.61},
+    "DRC": {"Q10_Op_License": 0.70, "Q11_Import_License": 0.35, "Q12_Construction": 0.70, "Q13_EIA": 1.00, "Q14_Water": 1.00, "Q15_Emissions": 1.00, "Q16_Zoning": 0.90},
+    "Russia": {"Q10_Op_License": 0.35, "Q11_Import_License": 0.35, "Q12_Construction": 0.62, "Q13_EIA": 0.40, "Q14_Water": 0.53, "Q15_Emissions": 0.55, "Q16_Zoning": 0.50},
+    "Sweden": {"Q10_Op_License": 0.70, "Q11_Import_License": 0.70, "Q12_Construction": 0.50, "Q13_EIA": 0.50, "Q14_Water": 0.55, "Q15_Emissions": 0.50, "Q16_Zoning": 0.50},
+    "UAE": {"Q10_Op_License": 0.35, "Q11_Import_License": 0.61, "Q12_Construction": 0.67, "Q13_EIA": 0.71, "Q14_Water": 0.75, "Q15_Emissions": 0.81, "Q16_Zoning": 0.46},
+    "Texas (US)": {"Q10_Op_License": 0.70, "Q11_Import_License": 0.70, "Q12_Construction": 0.64, "Q13_EIA": 0.42, "Q14_Water": 0.50, "Q15_Emissions": 0.36, "Q16_Zoning": 0.44},
+    "Australia": {"Q10_Op_License": 0.35, "Q11_Import_License": 0.70, "Q12_Construction": 0.30, "Q13_EIA": 0.30, "Q14_Water": 0.30, "Q15_Emissions": 0.30, "Q16_Zoning": 0.30}
+}
+
+# ============================================
 # HELPER FUNCTIONS
 # ============================================
 def get_score_color(score, min_score, max_score):
@@ -398,7 +430,7 @@ def get_text_color_for_score(score):
 # ============================================
 with st.sidebar:
     st.markdown("### Navigation")
-    page = st.radio("", ["Overview", "Jurisdiction", "Legal", "Fiscal", "Methodology"], label_visibility="collapsed")
+    page = st.radio("", ["Overview", "Jurisdiction", "Legal", "Fiscal", "Permits & Licenses", "Methodology"], label_visibility="collapsed")
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
@@ -1190,6 +1222,233 @@ elif page == "Fiscal":
         * Ethiopia: 30% CIT rate currently not applied to Bitcoin miners
     </p>
     """, unsafe_allow_html=True)
+
+# ============================================
+# PERMITS & LICENSES PAGE
+# ============================================
+elif page == "Permits & Licenses":
+    st.markdown("# Permits & Licenses Analysis")
+    st.markdown('<p class="subtitle-text">Regulatory requirements and permitting conditions assessment</p>', unsafe_allow_html=True)
+    
+    # Create Permits DataFrame
+    permit_data = []
+    for country, scores in PERMIT_SCORES.items():
+        permit_data.append({
+            "Country": country,
+            "Q10_Op_License": scores["Q10_Op_License"],
+            "Q11_Import_License": scores["Q11_Import_License"],
+            "Q12_Construction": scores["Q12_Construction"],
+            "Q13_EIA": scores["Q13_EIA"],
+            "Q14_Water": scores["Q14_Water"],
+            "Q15_Emissions": scores["Q15_Emissions"],
+            "Q16_Zoning": scores["Q16_Zoning"]
+        })
+    df_permit = pd.DataFrame(permit_data)
+    df_permit = df_permit.merge(df[["Country", "Region"]], on="Country", how="left")
+    df_permit["ISO"] = df_permit["Country"].map(ISO_CODES)
+    
+    # =====================
+    # SECTION 1: Radar Chart Comparison (Coleoptere)
+    # =====================
+    st.markdown('<p class="section-title">Regulatory Constraints Comparison</p>', unsafe_allow_html=True)
+    
+    col_radar_f1, col_radar_f2 = st.columns(2)
+    countries_list = df_permit["Country"].tolist()
+    
+    with col_radar_f1:
+        country1_radar = st.selectbox("Select first jurisdiction", countries_list, index=0, key="permit_radar_country1")
+    with col_radar_f2:
+        country2_radar = st.selectbox("Select second jurisdiction", countries_list, index=1, key="permit_radar_country2")
+    
+    # Radar chart categories
+    radar_categories = ["Water Permit", "EIA Process", "Zoning & Land", "Emissions & Noise"]
+    radar_cols = ["Q14_Water", "Q13_EIA", "Q16_Zoning", "Q15_Emissions"]
+    
+    # Get data for both countries
+    country1_data = df_permit[df_permit["Country"] == country1_radar].iloc[0]
+    country2_data = df_permit[df_permit["Country"] == country2_radar].iloc[0]
+    
+    country1_values = [country1_data[col] for col in radar_cols]
+    country2_values = [country2_data[col] for col in radar_cols]
+    
+    # Close the radar
+    country1_values.append(country1_values[0])
+    country2_values.append(country2_values[0])
+    radar_categories_closed = radar_categories + [radar_categories[0]]
+    
+    fig_radar = go.Figure()
+    
+    fig_radar.add_trace(go.Scatterpolar(
+        r=country1_values,
+        theta=radar_categories_closed,
+        fill='toself',
+        fillcolor='rgba(98, 135, 240, 0.3)',
+        line=dict(color='#6287F0', width=2),
+        name=country1_radar
+    ))
+    
+    fig_radar.add_trace(go.Scatterpolar(
+        r=country2_values,
+        theta=radar_categories_closed,
+        fill='toself',
+        fillcolor='rgba(29, 13, 237, 0.3)',
+        line=dict(color='#1D0DED', width=2),
+        name=country2_radar
+    ))
+    
+    fig_radar.update_layout(
+        polar=dict(
+            radialaxis=dict(
+                visible=True,
+                range=[0, 1],
+                tickfont=dict(size=10, family="Barlow"),
+                gridcolor='#E2E8F0'
+            ),
+            angularaxis=dict(
+                tickfont=dict(size=11, family="Barlow")
+            ),
+            bgcolor='rgba(0,0,0,0)'
+        ),
+        showlegend=True,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.1,
+            xanchor="center",
+            x=0.5,
+            font=dict(family="Barlow")
+        ),
+        height=400,
+        margin=dict(l=60, r=60, t=60, b=40),
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow")
+    )
+    st.plotly_chart(fig_radar, use_container_width=True)
+    
+    st.markdown("---")
+    
+    # =====================
+    # SECTION 2: Map with filter for Q10 and Q11 (Yes/No binary)
+    # =====================
+    st.markdown('<p class="section-title">Licensing Requirements Map</p>', unsafe_allow_html=True)
+    
+    col_map_filter, _ = st.columns([1, 3])
+    with col_map_filter:
+        permit_map_question = st.selectbox(
+            "Select question",
+            ["License required for operations?", "License required for imports?"],
+            key="permit_map_filter"
+        )
+    
+    if permit_map_question == "License required for operations?":
+        map_col = "Q10_Op_License"
+        map_title = "Operational License Requirement"
+    else:
+        map_col = "Q11_Import_License"
+        map_title = "Import License Requirement"
+    
+    # For licenses: low score = Yes (license required), high score = No (no license)
+    df_permit["Binary"] = df_permit[map_col].apply(lambda x: 0 if x < 0.5 else 1)
+    # Yes (required) = #fc7a53, No (not required) = #12E09B
+    binary_colorscale = [[0, '#fc7a53'], [1, '#12E09B']]
+    yes_color = "#fc7a53"
+    no_color = "#12E09B"
+    
+    df_permit_agg = df_permit.groupby("ISO").agg({
+        "Binary": "mean",
+        "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]
+    }).reset_index()
+    df_permit_agg.columns = ["ISO", "Score", "Country"]
+    
+    fig_permit_map = go.Figure(go.Choropleth(
+        locations=df_permit_agg["ISO"],
+        z=df_permit_agg["Score"],
+        text=df_permit_agg["Country"],
+        colorscale=binary_colorscale,
+        autocolorscale=False,
+        zmin=0,
+        zmax=1,
+        marker_line_color='#4B5563',
+        marker_line_width=1,
+        showscale=False,
+        hovertemplate="<b>%{text}</b><extra></extra>"
+    ))
+    fig_permit_map.update_layout(
+        height=450,
+        margin=dict(l=0, r=0, t=30, b=0),
+        title=dict(
+            text=map_title,
+            font=dict(family="Barlow", size=14, color="#1E293B"),
+            x=0.5,
+            xanchor="center"
+        ),
+        geo=dict(
+            showframe=False,
+            showcoastlines=True,
+            coastlinecolor="#94A3B8",
+            showland=True,
+            landcolor="#E2E8F0",
+            showocean=True,
+            oceancolor="#FFFFFF",
+            showcountries=True,
+            countrycolor="#94A3B8",
+            projection_type='natural earth',
+            bgcolor='rgba(0,0,0,0)'
+        ),
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow")
+    )
+    st.plotly_chart(fig_permit_map, use_container_width=True)
+    
+    # Binary legend Yes/No
+    st.markdown(f"""
+    <div style="display: flex; justify-content: center; gap: 3rem; margin: 1rem 0; font-size: 0.9rem;">
+        <span><strong style="color: {yes_color}; font-size: 1.2rem;">●</strong> Yes (License Required)</span>
+        <span><strong style="color: {no_color}; font-size: 1.2rem;">●</strong> No (No License Required)</span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # =====================
+    # SECTION 3: Construction Permit Timeline Bar Chart
+    # =====================
+    st.markdown('<p class="section-title">Timeline to Secure Construction Permits</p>', unsafe_allow_html=True)
+    
+    df_construction = df_permit.sort_values("Q12_Construction", ascending=True)
+    
+    # Color based on score (higher = faster/better = greener)
+    colors_construction = [get_score_color(s, df_construction["Q12_Construction"].min(), df_construction["Q12_Construction"].max()) for s in df_construction["Q12_Construction"]]
+    
+    fig_construction = go.Figure(go.Bar(
+        x=df_construction["Q12_Construction"],
+        y=df_construction["Country"],
+        orientation='h',
+        marker_color=colors_construction,
+        text=df_construction["Q12_Construction"].round(2),
+        textposition='outside',
+        textfont=dict(size=11, family="Barlow")
+    ))
+    
+    fig_construction.update_layout(
+        height=550,
+        margin=dict(l=0, r=60, t=10, b=60),
+        xaxis=dict(
+            title="Score (higher = faster approval)",
+            range=[0, 1.1],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12)
+        ),
+        yaxis=dict(
+            title="",
+            tickfont=dict(family="Barlow", size=11)
+        ),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow")
+    )
+    st.plotly_chart(fig_construction, use_container_width=True)
 
 # ============================================
 # METHODOLOGY PAGE
