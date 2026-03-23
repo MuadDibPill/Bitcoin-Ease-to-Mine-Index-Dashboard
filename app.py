@@ -395,6 +395,35 @@ PERMIT_SCORES = {
 }
 
 # ============================================
+# ENERGY & GRID SECTION DATA FROM EXCEL
+# ============================================
+# Q22: Level of barriers to entry for accessing grid/energy (Row 33)
+# Q23: Lead time grid connection (Row 34)
+# Q24: Electricity Price (Row 35)
+# Q25: Specific regulatory status for miners / Grid status (Row 36)
+ENERGY_SCORES = {
+    "Argentina": {"Q22_Barriers": 0.21, "Q23_Lead_Time": 0.62, "Q24_Elec_Price": 0.35, "Q25_Grid_Status": 0.50},
+    "Quebec (CA)": {"Q22_Barriers": 0.21, "Q23_Lead_Time": 0.62, "Q24_Elec_Price": 0.55, "Q25_Grid_Status": 0.62},
+    "Alberta (CA)": {"Q22_Barriers": 0.15, "Q23_Lead_Time": 0.00, "Q24_Elec_Price": 0.55, "Q25_Grid_Status": 0.50},
+    "Brazil": {"Q22_Barriers": 0.67, "Q23_Lead_Time": 0.42, "Q24_Elec_Price": 0.50, "Q25_Grid_Status": 0.50},
+    "Chile": {"Q22_Barriers": 0.00, "Q23_Lead_Time": 0.25, "Q24_Elec_Price": 0.50, "Q25_Grid_Status": 0.50},
+    "Ethiopia": {"Q22_Barriers": 0.81, "Q23_Lead_Time": 0.71, "Q24_Elec_Price": 0.25, "Q25_Grid_Status": 0.50},
+    "Finland": {"Q22_Barriers": 0.50, "Q23_Lead_Time": 0.35, "Q24_Elec_Price": 0.88, "Q25_Grid_Status": 0.50},
+    "Iceland": {"Q22_Barriers": 0.58, "Q23_Lead_Time": 0.45, "Q24_Elec_Price": 0.50, "Q25_Grid_Status": 0.50},
+    "Kazakhstan": {"Q22_Barriers": 0.19, "Q23_Lead_Time": 0.00, "Q24_Elec_Price": 0.28, "Q25_Grid_Status": 0.50},
+    "Kenya": {"Q22_Barriers": 1.00, "Q23_Lead_Time": 1.00, "Q24_Elec_Price": 0.50, "Q25_Grid_Status": 0.50},
+    "Norway": {"Q22_Barriers": 0.23, "Q23_Lead_Time": 0.25, "Q24_Elec_Price": 1.00, "Q25_Grid_Status": 0.50},
+    "Oman": {"Q22_Barriers": 0.75, "Q23_Lead_Time": 0.65, "Q24_Elec_Price": 0.50, "Q25_Grid_Status": 0.50},
+    "Paraguay": {"Q22_Barriers": 0.44, "Q23_Lead_Time": 0.82, "Q24_Elec_Price": 0.40, "Q25_Grid_Status": 0.50},
+    "DRC": {"Q22_Barriers": 0.50, "Q23_Lead_Time": 1.00, "Q24_Elec_Price": 0.00, "Q25_Grid_Status": 0.50},
+    "Russia": {"Q22_Barriers": 0.23, "Q23_Lead_Time": 0.62, "Q24_Elec_Price": 0.53, "Q25_Grid_Status": 0.25},
+    "Sweden": {"Q22_Barriers": 0.50, "Q23_Lead_Time": 0.75, "Q24_Elec_Price": 0.50, "Q25_Grid_Status": 0.50},
+    "UAE": {"Q22_Barriers": 0.83, "Q23_Lead_Time": 0.53, "Q24_Elec_Price": 0.62, "Q25_Grid_Status": 0.50},
+    "Texas (US)": {"Q22_Barriers": 0.39, "Q23_Lead_Time": 0.69, "Q24_Elec_Price": 0.57, "Q25_Grid_Status": 0.50},
+    "Australia": {"Q22_Barriers": 0.30, "Q23_Lead_Time": 0.30, "Q24_Elec_Price": 0.30, "Q25_Grid_Status": 0.30}
+}
+
+# ============================================
 # HELPER FUNCTIONS
 # ============================================
 def get_score_color(score, min_score, max_score):
@@ -430,7 +459,7 @@ def get_text_color_for_score(score):
 # ============================================
 with st.sidebar:
     st.markdown("### Navigation")
-    page = st.radio("", ["Overview", "Jurisdiction", "Legal", "Fiscal", "Permits & Licenses", "Methodology"], label_visibility="collapsed")
+    page = st.radio("", ["Overview", "Jurisdiction", "Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Methodology"], label_visibility="collapsed")
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
@@ -1328,10 +1357,10 @@ elif page == "Permits & Licenses":
     # Descriptions for each radar dimension
     st.markdown("""
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; font-size: 0.85rem; color: #475569;">
-        <div><strong style="color: #F3B11D;">●</strong> <strong>EIA Process:</strong> Environmental Impact Assessment — measures level of constraints when developing a site</div>
-        <div><strong style="color: #fc7a53;">●</strong> <strong>Water Permit:</strong> Level of constraints to comply with in order to operate a data center and obtain permits</div>
+        <div><strong style="color: #F3B11D;">●</strong> <strong>EIA Process:</strong> Environmental Impact Assessment — measures how burdensome the process used to evaluate the potential environmental effects of a proposed project before it is approved or built.</div>
+        <div><strong style="color: #fc7a53;">●</strong> <strong>Water Permit:</strong> An official authorization that allows a project to use, withdraw, discharge, or alter water resources under regulated conditions. It evaluates how difficult is to obtain this permit when developing a mining data center.</div>
         <div><strong style="color: #F3B11D;">●</strong> <strong>Zoning & Land:</strong> How zoning rules impact land availability for data center development</div>
-        <div><strong style="color: #fc7a53;">●</strong> <strong>Emissions & Noise:</strong> Regulation compliance constraints on mining operations</div>
+        <div><strong style="color: #fc7a53;">●</strong> <strong>Emissions & Noise:</strong> Sizes how restrictive these rules are on data center operations</div>
     </div>
     """, unsafe_allow_html=True)
     
@@ -1431,7 +1460,8 @@ elif page == "Permits & Licenses":
     # =====================
     # SECTION 3: Construction Permit Timeline Bar Chart
     # =====================
-    st.markdown('<p class="section-title">Timeline to Secure Construction Permits</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-title">How Long to Break Ground?</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">Construction permit timelines for Bitcoin mining facilities</p>', unsafe_allow_html=True)
     
     # Convert score to estimated months (inverse relationship: higher score = faster = fewer months)
     # Linear mapping: score 1.0 = 2 months, score 0.2 = 18 months
@@ -1490,6 +1520,233 @@ elif page == "Permits & Licenses":
         <span><strong style="color: #F3B11D; font-size: 1.1rem;">●</strong> 10-12 months</span>
         <span><strong style="color: #fc7a53; font-size: 1.1rem;">●</strong> &gt;12 months</span>
     </div>
+    """, unsafe_allow_html=True)
+
+# ============================================
+# ENERGY & GRID PAGE
+# ============================================
+elif page == "Energy & Grid":
+    st.markdown("# Energy & Grid Access")
+    st.markdown('<p class="subtitle-text">Power market accessibility and grid connection conditions</p>', unsafe_allow_html=True)
+    
+    # Create Energy DataFrame
+    energy_data = []
+    for country, scores in ENERGY_SCORES.items():
+        energy_data.append({
+            "Country": country,
+            "Q22_Barriers": scores["Q22_Barriers"],
+            "Q23_Lead_Time": scores["Q23_Lead_Time"],
+            "Q24_Elec_Price": scores["Q24_Elec_Price"],
+            "Q25_Grid_Status": scores["Q25_Grid_Status"]
+        })
+    df_energy = pd.DataFrame(energy_data)
+    df_energy = df_energy.merge(df[["Country", "Region"]], on="Country", how="left")
+    df_energy["ISO"] = df_energy["Country"].map(ISO_CODES)
+    
+    # =====================
+    # SECTION 1: Scatter Plot - Grid Status vs Barriers to Entry
+    # =====================
+    st.markdown('<p class="section-title">Grid Status vs Energy Market Barriers</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">Regulatory status for miners vs. barriers to entry for grid/energy access</p>', unsafe_allow_html=True)
+    
+    fig_energy_scatter = go.Figure()
+    
+    # Add colored quadrant backgrounds (15% opacity)
+    # Top-right: Favorable Status / Low Barriers (GREEN - best)
+    fig_energy_scatter.add_shape(type="rect", x0=0.5, y0=0.5, x1=1, y1=1,
+        fillcolor="rgba(30, 132, 73, 0.15)", line=dict(width=0), layer="below")
+    # Top-left: Favorable Status / High Barriers (ORANGE)
+    fig_energy_scatter.add_shape(type="rect", x0=0, y0=0.5, x1=0.5, y1=1,
+        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
+    # Bottom-right: Unfavorable Status / Low Barriers (ORANGE)
+    fig_energy_scatter.add_shape(type="rect", x0=0.5, y0=0, x1=1, y1=0.5,
+        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
+    # Bottom-left: Unfavorable Status / High Barriers (RED - worst)
+    fig_energy_scatter.add_shape(type="rect", x0=0, y0=0, x1=0.5, y1=0.5,
+        fillcolor="rgba(146, 43, 33, 0.15)", line=dict(width=0), layer="below")
+    
+    # Calculate colors based on combined score
+    colors_energy = [get_score_color((row["Q25_Grid_Status"] + row["Q22_Barriers"]) / 2, 0, 1) for _, row in df_energy.iterrows()]
+    
+    fig_energy_scatter.add_trace(go.Scatter(
+        x=df_energy["Q22_Barriers"],
+        y=df_energy["Q25_Grid_Status"],
+        mode='markers+text',
+        marker=dict(
+            size=14,
+            color=colors_energy,
+            line=dict(width=1.5, color='#4B5563')
+        ),
+        text=df_energy["Country"],
+        textposition='top center',
+        textfont=dict(size=10, family="Barlow"),
+        hovertemplate="<b>%{text}</b><br>Grid Status: %{y:.2f}<br>Barriers: %{x:.2f}<extra></extra>"
+    ))
+    
+    # Add quadrant lines
+    fig_energy_scatter.add_hline(y=0.5, line_dash="dash", line_color="#94A3B8", line_width=1.5)
+    fig_energy_scatter.add_vline(x=0.5, line_dash="dash", line_color="#94A3B8", line_width=1.5)
+    
+    # Add quadrant labels
+    fig_energy_scatter.add_annotation(x=0.75, y=0.97, text="<b>Favorable Status / Low Barriers</b>", showarrow=False,
+        font=dict(size=11, color="#1E8449", family="Barlow"), xanchor="center")
+    fig_energy_scatter.add_annotation(x=0.25, y=0.97, text="<b>Favorable Status / High Barriers</b>", showarrow=False,
+        font=dict(size=11, color="#E67E22", family="Barlow"), xanchor="center")
+    fig_energy_scatter.add_annotation(x=0.75, y=0.03, text="<b>Unfavorable Status / Low Barriers</b>", showarrow=False,
+        font=dict(size=11, color="#E67E22", family="Barlow"), xanchor="center")
+    fig_energy_scatter.add_annotation(x=0.25, y=0.03, text="<b>Unfavorable Status / High Barriers</b>", showarrow=False,
+        font=dict(size=11, color="#922B21", family="Barlow"), xanchor="center")
+    
+    fig_energy_scatter.update_layout(
+        height=550,
+        margin=dict(l=60, r=60, t=30, b=60),
+        xaxis=dict(
+            title="<b>Barriers to Entry for Energy Market Access</b><br>(Higher = Lower Barriers)",
+            range=[-0.05, 1.05],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12)
+        ),
+        yaxis=dict(
+            title="<b>Regulatory Status for Miners</b><br>(Higher = More Favorable)",
+            range=[-0.05, 1.05],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12)
+        ),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow"),
+        showlegend=False
+    )
+    st.plotly_chart(fig_energy_scatter, use_container_width=True)
+    
+    st.markdown("---")
+    
+    # =====================
+    # SECTION 2: Grid Connection Lead Time Bar Chart
+    # =====================
+    st.markdown('<p class="section-title">Grid Connection Lead Time</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">How long does it take to connect to the grid?</p>', unsafe_allow_html=True)
+    
+    # Convert score to estimated months (inverse: higher score = faster)
+    df_lead_time = df_energy.copy()
+    df_lead_time["Months"] = df_lead_time["Q23_Lead_Time"].apply(lambda s: round(24 - (s * 18)) if s > 0 else 24)
+    df_lead_time = df_lead_time.sort_values("Months", ascending=False)
+    
+    # Color based on month brackets
+    def get_lead_time_color(months):
+        if months <= 6:
+            return '#0EAA76'  # Dark green
+        elif months <= 12:
+            return '#12E09B'  # Light green
+        elif months <= 18:
+            return '#F3B11D'  # Orange/yellow
+        else:
+            return '#fc7a53'  # Red-orange
+    
+    colors_lead_time = [get_lead_time_color(m) for m in df_lead_time["Months"]]
+    
+    fig_lead_time = go.Figure(go.Bar(
+        x=df_lead_time["Months"],
+        y=df_lead_time["Country"],
+        orientation='h',
+        marker_color=colors_lead_time,
+        text=df_lead_time["Months"].apply(lambda x: f"{x} months"),
+        textposition='outside',
+        textfont=dict(size=11, family="Barlow")
+    ))
+    
+    fig_lead_time.update_layout(
+        height=550,
+        margin=dict(l=0, r=80, t=10, b=60),
+        xaxis=dict(
+            title="Grid Connection Lead Time (months)",
+            range=[0, df_lead_time["Months"].max() + 3],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12)
+        ),
+        yaxis=dict(
+            title="",
+            tickfont=dict(family="Barlow", size=11)
+        ),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow")
+    )
+    st.plotly_chart(fig_lead_time, use_container_width=True)
+    
+    # Legend for lead time color brackets
+    st.markdown("""
+    <div style="display: flex; justify-content: center; gap: 1.5rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
+        <span><strong style="color: #0EAA76; font-size: 1.1rem;">●</strong> ≤6 months</span>
+        <span><strong style="color: #12E09B; font-size: 1.1rem;">●</strong> 7-12 months</span>
+        <span><strong style="color: #F3B11D; font-size: 1.1rem;">●</strong> 13-18 months</span>
+        <span><strong style="color: #fc7a53; font-size: 1.1rem;">●</strong> &gt;18 months</span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # =====================
+    # SECTION 3: Electricity Price Score Map
+    # =====================
+    st.markdown('<p class="section-title">Electricity Price Competitiveness</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">Relative electricity costs for mining operations</p>', unsafe_allow_html=True)
+    
+    df_elec_map = df_energy.copy()
+    df_elec_agg = df_elec_map.groupby("ISO").agg({
+        "Q24_Elec_Price": "mean",
+        "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]
+    }).reset_index()
+    df_elec_agg.columns = ["ISO", "Score", "Country"]
+    
+    fig_elec_map = go.Figure(go.Choropleth(
+        locations=df_elec_agg["ISO"],
+        z=df_elec_agg["Score"],
+        text=df_elec_agg["Country"],
+        colorscale=[
+            [0, '#922B21'], [0.25, '#E67E22'], [0.5, '#F4D03F'], [0.75, '#52BE80'], [1, '#1E8449']
+        ],
+        autocolorscale=False,
+        zmin=0,
+        zmax=1,
+        marker_line_color='#4B5563',
+        marker_line_width=1,
+        colorbar=dict(
+            title=dict(text="Score", side="right", font=dict(family="Barlow", size=12)),
+            tickfont=dict(family="Barlow", size=10),
+            len=0.6
+        ),
+        hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"
+    ))
+    
+    fig_elec_map.update_layout(
+        height=450,
+        margin=dict(l=0, r=0, t=10, b=0),
+        geo=dict(
+            showframe=False,
+            showcoastlines=True,
+            coastlinecolor="#94A3B8",
+            showland=True,
+            landcolor="#E2E8F0",
+            showocean=True,
+            oceancolor="#FFFFFF",
+            showcountries=True,
+            countrycolor="#94A3B8",
+            projection_type='natural earth',
+            bgcolor='rgba(0,0,0,0)'
+        ),
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow")
+    )
+    st.plotly_chart(fig_elec_map, use_container_width=True)
+    
+    st.markdown("""
+    <p style="font-size: 0.85rem; color: #64748B; text-align: center;">
+        Higher score = more competitive electricity prices for mining operations
+    </p>
     """, unsafe_allow_html=True)
 
 # ============================================
