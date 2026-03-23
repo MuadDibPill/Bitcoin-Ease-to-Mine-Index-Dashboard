@@ -1531,25 +1531,25 @@ elif page == "Energy & Grid":
     
     # Real data from EMI report - Electricity Price ($/MWh) and Grid Connection Time (months)
     ENERGY_REAL_DATA = {
-        "Argentina": {"price_mwh": 51.25, "grid_months": 12},
-        "Quebec (CA)": {"price_mwh": 45.0, "grid_months": 15},  # Special rate for new miners is higher
-        "Alberta (CA)": {"price_mwh": 45.0, "grid_months": 24},
-        "Brazil": {"price_mwh": 50.0, "grid_months": 12},
-        "Chile": {"price_mwh": 60.0, "grid_months": 24},
-        "Ethiopia": {"price_mwh": 42.5, "grid_months": 9},
-        "Finland": {"price_mwh": 45.0, "grid_months": 15},  # Before electricity tax
-        "Iceland": {"price_mwh": 55.0, "grid_months": 12},
-        "Kazakhstan": {"price_mwh": 60.0, "grid_months": 15},
-        "Kenya": {"price_mwh": 35.0, "grid_months": 6},  # Off-grid mainly
-        "Norway": {"price_mwh": 35.0, "grid_months": 21},
-        "Oman": {"price_mwh": 41.75, "grid_months": 9},
-        "Paraguay": {"price_mwh": 48.75, "grid_months": 7.5},
-        "DRC": {"price_mwh": 22.0, "grid_months": 6},  # Off-grid hydro
-        "Russia": {"price_mwh": 60.0, "grid_months": 12},
-        "Sweden": {"price_mwh": 38.75, "grid_months": 15},  # Before electricity tax
-        "UAE": {"price_mwh": 45.0, "grid_months": 9},
-        "Texas (US)": {"price_mwh": 45.0, "grid_months": 12},
-        "Australia": {"price_mwh": 60.0, "grid_months": 15}
+        "Argentina": {"price_mwh": 51.25, "grid_months": 12, "barriers": 0.21},
+        "Quebec (CA)": {"price_mwh": 45.0, "grid_months": 15, "barriers": 0.21},
+        "Alberta (CA)": {"price_mwh": 45.0, "grid_months": 24, "barriers": 0.15},
+        "Brazil": {"price_mwh": 50.0, "grid_months": 12, "barriers": 0.67},
+        "Chile": {"price_mwh": 60.0, "grid_months": 24, "barriers": 0.00},
+        "Ethiopia": {"price_mwh": 42.5, "grid_months": 9, "barriers": 0.81},
+        "Finland": {"price_mwh": 45.0, "grid_months": 15, "barriers": 0.50},
+        "Iceland": {"price_mwh": 55.0, "grid_months": 12, "barriers": 0.58},
+        "Kazakhstan": {"price_mwh": 60.0, "grid_months": 15, "barriers": 0.19},
+        "Kenya": {"price_mwh": 35.0, "grid_months": 6, "barriers": 1.00},
+        "Norway": {"price_mwh": 35.0, "grid_months": 21, "barriers": 0.23},
+        "Oman": {"price_mwh": 41.75, "grid_months": 9, "barriers": 0.75},
+        "Paraguay": {"price_mwh": 48.75, "grid_months": 7.5, "barriers": 0.44},
+        "DRC": {"price_mwh": 22.0, "grid_months": 6, "barriers": 0.50},
+        "Russia": {"price_mwh": 60.0, "grid_months": 12, "barriers": 0.23},
+        "Sweden": {"price_mwh": 38.75, "grid_months": 15, "barriers": 0.50},
+        "UAE": {"price_mwh": 45.0, "grid_months": 9, "barriers": 0.83},
+        "Texas (US)": {"price_mwh": 45.0, "grid_months": 12, "barriers": 0.39},
+        "Australia": {"price_mwh": 60.0, "grid_months": 15, "barriers": 0.30}
     }
     
     # Create Energy DataFrame with real data
@@ -1558,10 +1558,12 @@ elif page == "Energy & Grid":
         energy_real_list.append({
             "Country": country,
             "Price_MWh": data["price_mwh"],
-            "Grid_Months": data["grid_months"]
+            "Grid_Months": data["grid_months"],
+            "Barriers": data["barriers"]
         })
     df_energy_real = pd.DataFrame(energy_real_list)
     df_energy_real = df_energy_real.merge(df[["Country", "Region"]], on="Country", how="left")
+    df_energy_real["ISO"] = df_energy_real["Country"].map(ISO_CODES)
     
     # =====================
     # SECTION 1: Scatter Plot - Grid Connection Time vs Electricity Price (Real Values)
@@ -1571,29 +1573,29 @@ elif page == "Energy & Grid":
     
     fig_energy_scatter = go.Figure()
     
-    # Define thresholds for quadrants
-    price_median = 45.0  # Industry median
-    time_median = 12  # Months median
+    # Define thresholds for quadrants - center at 15 months and 47.5 $/MWh
+    price_center = 47.5
+    time_center = 15
     
     # Add colored quadrant backgrounds (15% opacity)
     # Top-left: Fast Connection / Expensive Power (ORANGE)
-    fig_energy_scatter.add_shape(type="rect", x0=0, y0=price_median, x1=time_median, y1=80,
+    fig_energy_scatter.add_shape(type="rect", x0=3, y0=price_center, x1=time_center, y1=80,
         fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
     # Top-right: Slow Connection / Expensive Power (RED - worst)
-    fig_energy_scatter.add_shape(type="rect", x0=time_median, y0=price_median, x1=30, y1=80,
+    fig_energy_scatter.add_shape(type="rect", x0=time_center, y0=price_center, x1=30, y1=80,
         fillcolor="rgba(146, 43, 33, 0.15)", line=dict(width=0), layer="below")
     # Bottom-left: Fast Connection / Cheap Power (GREEN - best)
-    fig_energy_scatter.add_shape(type="rect", x0=0, y0=15, x1=time_median, y1=price_median,
+    fig_energy_scatter.add_shape(type="rect", x0=3, y0=15, x1=time_center, y1=price_center,
         fillcolor="rgba(30, 132, 73, 0.15)", line=dict(width=0), layer="below")
     # Bottom-right: Slow Connection / Cheap Power (ORANGE)
-    fig_energy_scatter.add_shape(type="rect", x0=time_median, y0=15, x1=30, y1=price_median,
+    fig_energy_scatter.add_shape(type="rect", x0=time_center, y0=15, x1=30, y1=price_center,
         fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
     
     # Calculate colors based on combined favorability (lower price + faster time = better)
     def get_energy_color(price, months):
         # Normalize: lower is better for both
         price_score = 1 - (price - 20) / (70 - 20)  # 20-70 range
-        time_score = 1 - (months - 6) / (24 - 6)  # 6-24 range
+        time_score = 1 - (months - 3) / (30 - 3)  # 3-30 range
         combined = (price_score + time_score) / 2
         return get_score_color(max(0, min(1, combined)), 0, 1)
     
@@ -1614,20 +1616,20 @@ elif page == "Energy & Grid":
         hovertemplate="<b>%{text}</b><br>Grid Time: %{x} months<br>Price: $%{y}/MWh<extra></extra>"
     ))
     
-    # Add quadrant lines at medians
-    fig_energy_scatter.add_hline(y=price_median, line_dash="dash", line_color="#94A3B8", line_width=1.5,
-        annotation_text="Industry Median $45/MWh", annotation_position="right")
-    fig_energy_scatter.add_vline(x=time_median, line_dash="dash", line_color="#94A3B8", line_width=1.5,
-        annotation_text="12 months", annotation_position="top")
+    # Add quadrant lines at medians (dashed line at 45$/MWh as requested)
+    fig_energy_scatter.add_hline(y=45, line_dash="dash", line_color="#94A3B8", line_width=1.5,
+        annotation_text="$45/MWh", annotation_position="right")
+    fig_energy_scatter.add_vline(x=time_center, line_dash="dash", line_color="#94A3B8", line_width=1.5,
+        annotation_text="15 months", annotation_position="top")
     
     # Add quadrant labels
-    fig_energy_scatter.add_annotation(x=6, y=75, text="<b>Fast / Expensive</b>", showarrow=False,
+    fig_energy_scatter.add_annotation(x=9, y=75, text="<b>Fast / Expensive</b>", showarrow=False,
         font=dict(size=11, color="#E67E22", family="Barlow"), xanchor="center")
-    fig_energy_scatter.add_annotation(x=21, y=75, text="<b>Slow / Expensive</b>", showarrow=False,
+    fig_energy_scatter.add_annotation(x=22.5, y=75, text="<b>Slow / Expensive</b>", showarrow=False,
         font=dict(size=11, color="#922B21", family="Barlow"), xanchor="center")
-    fig_energy_scatter.add_annotation(x=6, y=20, text="<b>Fast / Cheap</b>", showarrow=False,
+    fig_energy_scatter.add_annotation(x=9, y=20, text="<b>Fast / Cheap</b>", showarrow=False,
         font=dict(size=11, color="#1E8449", family="Barlow"), xanchor="center")
-    fig_energy_scatter.add_annotation(x=21, y=20, text="<b>Slow / Cheap</b>", showarrow=False,
+    fig_energy_scatter.add_annotation(x=22.5, y=20, text="<b>Slow / Cheap</b>", showarrow=False,
         font=dict(size=11, color="#E67E22", family="Barlow"), xanchor="center")
     
     fig_energy_scatter.update_layout(
@@ -1635,7 +1637,7 @@ elif page == "Energy & Grid":
         margin=dict(l=60, r=60, t=30, b=60),
         xaxis=dict(
             title="<b>Grid Connection Lead Time (months)</b>",
-            range=[0, 28],
+            range=[3, 30],
             gridcolor='#E2E8F0',
             tickfont=dict(family="Barlow", size=11),
             titlefont=dict(family="Barlow", size=12),
@@ -1659,65 +1661,64 @@ elif page == "Energy & Grid":
     st.markdown("---")
     
     # =====================
-    # SECTION 2: Grid Connection Lead Time Bar Chart
+    # SECTION 2: Map - Barriers to Entry the Energy Market
     # =====================
-    st.markdown('<p class="section-title">Grid Connection Lead Time</p>', unsafe_allow_html=True)
-    st.markdown('<p class="subtitle-text">How long does it take to connect to the grid?</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-title">Barriers to Entry the Energy Market</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">Level of barriers to entry for accessing grid/energy</p>', unsafe_allow_html=True)
     
-    df_lead_time = df_energy_real.copy()
-    df_lead_time = df_lead_time.sort_values("Grid_Months", ascending=False)
+    df_barriers_agg = df_energy_real.groupby("ISO").agg({
+        "Barriers": "mean",
+        "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]
+    }).reset_index()
+    df_barriers_agg.columns = ["ISO", "Score", "Country"]
     
-    # Color based on month brackets
-    def get_lead_time_color(months):
-        if months <= 6:
-            return '#0EAA76'  # Dark green
-        elif months <= 12:
-            return '#12E09B'  # Light green
-        elif months <= 18:
-            return '#F3B11D'  # Orange/yellow
-        else:
-            return '#fc7a53'  # Red-orange
-    
-    colors_lead_time = [get_lead_time_color(m) for m in df_lead_time["Grid_Months"]]
-    
-    fig_lead_time = go.Figure(go.Bar(
-        x=df_lead_time["Grid_Months"],
-        y=df_lead_time["Country"],
-        orientation='h',
-        marker_color=colors_lead_time,
-        text=df_lead_time["Grid_Months"].apply(lambda x: f"{x:.0f} months" if x == int(x) else f"{x} months"),
-        textposition='outside',
-        textfont=dict(size=11, family="Barlow")
+    fig_barriers_map = go.Figure(go.Choropleth(
+        locations=df_barriers_agg["ISO"],
+        z=df_barriers_agg["Score"],
+        text=df_barriers_agg["Country"],
+        colorscale=[
+            [0, '#922B21'], [0.25, '#E67E22'], [0.5, '#F4D03F'], [0.75, '#52BE80'], [1, '#1E8449']
+        ],
+        autocolorscale=False,
+        zmin=0,
+        zmax=1,
+        marker_line_color='#4B5563',
+        marker_line_width=1,
+        colorbar=dict(
+            title=dict(text="Score", side="right", font=dict(family="Barlow", size=12)),
+            tickfont=dict(family="Barlow", size=10),
+            len=0.6,
+            tickvals=[0, 0.25, 0.5, 0.75, 1],
+            ticktext=["High Barriers", "", "Neutral", "", "Low Barriers"]
+        ),
+        hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"
     ))
     
-    fig_lead_time.update_layout(
-        height=550,
-        margin=dict(l=0, r=80, t=10, b=60),
-        xaxis=dict(
-            title="Grid Connection Lead Time (months)",
-            range=[0, df_lead_time["Grid_Months"].max() + 3],
-            gridcolor='#E2E8F0',
-            tickfont=dict(family="Barlow", size=11),
-            titlefont=dict(family="Barlow", size=12)
+    fig_barriers_map.update_layout(
+        height=450,
+        margin=dict(l=0, r=0, t=10, b=0),
+        geo=dict(
+            showframe=False,
+            showcoastlines=True,
+            coastlinecolor="#94A3B8",
+            showland=True,
+            landcolor="#E2E8F0",
+            showocean=True,
+            oceancolor="#FFFFFF",
+            showcountries=True,
+            countrycolor="#94A3B8",
+            projection_type='natural earth',
+            bgcolor='rgba(0,0,0,0)'
         ),
-        yaxis=dict(
-            title="",
-            tickfont=dict(family="Barlow", size=11)
-        ),
-        plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
         font=dict(family="Barlow")
     )
-    st.plotly_chart(fig_lead_time, use_container_width=True)
+    st.plotly_chart(fig_barriers_map, use_container_width=True)
     
-    # Legend for lead time color brackets
     st.markdown("""
-    <div style="display: flex; justify-content: center; gap: 1.5rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
-        <span><strong style="color: #0EAA76; font-size: 1.1rem;">●</strong> ≤6 months</span>
-        <span><strong style="color: #12E09B; font-size: 1.1rem;">●</strong> 7-12 months</span>
-        <span><strong style="color: #F3B11D; font-size: 1.1rem;">●</strong> 13-18 months</span>
-        <span><strong style="color: #fc7a53; font-size: 1.1rem;">●</strong> &gt;18 months</span>
-    </div>
+    <p style="font-size: 0.85rem; color: #64748B; text-align: center;">
+        Higher score = Lower barriers to entry for energy market participation or grid interconnection
+    </p>
     """, unsafe_allow_html=True)
 
 # ============================================
