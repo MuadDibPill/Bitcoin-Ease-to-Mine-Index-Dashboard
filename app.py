@@ -333,6 +333,35 @@ LEGAL_SCORES = {
 }
 
 # ============================================
+# FISCAL SECTION DATA FROM EXCEL
+# ============================================
+# Q1: Taxation environment (Row 8)
+# Q4: Electricity Tax (Row 11)
+# Q5: Tax abatements, subsidies, incentives (Row 12)
+# Q6: Constraint to avoid taxes or access subsidies (Row 13)
+FISCAL_SCORES = {
+    "Argentina": {"Q1_Taxation": 0.50, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.33},
+    "Quebec (CA)": {"Q1_Taxation": 0.38, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.60},
+    "Alberta (CA)": {"Q1_Taxation": 0.50, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.30},
+    "Brazil": {"Q1_Taxation": 0.33, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.27},
+    "Chile": {"Q1_Taxation": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.50},
+    "Ethiopia": {"Q1_Taxation": 0.40, "Q4_Electricity_Tax": 0.25, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.47},
+    "Finland": {"Q1_Taxation": 0.25, "Q4_Electricity_Tax": 0.25, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.15},
+    "Iceland": {"Q1_Taxation": 0.58, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.57},
+    "Kazakhstan": {"Q1_Taxation": 0.67, "Q4_Electricity_Tax": 0.30, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.38},
+    "Kenya": {"Q1_Taxation": 0.50, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.50},
+    "Norway": {"Q1_Taxation": 0.58, "Q4_Electricity_Tax": 0.27, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.27},
+    "Oman": {"Q1_Taxation": 1.00, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.70},
+    "Paraguay": {"Q1_Taxation": 0.71, "Q4_Electricity_Tax": 0.25, "Q5_Subsidies": 0.71, "Q6_Constraints": 0.43},
+    "DRC": {"Q1_Taxation": 0.25, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.15},
+    "Russia": {"Q1_Taxation": 0.50, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.15},
+    "Sweden": {"Q1_Taxation": 0.00, "Q4_Electricity_Tax": 0.15, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.15},
+    "UAE": {"Q1_Taxation": 1.00, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.60},
+    "Texas (US)": {"Q1_Taxation": 0.58, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.72, "Q6_Constraints": 0.36},
+    "Australia": {"Q1_Taxation": 0.25, "Q4_Electricity_Tax": 0.50, "Q5_Subsidies": 0.25, "Q6_Constraints": 0.25}
+}
+
+# ============================================
 # HELPER FUNCTIONS
 # ============================================
 def get_score_color(score, min_score, max_score):
@@ -368,7 +397,7 @@ def get_text_color_for_score(score):
 # ============================================
 with st.sidebar:
     st.markdown("### Navigation")
-    page = st.radio("", ["Overview", "Jurisdiction", "Legal", "Methodology"], label_visibility="collapsed")
+    page = st.radio("", ["Overview", "Jurisdiction", "Legal", "Fiscal", "Methodology"], label_visibility="collapsed")
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
@@ -859,6 +888,215 @@ elif page == "Legal":
             "Evolution": st.column_config.NumberColumn(
                 "Evolution",
                 format="%+.2f"
+            )
+        }
+    )
+
+# ============================================
+# FISCAL PAGE
+# ============================================
+elif page == "Fiscal":
+    st.markdown("# Fiscal Framework Analysis")
+    st.markdown('<p class="subtitle-text">Taxation environment and fiscal incentives assessment</p>', unsafe_allow_html=True)
+    
+    # Create Fiscal DataFrame
+    fiscal_data = []
+    for country, scores in FISCAL_SCORES.items():
+        fiscal_data.append({
+            "Country": country,
+            "Q1_Taxation": scores["Q1_Taxation"],
+            "Q4_Electricity_Tax": scores["Q4_Electricity_Tax"],
+            "Q5_Subsidies": scores["Q5_Subsidies"],
+            "Q6_Constraints": scores["Q6_Constraints"]
+        })
+    df_fiscal = pd.DataFrame(fiscal_data)
+    df_fiscal = df_fiscal.merge(df[["Country", "Region"]], on="Country", how="left")
+    df_fiscal["ISO"] = df_fiscal["Country"].map(ISO_CODES)
+    
+    # =====================
+    # SECTION 1: Two bar charts for Q1 and Q6
+    # =====================
+    st.markdown('<p class="section-title">Taxation Environment Overview</p>', unsafe_allow_html=True)
+    
+    col_chart1, col_chart2 = st.columns(2)
+    
+    with col_chart1:
+        st.markdown('<p class="section-title-small">Current Taxation Environment</p>', unsafe_allow_html=True)
+        df_q1 = df_fiscal.sort_values("Q1_Taxation", ascending=True)
+        colors_q1 = [get_score_color(s, df_q1["Q1_Taxation"].min(), df_q1["Q1_Taxation"].max()) for s in df_q1["Q1_Taxation"]]
+        
+        fig_q1 = go.Figure(go.Bar(
+            x=df_q1["Q1_Taxation"],
+            y=df_q1["Country"],
+            orientation='h',
+            marker_color=colors_q1,
+            text=df_q1["Q1_Taxation"].round(2),
+            textposition='outside',
+            textfont=dict(size=10, family="Barlow")
+        ))
+        fig_q1.update_layout(
+            height=500,
+            margin=dict(l=0, r=40, t=10, b=40),
+            xaxis=dict(range=[0, 1.1], title="Score", gridcolor='#E2E8F0', tickfont=dict(family="Barlow", size=10)),
+            yaxis=dict(title="", tickfont=dict(family="Barlow", size=11)),
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            font=dict(family="Barlow")
+        )
+        st.plotly_chart(fig_q1, use_container_width=True)
+    
+    with col_chart2:
+        st.markdown('<p class="section-title-small">Constraints to Access Tax Benefits</p>', unsafe_allow_html=True)
+        df_q6 = df_fiscal.sort_values("Q6_Constraints", ascending=True)
+        colors_q6 = [get_score_color(s, df_q6["Q6_Constraints"].min(), df_q6["Q6_Constraints"].max()) for s in df_q6["Q6_Constraints"]]
+        
+        fig_q6 = go.Figure(go.Bar(
+            x=df_q6["Q6_Constraints"],
+            y=df_q6["Country"],
+            orientation='h',
+            marker_color=colors_q6,
+            text=df_q6["Q6_Constraints"].round(2),
+            textposition='outside',
+            textfont=dict(size=10, family="Barlow")
+        ))
+        fig_q6.update_layout(
+            height=500,
+            margin=dict(l=0, r=40, t=10, b=40),
+            xaxis=dict(range=[0, 1.1], title="Score", gridcolor='#E2E8F0', tickfont=dict(family="Barlow", size=10)),
+            yaxis=dict(title="", tickfont=dict(family="Barlow", size=11)),
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            font=dict(family="Barlow")
+        )
+        st.plotly_chart(fig_q6, use_container_width=True)
+    
+    st.markdown("---")
+    
+    # =====================
+    # SECTION 2: Map with filter for Q4 and Q5
+    # =====================
+    st.markdown('<p class="section-title">Fiscal Incentives Map</p>', unsafe_allow_html=True)
+    
+    col_map_filter, _ = st.columns([1, 3])
+    with col_map_filter:
+        fiscal_map_question = st.selectbox(
+            "Select question",
+            ["Is there a power tax?", "Access to subsidies or abatements?"],
+            key="fiscal_map_filter"
+        )
+    
+    if fiscal_map_question == "Is there a power tax?":
+        map_col = "Q4_Electricity_Tax"
+        map_title = "Power Tax Exposure"
+    else:
+        map_col = "Q5_Subsidies"
+        map_title = "Access to Subsidies or Abatements"
+    
+    df_fiscal_agg = df_fiscal.groupby("ISO").agg({
+        map_col: "mean",
+        "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]
+    }).reset_index()
+    df_fiscal_agg.columns = ["ISO", "Score", "Country"]
+    
+    fig_fiscal_map = go.Figure(go.Choropleth(
+        locations=df_fiscal_agg["ISO"],
+        z=df_fiscal_agg["Score"],
+        text=df_fiscal_agg["Country"],
+        colorscale=COLOR_SCALE,
+        autocolorscale=False,
+        marker_line_color='#4B5563',
+        marker_line_width=1,
+        colorbar=dict(
+            title=dict(text="Score", side="right", font=dict(family="Barlow", size=11)),
+            tickfont=dict(family="Barlow", size=10),
+            len=0.8,
+            thickness=12
+        ),
+        hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"
+    ))
+    fig_fiscal_map.update_layout(
+        height=450,
+        margin=dict(l=0, r=0, t=30, b=0),
+        title=dict(
+            text=map_title,
+            font=dict(family="Barlow", size=14, color="#1E293B"),
+            x=0.5,
+            xanchor="center"
+        ),
+        geo=dict(
+            showframe=False,
+            showcoastlines=True,
+            coastlinecolor="#94A3B8",
+            showland=True,
+            landcolor="#E2E8F0",
+            showocean=True,
+            oceancolor="#FFFFFF",
+            showcountries=True,
+            countrycolor="#94A3B8",
+            projection_type='natural earth',
+            bgcolor='rgba(0,0,0,0)'
+        ),
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow")
+    )
+    st.plotly_chart(fig_fiscal_map, use_container_width=True)
+    
+    # Score interpretation legend
+    st.markdown("""
+    <div style="display: flex; justify-content: center; gap: 2rem; margin: 1rem 0; font-size: 0.85rem;">
+        <span><strong style="color: #1E8449;">●</strong> Highly Favorable (≥0.75)</span>
+        <span><strong style="color: #28B463;">●</strong> Favorable (0.60-0.74)</span>
+        <span><strong style="color: #F4D03F;">●</strong> Neutral (0.40-0.59)</span>
+        <span><strong style="color: #E67E22;">●</strong> Unfavorable (0.25-0.39)</span>
+        <span><strong style="color: #922B21;">●</strong> Highly Unfavorable (<0.25)</span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # =====================
+    # SECTION 3: Data table
+    # =====================
+    st.markdown('<p class="section-title">Fiscal Framework Data</p>', unsafe_allow_html=True)
+    
+    df_fiscal_display = df_fiscal[["Country", "Region", "Q1_Taxation", "Q4_Electricity_Tax", "Q5_Subsidies", "Q6_Constraints"]].copy()
+    df_fiscal_display = df_fiscal_display.rename(columns={
+        "Q1_Taxation": "Taxation Environment",
+        "Q4_Electricity_Tax": "Power Tax",
+        "Q5_Subsidies": "Subsidies Access",
+        "Q6_Constraints": "Tax Constraints"
+    })
+    df_fiscal_display = df_fiscal_display.sort_values("Taxation Environment", ascending=False)
+    
+    st.dataframe(
+        df_fiscal_display,
+        use_container_width=True,
+        hide_index=True,
+        height=500,
+        column_config={
+            "Taxation Environment": st.column_config.ProgressColumn(
+                "Taxation Environment",
+                format="%.2f",
+                min_value=0,
+                max_value=1
+            ),
+            "Power Tax": st.column_config.ProgressColumn(
+                "Power Tax",
+                format="%.2f",
+                min_value=0,
+                max_value=1
+            ),
+            "Subsidies Access": st.column_config.ProgressColumn(
+                "Subsidies Access",
+                format="%.2f",
+                min_value=0,
+                max_value=1
+            ),
+            "Tax Constraints": st.column_config.ProgressColumn(
+                "Tax Constraints",
+                format="%.2f",
+                min_value=0,
+                max_value=1
             )
         }
     )
