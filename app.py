@@ -1154,15 +1154,15 @@ elif page == "Fiscal":
     # Color function based on CIT rate brackets
     def get_cit_color(rate):
         if rate < 11.0:
-            return '#12E09B'  # Green
+            return '#0EAA76'  # Dark green
         elif rate < 20.0:
-            return '#6287F0'  # Light blue
+            return '#12E09B'  # Light green
         elif rate <= 25.0:
-            return '#0D6FFF'  # Blue
+            return '#F3B11D'  # Orange/yellow
         elif rate <= 30.0:
-            return '#1D0DED'  # Dark blue
+            return '#fc7a53'  # Red-orange
         else:
-            return '#002060'  # Navy
+            return '#8A0000'  # Dark red
     
     # Create CIT dataframe
     cit_data = [{"Country": k, "CIT_Rate": v} for k, v in CIT_RATES.items()]
@@ -1208,11 +1208,11 @@ elif page == "Fiscal":
     # Legend for CIT color brackets
     st.markdown("""
     <div style="display: flex; justify-content: center; gap: 1.5rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
-        <span><strong style="color: #12E09B; font-size: 1.1rem;">●</strong> &lt;11%</span>
-        <span><strong style="color: #6287F0; font-size: 1.1rem;">●</strong> 11-19%</span>
-        <span><strong style="color: #0D6FFF; font-size: 1.1rem;">●</strong> 20-25%</span>
-        <span><strong style="color: #1D0DED; font-size: 1.1rem;">●</strong> 26-30%</span>
-        <span><strong style="color: #002060; font-size: 1.1rem;">●</strong> &gt;30%</span>
+        <span><strong style="color: #0EAA76; font-size: 1.1rem;">●</strong> &lt;11%</span>
+        <span><strong style="color: #12E09B; font-size: 1.1rem;">●</strong> 11-19%</span>
+        <span><strong style="color: #F3B11D; font-size: 1.1rem;">●</strong> 20-25%</span>
+        <span><strong style="color: #fc7a53; font-size: 1.1rem;">●</strong> 26-30%</span>
+        <span><strong style="color: #8A0000; font-size: 1.1rem;">●</strong> &gt;30%</span>
     </div>
     """, unsafe_allow_html=True)
     
@@ -1325,6 +1325,16 @@ elif page == "Permits & Licenses":
     )
     st.plotly_chart(fig_radar, use_container_width=True)
     
+    # Descriptions for each radar dimension
+    st.markdown("""
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; font-size: 0.85rem; color: #475569;">
+        <div><strong style="color: #F3B11D;">●</strong> <strong>EIA Process:</strong> Environmental Impact Assessment — measures level of constraints when developing a site</div>
+        <div><strong style="color: #fc7a53;">●</strong> <strong>Water Permit:</strong> Level of constraints to comply with in order to operate a data center and obtain permits</div>
+        <div><strong style="color: #F3B11D;">●</strong> <strong>Zoning & Land:</strong> How zoning rules impact land availability for data center development</div>
+        <div><strong style="color: #fc7a53;">●</strong> <strong>Emissions & Noise:</strong> Regulation compliance constraints on mining operations</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
     st.markdown("---")
     
     # =====================
@@ -1408,6 +1418,14 @@ elif page == "Permits & Licenses":
     </div>
     """, unsafe_allow_html=True)
     
+    # Note for Alberta operating license
+    if permit_map_question == "License required for operations?":
+        st.markdown("""
+        <p style="font-size: 0.8rem; color: #64748B; text-align: center; margin-top: 0;">
+            * Note: In Canada, Alberta requires an operating license, not Quebec.
+        </p>
+        """, unsafe_allow_html=True)
+    
     st.markdown("---")
     
     # =====================
@@ -1421,10 +1439,18 @@ elif page == "Permits & Licenses":
     df_construction["Months"] = df_construction["Q12_Construction"].apply(lambda s: round(18 - (s * 16)))
     df_construction = df_construction.sort_values("Months", ascending=False)
     
-    # Color based on months (fewer = better = greener)
-    max_months = df_construction["Months"].max()
-    min_months = df_construction["Months"].min()
-    colors_construction = [get_score_color(1 - (m - min_months) / (max_months - min_months) if max_months > min_months else 0.5, 0, 1) for m in df_construction["Months"]]
+    # Color based on month brackets
+    def get_construction_color(months):
+        if months <= 6:
+            return '#0EAA76'  # Dark green
+        elif months <= 8:
+            return '#12E09B'  # Light green
+        elif months <= 12:
+            return '#F3B11D'  # Orange/yellow
+        else:
+            return '#fc7a53'  # Red-orange
+    
+    colors_construction = [get_construction_color(m) for m in df_construction["Months"]]
     
     fig_construction = go.Figure(go.Bar(
         x=df_construction["Months"],
@@ -1441,7 +1467,7 @@ elif page == "Permits & Licenses":
         margin=dict(l=0, r=80, t=10, b=60),
         xaxis=dict(
             title="Average Timeline (months)",
-            range=[0, max_months + 3],
+            range=[0, df_construction["Months"].max() + 3],
             gridcolor='#E2E8F0',
             tickfont=dict(family="Barlow", size=11),
             titlefont=dict(family="Barlow", size=12)
@@ -1455,6 +1481,16 @@ elif page == "Permits & Licenses":
         font=dict(family="Barlow")
     )
     st.plotly_chart(fig_construction, use_container_width=True)
+    
+    # Legend for timeline color brackets
+    st.markdown("""
+    <div style="display: flex; justify-content: center; gap: 1.5rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
+        <span><strong style="color: #0EAA76; font-size: 1.1rem;">●</strong> &lt;6 months</span>
+        <span><strong style="color: #12E09B; font-size: 1.1rem;">●</strong> 7-8 months</span>
+        <span><strong style="color: #F3B11D; font-size: 1.1rem;">●</strong> 10-12 months</span>
+        <span><strong style="color: #fc7a53; font-size: 1.1rem;">●</strong> &gt;12 months</span>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ============================================
 # METHODOLOGY PAGE
