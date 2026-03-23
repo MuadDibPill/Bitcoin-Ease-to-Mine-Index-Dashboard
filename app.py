@@ -480,32 +480,32 @@ if page == "Overview":
     
     # EMI Ranking
     st.markdown('<p class="section-title">EMI Ranking</p>', unsafe_allow_html=True)
-    
-    # Filter and text box on the same row
-    col_rf, col_spacer, col_text_intro = st.columns([1, 0.1, 2])
+    col_rf, _ = st.columns([1, 3])
     with col_rf:
         rank_dim = st.selectbox("Select category", list(score_map.keys()), key="rank_filter")
-    
-    with col_text_intro:
-        st.markdown("""<div class="info-box" style="margin-top: 0;">
-            <div class="info-box-title" style="font-size: 1.1rem; margin-bottom: 0.75rem;">EMI Description</div>
-            <p>The first edition of the <strong>Ease to Mine Index (EMI)</strong> is a composite framework designed to assess the overall attractiveness of jurisdictions for Bitcoin mining.</p>
-            <p style="margin-top: 0.75rem;">The index evaluates a broad set of dimensions:</p>
-            <ul style="margin: 0.5rem 0; padding-left: 1.2rem;"><li>Legal and fiscal frameworks</li><li>Permitting and licensing conditions</li><li>Energy market structure and grid access</li><li>Climate characteristics</li><li>Tariff and import environments</li></ul>
-            <p style="margin-top: 0.75rem;"><strong>Coverage:</strong> 18 countries spanning established and emerging mining regions — 19 jurisdictions (where Texas serves as a proxy of U.S., and Alberta and Québec for Canada).</p>
-        </div>""", unsafe_allow_html=True)
     
     rank_col = score_map[rank_dim]
     df_rank = df.sort_values(rank_col, ascending=True).copy()
     min_r, max_r = df_rank[rank_col].min(), df_rank[rank_col].max()
     colors_r = [get_score_color(s, min_r, max_r) for s in df_rank[rank_col]]
     
-    fig_rank = go.Figure(go.Bar(x=df_rank[rank_col], y=df_rank["Country"], orientation='h', marker_color=colors_r,
-        text=df_rank[rank_col].round(2), textposition='outside', textfont=dict(size=13, family="Barlow")))
-    fig_rank.update_layout(height=560, margin=dict(l=0, r=60, t=10, b=40),
-        xaxis=dict(range=[0, 1], title=dict(text=rank_dim + " Score", font=dict(family="Barlow", size=12)), gridcolor='#E2E8F0', zeroline=False),
-        yaxis=dict(title="", tickfont=dict(family="Barlow", size=13)), plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(family="Barlow"))
-    st.plotly_chart(fig_rank, use_container_width=True)
+    col_chart, col_text = st.columns([2, 1])
+    with col_chart:
+        fig_rank = go.Figure(go.Bar(x=df_rank[rank_col], y=df_rank["Country"], orientation='h', marker_color=colors_r,
+            text=df_rank[rank_col].round(2), textposition='outside', textfont=dict(size=13, family="Barlow")))
+        fig_rank.update_layout(height=560, margin=dict(l=0, r=60, t=10, b=40),
+            xaxis=dict(range=[0, 1], title=dict(text=rank_dim + " Score", font=dict(family="Barlow", size=12)), gridcolor='#E2E8F0', zeroline=False),
+            yaxis=dict(title="", tickfont=dict(family="Barlow", size=13)), plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(family="Barlow"))
+        st.plotly_chart(fig_rank, use_container_width=True)
+    
+    with col_text:
+        st.markdown("""<div class="info-box">
+            <div class="info-box-title" style="font-size: 1.1rem; margin-bottom: 0.75rem;">EMI Description</div>
+            <p>The first edition of the <strong>Ease to Mine Index (EMI)</strong> is a composite framework designed to assess the overall attractiveness of jurisdictions for Bitcoin mining.</p>
+            <p style="margin-top: 0.75rem;">The index evaluates a broad set of dimensions:</p>
+            <ul style="margin: 0.5rem 0; padding-left: 1.2rem;"><li>Legal and fiscal frameworks</li><li>Permitting and licensing conditions</li><li>Energy market structure and grid access</li><li>Climate characteristics</li><li>Tariff and import environments</li></ul>
+            <p style="margin-top: 0.75rem;"><strong>Coverage:</strong> 18 countries spanning established and emerging mining regions — 19 jurisdictions (where Texas serves as a proxy of U.S., and Alberta and Québec for Canada).</p>
+        </div>""", unsafe_allow_html=True)
     
     st.markdown("---")
     
@@ -918,24 +918,24 @@ elif page == "Fiscal":
     # =====================
     # SECTION 1: Scatter plot - Taxation Environment vs Constraints
     # =====================
-    st.markdown('<p class="section-title">Taxation Environment vs Constraints to Access Benefits</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-title">Taxation Environment vs Constraints to Access Benefits or Avoid Taxes</p>', unsafe_allow_html=True)
     
     fig_scatter = go.Figure()
     
     # Add colored quadrant backgrounds (15% opacity = 0.15)
     # CORRECTED LOGIC:
-    # Y-axis (Taxation): 0 = Hard/Unfavorable, 1 = Favorable
-    # X-axis (Constraints): 0 = Low Access, 1 = Easy Access
-    # Top-right: Favorable Tax / Easy Access (GREEN - best)
+    # Y-axis (Taxation): 0 = Unfavorable, 1 = Favorable
+    # X-axis (Constraints): 0 = High Constraint, 1 = Low Constraint
+    # Top-right: Favorable Tax / Low Constraint (GREEN - best)
     fig_scatter.add_shape(type="rect", x0=0.5, y0=0.5, x1=1, y1=1,
         fillcolor="rgba(30, 132, 73, 0.15)", line=dict(width=0), layer="below")
-    # Top-left: Favorable Tax / Low Access (ORANGE)
+    # Top-left: Favorable Tax / High Constraint (ORANGE)
     fig_scatter.add_shape(type="rect", x0=0, y0=0.5, x1=0.5, y1=1,
         fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
-    # Bottom-right: Hard Tax / Easy Access (ORANGE)
+    # Bottom-right: Unfavorable Tax / Low Constraint (ORANGE)
     fig_scatter.add_shape(type="rect", x0=0.5, y0=0, x1=1, y1=0.5,
         fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
-    # Bottom-left: Hard Tax / Low Access (RED - worst)
+    # Bottom-left: Unfavorable Tax / High Constraint (RED - worst)
     fig_scatter.add_shape(type="rect", x0=0, y0=0, x1=0.5, y1=0.5,
         fillcolor="rgba(146, 43, 33, 0.15)", line=dict(width=0), layer="below")
     
@@ -960,20 +960,20 @@ elif page == "Fiscal":
     fig_scatter.add_vline(x=0.5, line_dash="dash", line_color="#94A3B8", line_width=1)
     
     # Add quadrant labels (bold) - CORRECTED
-    fig_scatter.add_annotation(x=0.75, y=0.95, text="<b>Favorable Tax / Easy Access</b>", showarrow=False,
+    fig_scatter.add_annotation(x=0.75, y=0.95, text="<b>Favorable Tax / Low Constraint</b>", showarrow=False,
         font=dict(size=10, color="#1E8449", family="Barlow"), xanchor="center")
-    fig_scatter.add_annotation(x=0.25, y=0.95, text="<b>Favorable Tax / Low Access</b>", showarrow=False,
+    fig_scatter.add_annotation(x=0.25, y=0.95, text="<b>Favorable Tax / High Constraint</b>", showarrow=False,
         font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
-    fig_scatter.add_annotation(x=0.75, y=0.05, text="<b>Hard Tax / Easy Access</b>", showarrow=False,
+    fig_scatter.add_annotation(x=0.75, y=0.05, text="<b>Unfavorable Tax / Low Constraint</b>", showarrow=False,
         font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
-    fig_scatter.add_annotation(x=0.25, y=0.05, text="<b>Hard Tax / Low Access</b>", showarrow=False,
+    fig_scatter.add_annotation(x=0.25, y=0.05, text="<b>Unfavorable Tax / High Constraint</b>", showarrow=False,
         font=dict(size=10, color="#922B21", family="Barlow"), xanchor="center")
     
     fig_scatter.update_layout(
         height=550,
         margin=dict(l=60, r=40, t=40, b=60),
         xaxis=dict(
-            title="Constraints to Access Tax Benefits",
+            title="Constraints to Access Tax Benefits or Avoid Taxes",
             range=[-0.05, 1.05],
             gridcolor='#E2E8F0',
             tickfont=dict(family="Barlow", size=11),
@@ -1088,6 +1088,86 @@ elif page == "Fiscal":
         <span><strong style="color: {yes_color}; font-size: 1.2rem;">●</strong> Yes</span>
         <span><strong style="color: {no_color}; font-size: 1.2rem;">●</strong> No</span>
     </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # =====================
+    # SECTION 3: Corporate Income Tax (CIT) Rates
+    # =====================
+    st.markdown('<p class="section-title">Corporate Income Tax (CIT) Rates by Jurisdiction</p>', unsafe_allow_html=True)
+    
+    # CIT rates data (standard corporate tax rates)
+    CIT_RATES = {
+        "UAE": 9.0,
+        "Paraguay": 10.0,
+        "Oman": 15.0,
+        "Russia": 20.0,
+        "Iceland": 20.0,
+        "Finland": 20.0,
+        "Sweden": 20.6,
+        "Kazakhstan": 20.0,
+        "Texas (US)": 21.0,
+        "Quebec (CA)": 26.5,
+        "Alberta (CA)": 23.0,
+        "Norway": 22.0,
+        "Chile": 27.0,
+        "Kenya": 30.0,
+        "Ethiopia": 30.0,  # Note: Currently not applied to miners
+        "DRC": 30.0,
+        "Brazil": 34.0,
+        "Argentina": 35.0,
+        "Australia": 30.0
+    }
+    
+    # Create CIT dataframe
+    cit_data = [{"Country": k, "CIT_Rate": v} for k, v in CIT_RATES.items()]
+    df_cit = pd.DataFrame(cit_data)
+    df_cit = df_cit.sort_values("CIT_Rate", ascending=True)
+    
+    # Add asterisk to Ethiopia
+    df_cit["Display_Country"] = df_cit["Country"].apply(lambda x: x + "*" if x == "Ethiopia" else x)
+    
+    # Color gradient based on CIT rate (lower is better = greener)
+    max_cit = df_cit["CIT_Rate"].max()
+    min_cit = df_cit["CIT_Rate"].min()
+    colors_cit = [get_score_color(1 - (rate - min_cit) / (max_cit - min_cit), 0, 1) for rate in df_cit["CIT_Rate"]]
+    
+    fig_cit = go.Figure(go.Bar(
+        x=df_cit["CIT_Rate"],
+        y=df_cit["Display_Country"],
+        orientation='h',
+        marker_color=colors_cit,
+        text=df_cit["CIT_Rate"].apply(lambda x: f"{x:.1f}%"),
+        textposition='outside',
+        textfont=dict(size=11, family="Barlow")
+    ))
+    
+    fig_cit.update_layout(
+        height=550,
+        margin=dict(l=0, r=60, t=10, b=60),
+        xaxis=dict(
+            title="Corporate Income Tax Rate (%)",
+            range=[0, 42],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12)
+        ),
+        yaxis=dict(
+            title="",
+            tickfont=dict(family="Barlow", size=11)
+        ),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow")
+    )
+    st.plotly_chart(fig_cit, use_container_width=True)
+    
+    # Note for Ethiopia
+    st.markdown("""
+    <p style="font-size: 0.8rem; color: #64748B; text-align: center; margin-top: -0.5rem;">
+        * Ethiopia: 30% CIT rate currently not applied to Bitcoin miners
+    </p>
     """, unsafe_allow_html=True)
 
 # ============================================
