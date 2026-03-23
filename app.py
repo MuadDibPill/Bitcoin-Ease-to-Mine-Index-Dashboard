@@ -1616,9 +1616,9 @@ elif page == "Energy & Grid":
         hovertemplate="<b>%{text}</b><br>Grid Time: %{x} months<br>Price: $%{y}/MWh<extra></extra>"
     ))
     
-    # Add quadrant lines at medians (dashed line at 45$/MWh as requested)
-    fig_energy_scatter.add_hline(y=45, line_dash="dash", line_color="#94A3B8", line_width=1.5,
-        annotation_text="$45/MWh", annotation_position="right")
+    # Add quadrant lines at medians (dashed line at $47.5/MWh)
+    fig_energy_scatter.add_hline(y=47.5, line_dash="dash", line_color="#94A3B8", line_width=1.5,
+        annotation_text="$47.5/MWh", annotation_position="right")
     fig_energy_scatter.add_vline(x=time_center, line_dash="dash", line_color="#94A3B8", line_width=1.5,
         annotation_text="15 months", annotation_position="top")
     
@@ -1720,6 +1720,40 @@ elif page == "Energy & Grid":
         Higher score = Lower barriers to entry for energy market participation or grid interconnection
     </p>
     """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # =====================
+    # SECTION 3: Energy Data Table
+    # =====================
+    st.markdown('<p class="section-title">Energy & Grid Data</p>', unsafe_allow_html=True)
+    
+    # Prepare data table
+    df_energy_table = df_energy_real[["Country", "Price_MWh", "Grid_Months", "Barriers"]].copy()
+    df_energy_table.columns = ["Country", "Power Cost ($/MWh)", "Grid Connection (months)", "Market Access Score"]
+    df_energy_table = df_energy_table.sort_values("Power Cost ($/MWh)", ascending=True)
+    
+    # Format the columns
+    df_energy_table["Power Cost ($/MWh)"] = df_energy_table["Power Cost ($/MWh)"].apply(lambda x: f"${x:.2f}")
+    df_energy_table["Grid Connection (months)"] = df_energy_table["Grid Connection (months)"].apply(lambda x: f"{x:.1f}" if x != int(x) else f"{int(x)}")
+    df_energy_table["Market Access Score"] = df_energy_table["Market Access Score"].apply(lambda x: f"{x:.2f}")
+    
+    st.dataframe(
+        df_energy_table,
+        use_container_width=True,
+        hide_index=True,
+        height=500
+    )
+    
+    # Download button
+    csv_energy = df_energy_real[["Country", "Price_MWh", "Grid_Months", "Barriers"]].copy()
+    csv_energy.columns = ["Country", "Power Cost ($/MWh)", "Grid Connection (months)", "Market Access Score"]
+    st.download_button(
+        label="📥 Download Energy Data (CSV)",
+        data=csv_energy.to_csv(index=False),
+        file_name="emi_energy_grid_data.csv",
+        mime="text/csv"
+    )
 
 # ============================================
 # METHODOLOGY PAGE
