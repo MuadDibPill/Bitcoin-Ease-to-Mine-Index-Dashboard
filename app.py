@@ -1544,33 +1544,33 @@ elif page == "Energy & Grid":
     df_energy["ISO"] = df_energy["Country"].map(ISO_CODES)
     
     # =====================
-    # SECTION 1: Scatter Plot - Grid Status vs Barriers to Entry
+    # SECTION 1: Scatter Plot - Grid Connection Lead Time vs Power Cost
     # =====================
-    st.markdown('<p class="section-title">Grid Status vs Energy Market Barriers</p>', unsafe_allow_html=True)
-    st.markdown('<p class="subtitle-text">Regulatory status for miners vs. barriers to entry for grid/energy access</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-title">Grid Connection Lead Time vs Electricity Price</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">Comparing time to connect to the grid with power cost competitiveness</p>', unsafe_allow_html=True)
     
     fig_energy_scatter = go.Figure()
     
     # Add colored quadrant backgrounds (15% opacity)
-    # Top-right: Favorable Status / Low Barriers (GREEN - best)
+    # Top-right: Fast Connection / Competitive Price (GREEN - best)
     fig_energy_scatter.add_shape(type="rect", x0=0.5, y0=0.5, x1=1, y1=1,
         fillcolor="rgba(30, 132, 73, 0.15)", line=dict(width=0), layer="below")
-    # Top-left: Favorable Status / High Barriers (ORANGE)
+    # Top-left: Slow Connection / Competitive Price (ORANGE)
     fig_energy_scatter.add_shape(type="rect", x0=0, y0=0.5, x1=0.5, y1=1,
         fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
-    # Bottom-right: Unfavorable Status / Low Barriers (ORANGE)
+    # Bottom-right: Fast Connection / Expensive Power (ORANGE)
     fig_energy_scatter.add_shape(type="rect", x0=0.5, y0=0, x1=1, y1=0.5,
         fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
-    # Bottom-left: Unfavorable Status / High Barriers (RED - worst)
+    # Bottom-left: Slow Connection / Expensive Power (RED - worst)
     fig_energy_scatter.add_shape(type="rect", x0=0, y0=0, x1=0.5, y1=0.5,
         fillcolor="rgba(146, 43, 33, 0.15)", line=dict(width=0), layer="below")
     
     # Calculate colors based on combined score
-    colors_energy = [get_score_color((row["Q25_Grid_Status"] + row["Q22_Barriers"]) / 2, 0, 1) for _, row in df_energy.iterrows()]
+    colors_energy = [get_score_color((row["Q23_Lead_Time"] + row["Q24_Elec_Price"]) / 2, 0, 1) for _, row in df_energy.iterrows()]
     
     fig_energy_scatter.add_trace(go.Scatter(
-        x=df_energy["Q22_Barriers"],
-        y=df_energy["Q25_Grid_Status"],
+        x=df_energy["Q23_Lead_Time"],
+        y=df_energy["Q24_Elec_Price"],
         mode='markers+text',
         marker=dict(
             size=14,
@@ -1580,7 +1580,7 @@ elif page == "Energy & Grid":
         text=df_energy["Country"],
         textposition='top center',
         textfont=dict(size=10, family="Barlow"),
-        hovertemplate="<b>%{text}</b><br>Grid Status: %{y:.2f}<br>Barriers: %{x:.2f}<extra></extra>"
+        hovertemplate="<b>%{text}</b><br>Lead Time: %{x:.2f}<br>Power Cost: %{y:.2f}<extra></extra>"
     ))
     
     # Add quadrant lines
@@ -1588,27 +1588,27 @@ elif page == "Energy & Grid":
     fig_energy_scatter.add_vline(x=0.5, line_dash="dash", line_color="#94A3B8", line_width=1.5)
     
     # Add quadrant labels
-    fig_energy_scatter.add_annotation(x=0.75, y=0.97, text="<b>Favorable Status / Low Barriers</b>", showarrow=False,
+    fig_energy_scatter.add_annotation(x=0.75, y=0.97, text="<b>Fast Connection / Competitive Price</b>", showarrow=False,
         font=dict(size=11, color="#1E8449", family="Barlow"), xanchor="center")
-    fig_energy_scatter.add_annotation(x=0.25, y=0.97, text="<b>Favorable Status / High Barriers</b>", showarrow=False,
+    fig_energy_scatter.add_annotation(x=0.25, y=0.97, text="<b>Slow Connection / Competitive Price</b>", showarrow=False,
         font=dict(size=11, color="#E67E22", family="Barlow"), xanchor="center")
-    fig_energy_scatter.add_annotation(x=0.75, y=0.03, text="<b>Unfavorable Status / Low Barriers</b>", showarrow=False,
+    fig_energy_scatter.add_annotation(x=0.75, y=0.03, text="<b>Fast Connection / Expensive Power</b>", showarrow=False,
         font=dict(size=11, color="#E67E22", family="Barlow"), xanchor="center")
-    fig_energy_scatter.add_annotation(x=0.25, y=0.03, text="<b>Unfavorable Status / High Barriers</b>", showarrow=False,
+    fig_energy_scatter.add_annotation(x=0.25, y=0.03, text="<b>Slow Connection / Expensive Power</b>", showarrow=False,
         font=dict(size=11, color="#922B21", family="Barlow"), xanchor="center")
     
     fig_energy_scatter.update_layout(
         height=550,
         margin=dict(l=60, r=60, t=30, b=60),
         xaxis=dict(
-            title="<b>Barriers to Entry for Energy Market Access</b><br>(Higher = Lower Barriers)",
+            title="<b>Grid Connection Lead Time</b><br>(Higher = Faster Connection)",
             range=[-0.05, 1.05],
             gridcolor='#E2E8F0',
             tickfont=dict(family="Barlow", size=11),
             titlefont=dict(family="Barlow", size=12)
         ),
         yaxis=dict(
-            title="<b>Regulatory Status for Miners</b><br>(Higher = More Favorable)",
+            title="<b>Electricity Price Competitiveness</b><br>(Higher = More Competitive)",
             range=[-0.05, 1.05],
             gridcolor='#E2E8F0',
             tickfont=dict(family="Barlow", size=11),
@@ -1690,62 +1690,140 @@ elif page == "Energy & Grid":
     st.markdown("---")
     
     # =====================
-    # SECTION 3: Electricity Price Score Map
+    # SECTION 3: Utility Tariff Mitigation Strategies
     # =====================
-    st.markdown('<p class="section-title">Electricity Price Competitiveness</p>', unsafe_allow_html=True)
-    st.markdown('<p class="subtitle-text">Relative electricity costs for mining operations</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-title">Utility Tariff Exposure & Mitigation Strategies</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">Are miners exposed to utility tariffs? What strategies exist to mitigate them?</p>', unsafe_allow_html=True)
     
-    df_elec_map = df_energy.copy()
-    df_elec_agg = df_elec_map.groupby("ISO").agg({
-        "Q24_Elec_Price": "mean",
-        "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]
-    }).reset_index()
-    df_elec_agg.columns = ["ISO", "Score", "Country"]
+    # Mitigation strategies data based on survey responses
+    MITIGATION_DATA = {
+        "Argentina": {"has_mitigation": True, "strategies": ["Multiple options available"], "exposure": "Medium"},
+        "Quebec (CA)": {"has_mitigation": True, "strategies": ["Demand Response", "Curtailment programs"], "exposure": "Low"},
+        "Alberta (CA)": {"has_mitigation": True, "strategies": ["Deregulated market", "Curtailment"], "exposure": "Medium"},
+        "Brazil": {"has_mitigation": False, "strategies": [], "exposure": "High"},
+        "Chile": {"has_mitigation": False, "strategies": [], "exposure": "High"},
+        "Ethiopia": {"has_mitigation": False, "strategies": [], "exposure": "High"},
+        "Finland": {"has_mitigation": False, "strategies": [], "exposure": "High"},
+        "Iceland": {"has_mitigation": False, "strategies": [], "exposure": "Medium"},
+        "Kazakhstan": {"has_mitigation": False, "strategies": [], "exposure": "High"},
+        "Kenya": {"has_mitigation": False, "strategies": [], "exposure": "High"},
+        "Norway": {"has_mitigation": True, "strategies": ["Open market", "Demand Response"], "exposure": "Low"},
+        "Oman": {"has_mitigation": False, "strategies": [], "exposure": "Low"},
+        "Paraguay": {"has_mitigation": False, "strategies": [], "exposure": "Medium"},
+        "DRC": {"has_mitigation": False, "strategies": [], "exposure": "High"},
+        "Russia": {"has_mitigation": True, "strategies": ["Demand Response", "Special Economic Zones"], "exposure": "Medium"},
+        "Sweden": {"has_mitigation": False, "strategies": [], "exposure": "High"},
+        "UAE": {"has_mitigation": False, "strategies": [], "exposure": "Low"},
+        "Texas (US)": {"has_mitigation": True, "strategies": ["Demand Response", "Curtailment", "ERCOT programs"], "exposure": "Low"},
+        "Australia": {"has_mitigation": False, "strategies": [], "exposure": "High"}
+    }
     
-    fig_elec_map = go.Figure(go.Choropleth(
-        locations=df_elec_agg["ISO"],
-        z=df_elec_agg["Score"],
-        text=df_elec_agg["Country"],
-        colorscale=[
-            [0, '#922B21'], [0.25, '#E67E22'], [0.5, '#F4D03F'], [0.75, '#52BE80'], [1, '#1E8449']
-        ],
-        autocolorscale=False,
-        zmin=0,
-        zmax=1,
-        marker_line_color='#4B5563',
-        marker_line_width=1,
-        colorbar=dict(
-            title=dict(text="Score", side="right", font=dict(family="Barlow", size=12)),
-            tickfont=dict(family="Barlow", size=10),
-            len=0.6
+    # Create mitigation dataframe
+    mitigation_list = []
+    for country, data in MITIGATION_DATA.items():
+        mitigation_list.append({
+            "Country": country,
+            "Has_Mitigation": data["has_mitigation"],
+            "Strategies": ", ".join(data["strategies"]) if data["strategies"] else "None available",
+            "Exposure": data["exposure"],
+            "Strategy_Count": len(data["strategies"])
+        })
+    df_mitigation = pd.DataFrame(mitigation_list)
+    df_mitigation = df_mitigation.merge(df[["Country", "Region"]], on="Country", how="left")
+    
+    # Create a creative visualization - Bubble chart showing exposure vs mitigation options
+    exposure_score = {"Low": 0.8, "Medium": 0.5, "High": 0.2}
+    df_mitigation["Exposure_Score"] = df_mitigation["Exposure"].map(exposure_score)
+    df_mitigation["Mitigation_Score"] = df_mitigation["Has_Mitigation"].apply(lambda x: 0.8 if x else 0.2)
+    
+    # Color based on combined score
+    colors_mitigation = []
+    for _, row in df_mitigation.iterrows():
+        combined = (row["Exposure_Score"] + row["Mitigation_Score"]) / 2
+        colors_mitigation.append(get_score_color(combined, 0, 1))
+    
+    fig_mitigation = go.Figure()
+    
+    # Add quadrant backgrounds
+    fig_mitigation.add_shape(type="rect", x0=0.5, y0=0.5, x1=1, y1=1,
+        fillcolor="rgba(30, 132, 73, 0.15)", line=dict(width=0), layer="below")
+    fig_mitigation.add_shape(type="rect", x0=0, y0=0.5, x1=0.5, y1=1,
+        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
+    fig_mitigation.add_shape(type="rect", x0=0.5, y0=0, x1=1, y1=0.5,
+        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
+    fig_mitigation.add_shape(type="rect", x0=0, y0=0, x1=0.5, y1=0.5,
+        fillcolor="rgba(146, 43, 33, 0.15)", line=dict(width=0), layer="below")
+    
+    # Add jitter to avoid overlap
+    import random
+    random.seed(42)
+    jitter_x = [random.uniform(-0.08, 0.08) for _ in range(len(df_mitigation))]
+    jitter_y = [random.uniform(-0.08, 0.08) for _ in range(len(df_mitigation))]
+    
+    fig_mitigation.add_trace(go.Scatter(
+        x=[row["Mitigation_Score"] + jitter_x[i] for i, (_, row) in enumerate(df_mitigation.iterrows())],
+        y=[row["Exposure_Score"] + jitter_y[i] for i, (_, row) in enumerate(df_mitigation.iterrows())],
+        mode='markers+text',
+        marker=dict(
+            size=[20 + row["Strategy_Count"] * 8 for _, row in df_mitigation.iterrows()],
+            color=colors_mitigation,
+            line=dict(width=2, color='#4B5563'),
+            opacity=0.85
         ),
-        hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"
+        text=df_mitigation["Country"],
+        textposition='top center',
+        textfont=dict(size=9, family="Barlow"),
+        customdata=df_mitigation["Strategies"],
+        hovertemplate="<b>%{text}</b><br>Strategies: %{customdata}<extra></extra>"
     ))
     
-    fig_elec_map.update_layout(
-        height=450,
-        margin=dict(l=0, r=0, t=10, b=0),
-        geo=dict(
-            showframe=False,
-            showcoastlines=True,
-            coastlinecolor="#94A3B8",
-            showland=True,
-            landcolor="#E2E8F0",
-            showocean=True,
-            oceancolor="#FFFFFF",
-            showcountries=True,
-            countrycolor="#94A3B8",
-            projection_type='natural earth',
-            bgcolor='rgba(0,0,0,0)'
-        ),
-        paper_bgcolor='rgba(0,0,0,0)',
-        font=dict(family="Barlow")
-    )
-    st.plotly_chart(fig_elec_map, use_container_width=True)
+    # Add quadrant lines
+    fig_mitigation.add_hline(y=0.5, line_dash="dash", line_color="#94A3B8", line_width=1.5)
+    fig_mitigation.add_vline(x=0.5, line_dash="dash", line_color="#94A3B8", line_width=1.5)
     
+    # Add quadrant labels
+    fig_mitigation.add_annotation(x=0.75, y=0.97, text="<b>Low Exposure / Mitigation Available</b>", showarrow=False,
+        font=dict(size=10, color="#1E8449", family="Barlow"), xanchor="center")
+    fig_mitigation.add_annotation(x=0.25, y=0.97, text="<b>Low Exposure / No Mitigation</b>", showarrow=False,
+        font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
+    fig_mitigation.add_annotation(x=0.75, y=0.03, text="<b>High Exposure / Mitigation Available</b>", showarrow=False,
+        font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
+    fig_mitigation.add_annotation(x=0.25, y=0.03, text="<b>High Exposure / No Mitigation</b>", showarrow=False,
+        font=dict(size=10, color="#922B21", family="Barlow"), xanchor="center")
+    
+    fig_mitigation.update_layout(
+        height=550,
+        margin=dict(l=60, r=60, t=30, b=60),
+        xaxis=dict(
+            title="<b>Mitigation Strategies Available</b><br>(Right = More Options)",
+            range=[-0.05, 1.05],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12),
+            tickvals=[0.2, 0.8],
+            ticktext=["No", "Yes"]
+        ),
+        yaxis=dict(
+            title="<b>Tariff Exposure Level</b><br>(Higher = Lower Exposure)",
+            range=[-0.05, 1.05],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12),
+            tickvals=[0.2, 0.5, 0.8],
+            ticktext=["High", "Medium", "Low"]
+        ),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow"),
+        showlegend=False
+    )
+    st.plotly_chart(fig_mitigation, use_container_width=True)
+    
+    # Description
     st.markdown("""
     <p style="font-size: 0.85rem; color: #64748B; text-align: center;">
-        Higher score = more competitive electricity prices for mining operations
+        Bubble size reflects the number of mitigation strategies available. Hover for details.<br>
+        Common strategies include: Demand Response, Curtailment Programs, Heat Reuse, Special Economic Zones.
     </p>
     """, unsafe_allow_html=True)
 
