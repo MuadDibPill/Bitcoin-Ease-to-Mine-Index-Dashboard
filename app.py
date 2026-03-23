@@ -426,30 +426,31 @@ if page == "Overview":
     selected_col = score_map[score_type]
     df_sorted = df.sort_values(selected_col, ascending=False)
     
-    col_map, col_top = st.columns([3, 1])
+    # Map (full width)
+    st.markdown('<p class="section-title">Ease to Mine Index Map</p>', unsafe_allow_html=True)
+    df_map = df.copy()
+    df_map["ISO"] = df_map["Country"].map(ISO_CODES)
+    df_map_agg = df_map.groupby("ISO").agg({selected_col: "mean", "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]}).reset_index()
+    df_map_agg.columns = ["ISO", "Score", "Country"]
     
-    with col_map:
-        st.markdown('<p class="section-title">Ease to Mine Index Map</p>', unsafe_allow_html=True)
-        df_map = df.copy()
-        df_map["ISO"] = df_map["Country"].map(ISO_CODES)
-        df_map_agg = df_map.groupby("ISO").agg({selected_col: "mean", "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]}).reset_index()
-        df_map_agg.columns = ["ISO", "Score", "Country"]
-        
-        fig_map = go.Figure(go.Choropleth(
-            locations=df_map_agg["ISO"], z=df_map_agg["Score"], text=df_map_agg["Country"],
-            colorscale=COLOR_SCALE, autocolorscale=False, marker_line_color='#4B5563', marker_line_width=1,
-            colorbar=dict(title=dict(text="Score", side="right", font=dict(family="Barlow", size=11)), tickfont=dict(family="Barlow", size=10), len=0.8, thickness=12),
-            hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"))
-        fig_map.update_layout(height=520, margin=dict(l=0, r=0, t=5, b=0),
-            geo=dict(showframe=False, showcoastlines=True, coastlinecolor="#94A3B8", showland=True, landcolor="#E2E8F0",
-                showocean=True, oceancolor="#FFFFFF", showcountries=True, countrycolor="#94A3B8", projection_type='natural earth', bgcolor='rgba(0,0,0,0)'),
-            paper_bgcolor='rgba(0,0,0,0)', font=dict(family="Barlow"))
-        st.plotly_chart(fig_map, use_container_width=True)
+    fig_map = go.Figure(go.Choropleth(
+        locations=df_map_agg["ISO"], z=df_map_agg["Score"], text=df_map_agg["Country"],
+        colorscale=COLOR_SCALE, autocolorscale=False, marker_line_color='#4B5563', marker_line_width=1,
+        colorbar=dict(title=dict(text="Score", side="right", font=dict(family="Barlow", size=11)), tickfont=dict(family="Barlow", size=10), len=0.8, thickness=12),
+        hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"))
+    fig_map.update_layout(height=520, margin=dict(l=0, r=0, t=5, b=0),
+        geo=dict(showframe=False, showcoastlines=True, coastlinecolor="#94A3B8", showland=True, landcolor="#E2E8F0",
+            showocean=True, oceancolor="#FFFFFF", showcountries=True, countrycolor="#94A3B8", projection_type='natural earth', bgcolor='rgba(0,0,0,0)'),
+        paper_bgcolor='rgba(0,0,0,0)', font=dict(family="Barlow"))
+    st.plotly_chart(fig_map, use_container_width=True)
     
-    with col_top:
+    # Top 3 and Bottom 3 below the map
+    min_s, max_s = df[selected_col].min(), df[selected_col].max()
+    
+    col_top3, col_bottom3 = st.columns(2)
+    
+    with col_top3:
         st.markdown('<p class="section-title-small">Top 3 Jurisdictions</p>', unsafe_allow_html=True)
-        min_s, max_s = df[selected_col].min(), df[selected_col].max()
-        
         for idx, (i, row) in enumerate(df_sorted.head(3).iterrows()):
             rank, score = idx + 1, row[selected_col]
             color = get_score_color(score, min_s, max_s)
@@ -460,10 +461,9 @@ if page == "Overview":
                 </div>
                 <div style="font-size: 0.7rem; color: #64748B; margin-top: 2px;">Hashrate Q1-26: {row['Hashrate_Q1_26']:.1f} EH/s</div>
             </div>""", unsafe_allow_html=True)
-        
-        st.markdown("")
-        st.markdown('<p class="section-title-small" style="margin-top: 0.5rem;">Bottom 3 Jurisdictions</p>', unsafe_allow_html=True)
-        
+    
+    with col_bottom3:
+        st.markdown('<p class="section-title-small">Bottom 3 Jurisdictions</p>', unsafe_allow_html=True)
         for idx, (i, row) in enumerate(df_sorted.tail(3).iterrows()):
             rank, score = 17 + idx, row[selected_col]
             color = get_score_color(score, min_s, max_s)
@@ -920,6 +920,20 @@ elif page == "Fiscal":
     
     fig_scatter = go.Figure()
     
+    # Add colored quadrant backgrounds (15% opacity = 0.15)
+    # Top-left: High Tax / Low Access (red)
+    fig_scatter.add_shape(type="rect", x0=0, y0=0.5, x1=0.5, y1=1,
+        fillcolor="rgba(146, 43, 33, 0.15)", line=dict(width=0), layer="below")
+    # Top-right: High Tax / Easy Access (orange)
+    fig_scatter.add_shape(type="rect", x0=0.5, y0=0.5, x1=1, y1=1,
+        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
+    # Bottom-left: Low Tax / Low Access (orange)
+    fig_scatter.add_shape(type="rect", x0=0, y0=0, x1=0.5, y1=0.5,
+        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
+    # Bottom-right: Low Tax / Easy Access (green)
+    fig_scatter.add_shape(type="rect", x0=0.5, y0=0, x1=1, y1=0.5,
+        fillcolor="rgba(30, 132, 73, 0.15)", line=dict(width=0), layer="below")
+    
     # Add scatter points
     fig_scatter.add_trace(go.Scatter(
         x=df_fiscal["Q6_Constraints"],
@@ -940,14 +954,14 @@ elif page == "Fiscal":
     fig_scatter.add_hline(y=0.5, line_dash="dash", line_color="#94A3B8", line_width=1)
     fig_scatter.add_vline(x=0.5, line_dash="dash", line_color="#94A3B8", line_width=1)
     
-    # Add quadrant labels
-    fig_scatter.add_annotation(x=0.25, y=0.95, text="High Tax / Low Access", showarrow=False,
+    # Add quadrant labels (bold)
+    fig_scatter.add_annotation(x=0.25, y=0.95, text="<b>High Tax / Low Access</b>", showarrow=False,
         font=dict(size=10, color="#922B21", family="Barlow"), xanchor="center")
-    fig_scatter.add_annotation(x=0.75, y=0.95, text="High Tax / Easy Access", showarrow=False,
+    fig_scatter.add_annotation(x=0.75, y=0.95, text="<b>High Tax / Easy Access</b>", showarrow=False,
         font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
-    fig_scatter.add_annotation(x=0.25, y=0.05, text="Low Tax / Low Access", showarrow=False,
+    fig_scatter.add_annotation(x=0.25, y=0.05, text="<b>Low Tax / Low Access</b>", showarrow=False,
         font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
-    fig_scatter.add_annotation(x=0.75, y=0.05, text="Low Tax / Easy Access", showarrow=False,
+    fig_scatter.add_annotation(x=0.75, y=0.05, text="<b>Low Tax / Easy Access</b>", showarrow=False,
         font=dict(size=10, color="#1E8449", family="Barlow"), xanchor="center")
     
     fig_scatter.update_layout(
@@ -993,26 +1007,26 @@ elif page == "Fiscal":
         map_col = "Q4_Electricity_Tax"
         map_title = "Power Tax Exposure"
         # For power tax: low score = Yes (there is a tax), high score = No (no tax)
-        # Invert logic: score < 0.5 means Yes (tax exists), score >= 0.5 means No (no tax)
         df_fiscal["Binary"] = df_fiscal[map_col].apply(lambda x: 0 if x < 0.5 else 1)
-        yes_label = "Yes (tax exists)"
-        no_label = "No (no tax)"
+        # Power tax: Yes = #fc7a53 (orange-red), No = #12E09B (green)
+        binary_colorscale = [[0, '#fc7a53'], [1, '#12E09B']]
+        yes_color = "#fc7a53"
+        no_color = "#12E09B"
     else:
         map_col = "Q5_Subsidies"
         map_title = "Access to Subsidies or Abatements"
         # For subsidies: high score = Yes (access exists), low score = No
         df_fiscal["Binary"] = df_fiscal[map_col].apply(lambda x: 1 if x >= 0.5 else 0)
-        yes_label = "Yes (access exists)"
-        no_label = "No (no access)"
+        # Subsidies: Yes = #12E09B (green), No = #fc7a53 (orange-red)
+        binary_colorscale = [[0, '#fc7a53'], [1, '#12E09B']]
+        yes_color = "#12E09B"
+        no_color = "#fc7a53"
     
     df_fiscal_agg = df_fiscal.groupby("ISO").agg({
         "Binary": "mean",
         "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]
     }).reset_index()
     df_fiscal_agg.columns = ["ISO", "Score", "Country"]
-    
-    # Binary colorscale: 0 = No (#F3B11D), 1 = Yes (#12E09B)
-    binary_colorscale = [[0, '#F3B11D'], [1, '#12E09B']]
     
     fig_fiscal_map = go.Figure(go.Choropleth(
         locations=df_fiscal_agg["ISO"],
@@ -1054,11 +1068,11 @@ elif page == "Fiscal":
     )
     st.plotly_chart(fig_fiscal_map, use_container_width=True)
     
-    # Binary legend Yes/No
+    # Binary legend Yes/No with dynamic colors
     st.markdown(f"""
     <div style="display: flex; justify-content: center; gap: 3rem; margin: 1rem 0; font-size: 0.9rem;">
-        <span><strong style="color: #12E09B; font-size: 1.2rem;">●</strong> Yes</span>
-        <span><strong style="color: #F3B11D; font-size: 1.2rem;">●</strong> No</span>
+        <span><strong style="color: {yes_color}; font-size: 1.2rem;">●</strong> Yes</span>
+        <span><strong style="color: {no_color}; font-size: 1.2rem;">●</strong> No</span>
     </div>
     """, unsafe_allow_html=True)
 
