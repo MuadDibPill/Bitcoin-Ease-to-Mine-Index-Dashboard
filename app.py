@@ -336,29 +336,30 @@ LEGAL_SCORES = {
 # FISCAL SECTION DATA FROM EXCEL
 # ============================================
 # Q1: Taxation environment (Row 8)
+# Q2: Profit center shift abroad (Row 9)
 # Q4: Electricity Tax (Row 11)
 # Q5: Tax abatements, subsidies, incentives (Row 12)
 # Q6: Constraint to avoid taxes or access subsidies (Row 13)
 FISCAL_SCORES = {
-    "Argentina": {"Q1_Taxation": 0.50, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.33},
-    "Quebec (CA)": {"Q1_Taxation": 0.38, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.60},
-    "Alberta (CA)": {"Q1_Taxation": 0.50, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.30},
-    "Brazil": {"Q1_Taxation": 0.33, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.27},
-    "Chile": {"Q1_Taxation": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.50},
-    "Ethiopia": {"Q1_Taxation": 0.40, "Q4_Electricity_Tax": 0.25, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.47},
-    "Finland": {"Q1_Taxation": 0.25, "Q4_Electricity_Tax": 0.25, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.15},
-    "Iceland": {"Q1_Taxation": 0.58, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.57},
-    "Kazakhstan": {"Q1_Taxation": 0.67, "Q4_Electricity_Tax": 0.30, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.38},
-    "Kenya": {"Q1_Taxation": 0.50, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.50},
-    "Norway": {"Q1_Taxation": 0.58, "Q4_Electricity_Tax": 0.27, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.27},
-    "Oman": {"Q1_Taxation": 1.00, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.70},
-    "Paraguay": {"Q1_Taxation": 0.71, "Q4_Electricity_Tax": 0.25, "Q5_Subsidies": 0.71, "Q6_Constraints": 0.43},
-    "DRC": {"Q1_Taxation": 0.25, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.15},
-    "Russia": {"Q1_Taxation": 0.50, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.15},
-    "Sweden": {"Q1_Taxation": 0.00, "Q4_Electricity_Tax": 0.15, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.15},
-    "UAE": {"Q1_Taxation": 1.00, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.60},
-    "Texas (US)": {"Q1_Taxation": 0.58, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.72, "Q6_Constraints": 0.36},
-    "Australia": {"Q1_Taxation": 0.25, "Q4_Electricity_Tax": 0.50, "Q5_Subsidies": 0.25, "Q6_Constraints": 0.25}
+    "Argentina": {"Q1_Taxation": 0.50, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.33},
+    "Quebec (CA)": {"Q1_Taxation": 0.38, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.60},
+    "Alberta (CA)": {"Q1_Taxation": 0.50, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.30},
+    "Brazil": {"Q1_Taxation": 0.33, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.27},
+    "Chile": {"Q1_Taxation": 0.75, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.50},
+    "Ethiopia": {"Q1_Taxation": 0.40, "Q2_Profit_Center": 0.43, "Q4_Electricity_Tax": 0.25, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.47},
+    "Finland": {"Q1_Taxation": 0.25, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.25, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.15},
+    "Iceland": {"Q1_Taxation": 0.58, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.57},
+    "Kazakhstan": {"Q1_Taxation": 0.67, "Q2_Profit_Center": 0.35, "Q4_Electricity_Tax": 0.30, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.38},
+    "Kenya": {"Q1_Taxation": 0.50, "Q2_Profit_Center": 0.35, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.50},
+    "Norway": {"Q1_Taxation": 0.58, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.27, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.27},
+    "Oman": {"Q1_Taxation": 1.00, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.70},
+    "Paraguay": {"Q1_Taxation": 0.71, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.25, "Q5_Subsidies": 0.71, "Q6_Constraints": 0.43},
+    "DRC": {"Q1_Taxation": 0.25, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.15},
+    "Russia": {"Q1_Taxation": 0.50, "Q2_Profit_Center": 0.35, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.15},
+    "Sweden": {"Q1_Taxation": 0.00, "Q2_Profit_Center": 0.35, "Q4_Electricity_Tax": 0.15, "Q5_Subsidies": 0.50, "Q6_Constraints": 0.15},
+    "UAE": {"Q1_Taxation": 1.00, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.75, "Q6_Constraints": 0.60},
+    "Texas (US)": {"Q1_Taxation": 0.58, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.75, "Q5_Subsidies": 0.72, "Q6_Constraints": 0.36},
+    "Australia": {"Q1_Taxation": 0.25, "Q2_Profit_Center": 0.75, "Q4_Electricity_Tax": 0.50, "Q5_Subsidies": 0.25, "Q6_Constraints": 0.25}
 }
 
 # ============================================
@@ -479,32 +480,32 @@ if page == "Overview":
     
     # EMI Ranking
     st.markdown('<p class="section-title">EMI Ranking</p>', unsafe_allow_html=True)
-    col_rf, _ = st.columns([1, 3])
+    
+    # Filter and text box on the same row
+    col_rf, col_spacer, col_text_intro = st.columns([1, 0.1, 2])
     with col_rf:
         rank_dim = st.selectbox("Select category", list(score_map.keys()), key="rank_filter")
     
-    rank_col = score_map[rank_dim]
-    df_rank = df.sort_values(rank_col, ascending=True).copy()
-    min_r, max_r = df_rank[rank_col].min(), df_rank[rank_col].max()
-    colors_r = [get_score_color(s, min_r, max_r) for s in df_rank[rank_col]]
-    
-    col_chart, col_text = st.columns([2, 1])
-    with col_chart:
-        fig_rank = go.Figure(go.Bar(x=df_rank[rank_col], y=df_rank["Country"], orientation='h', marker_color=colors_r,
-            text=df_rank[rank_col].round(2), textposition='outside', textfont=dict(size=13, family="Barlow")))
-        fig_rank.update_layout(height=560, margin=dict(l=0, r=60, t=10, b=40),
-            xaxis=dict(range=[0, 1], title=dict(text=rank_dim + " Score", font=dict(family="Barlow", size=12)), gridcolor='#E2E8F0', zeroline=False),
-            yaxis=dict(title="", tickfont=dict(family="Barlow", size=13)), plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(family="Barlow"))
-        st.plotly_chart(fig_rank, use_container_width=True)
-    
-    with col_text:
-        st.markdown("""<div class="info-box">
+    with col_text_intro:
+        st.markdown("""<div class="info-box" style="margin-top: 0;">
             <div class="info-box-title" style="font-size: 1.1rem; margin-bottom: 0.75rem;">EMI Description</div>
             <p>The first edition of the <strong>Ease to Mine Index (EMI)</strong> is a composite framework designed to assess the overall attractiveness of jurisdictions for Bitcoin mining.</p>
             <p style="margin-top: 0.75rem;">The index evaluates a broad set of dimensions:</p>
             <ul style="margin: 0.5rem 0; padding-left: 1.2rem;"><li>Legal and fiscal frameworks</li><li>Permitting and licensing conditions</li><li>Energy market structure and grid access</li><li>Climate characteristics</li><li>Tariff and import environments</li></ul>
             <p style="margin-top: 0.75rem;"><strong>Coverage:</strong> 18 countries spanning established and emerging mining regions — 19 jurisdictions (where Texas serves as a proxy of U.S., and Alberta and Québec for Canada).</p>
         </div>""", unsafe_allow_html=True)
+    
+    rank_col = score_map[rank_dim]
+    df_rank = df.sort_values(rank_col, ascending=True).copy()
+    min_r, max_r = df_rank[rank_col].min(), df_rank[rank_col].max()
+    colors_r = [get_score_color(s, min_r, max_r) for s in df_rank[rank_col]]
+    
+    fig_rank = go.Figure(go.Bar(x=df_rank[rank_col], y=df_rank["Country"], orientation='h', marker_color=colors_r,
+        text=df_rank[rank_col].round(2), textposition='outside', textfont=dict(size=13, family="Barlow")))
+    fig_rank.update_layout(height=560, margin=dict(l=0, r=60, t=10, b=40),
+        xaxis=dict(range=[0, 1], title=dict(text=rank_dim + " Score", font=dict(family="Barlow", size=12)), gridcolor='#E2E8F0', zeroline=False),
+        yaxis=dict(title="", tickfont=dict(family="Barlow", size=13)), plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(family="Barlow"))
+    st.plotly_chart(fig_rank, use_container_width=True)
     
     st.markdown("---")
     
@@ -905,6 +906,7 @@ elif page == "Fiscal":
         fiscal_data.append({
             "Country": country,
             "Q1_Taxation": scores["Q1_Taxation"],
+            "Q2_Profit_Center": scores["Q2_Profit_Center"],
             "Q4_Electricity_Tax": scores["Q4_Electricity_Tax"],
             "Q5_Subsidies": scores["Q5_Subsidies"],
             "Q6_Constraints": scores["Q6_Constraints"]
@@ -921,18 +923,21 @@ elif page == "Fiscal":
     fig_scatter = go.Figure()
     
     # Add colored quadrant backgrounds (15% opacity = 0.15)
-    # Top-left: High Tax / Low Access (red)
-    fig_scatter.add_shape(type="rect", x0=0, y0=0.5, x1=0.5, y1=1,
-        fillcolor="rgba(146, 43, 33, 0.15)", line=dict(width=0), layer="below")
-    # Top-right: High Tax / Easy Access (orange)
+    # CORRECTED LOGIC:
+    # Y-axis (Taxation): 0 = Hard/Unfavorable, 1 = Favorable
+    # X-axis (Constraints): 0 = Low Access, 1 = Easy Access
+    # Top-right: Favorable Tax / Easy Access (GREEN - best)
     fig_scatter.add_shape(type="rect", x0=0.5, y0=0.5, x1=1, y1=1,
-        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
-    # Bottom-left: Low Tax / Low Access (orange)
-    fig_scatter.add_shape(type="rect", x0=0, y0=0, x1=0.5, y1=0.5,
-        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
-    # Bottom-right: Low Tax / Easy Access (green)
-    fig_scatter.add_shape(type="rect", x0=0.5, y0=0, x1=1, y1=0.5,
         fillcolor="rgba(30, 132, 73, 0.15)", line=dict(width=0), layer="below")
+    # Top-left: Favorable Tax / Low Access (ORANGE)
+    fig_scatter.add_shape(type="rect", x0=0, y0=0.5, x1=0.5, y1=1,
+        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
+    # Bottom-right: Hard Tax / Easy Access (ORANGE)
+    fig_scatter.add_shape(type="rect", x0=0.5, y0=0, x1=1, y1=0.5,
+        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
+    # Bottom-left: Hard Tax / Low Access (RED - worst)
+    fig_scatter.add_shape(type="rect", x0=0, y0=0, x1=0.5, y1=0.5,
+        fillcolor="rgba(146, 43, 33, 0.15)", line=dict(width=0), layer="below")
     
     # Add scatter points
     fig_scatter.add_trace(go.Scatter(
@@ -954,15 +959,15 @@ elif page == "Fiscal":
     fig_scatter.add_hline(y=0.5, line_dash="dash", line_color="#94A3B8", line_width=1)
     fig_scatter.add_vline(x=0.5, line_dash="dash", line_color="#94A3B8", line_width=1)
     
-    # Add quadrant labels (bold)
-    fig_scatter.add_annotation(x=0.25, y=0.95, text="<b>High Tax / Low Access</b>", showarrow=False,
-        font=dict(size=10, color="#922B21", family="Barlow"), xanchor="center")
-    fig_scatter.add_annotation(x=0.75, y=0.95, text="<b>High Tax / Easy Access</b>", showarrow=False,
-        font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
-    fig_scatter.add_annotation(x=0.25, y=0.05, text="<b>Low Tax / Low Access</b>", showarrow=False,
-        font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
-    fig_scatter.add_annotation(x=0.75, y=0.05, text="<b>Low Tax / Easy Access</b>", showarrow=False,
+    # Add quadrant labels (bold) - CORRECTED
+    fig_scatter.add_annotation(x=0.75, y=0.95, text="<b>Favorable Tax / Easy Access</b>", showarrow=False,
         font=dict(size=10, color="#1E8449", family="Barlow"), xanchor="center")
+    fig_scatter.add_annotation(x=0.25, y=0.95, text="<b>Favorable Tax / Low Access</b>", showarrow=False,
+        font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
+    fig_scatter.add_annotation(x=0.75, y=0.05, text="<b>Hard Tax / Easy Access</b>", showarrow=False,
+        font=dict(size=10, color="#E67E22", family="Barlow"), xanchor="center")
+    fig_scatter.add_annotation(x=0.25, y=0.05, text="<b>Hard Tax / Low Access</b>", showarrow=False,
+        font=dict(size=10, color="#922B21", family="Barlow"), xanchor="center")
     
     fig_scatter.update_layout(
         height=550,
@@ -991,7 +996,7 @@ elif page == "Fiscal":
     st.markdown("---")
     
     # =====================
-    # SECTION 2: Map with filter for Q4 and Q5 (Yes/No binary)
+    # SECTION 2: Map with filter for Q2, Q4 and Q5 (Yes/No binary)
     # =====================
     st.markdown('<p class="section-title">Fiscal Incentives Map</p>', unsafe_allow_html=True)
     
@@ -999,7 +1004,7 @@ elif page == "Fiscal":
     with col_map_filter:
         fiscal_map_question = st.selectbox(
             "Select question",
-            ["Is there a power tax?", "Access to subsidies or abatements?"],
+            ["Is there a power tax?", "Access to subsidies or abatements?", "Ability to shift profit center abroad?"],
             key="fiscal_map_filter"
         )
     
@@ -1012,12 +1017,21 @@ elif page == "Fiscal":
         binary_colorscale = [[0, '#fc7a53'], [1, '#12E09B']]
         yes_color = "#fc7a53"
         no_color = "#12E09B"
-    else:
+    elif fiscal_map_question == "Access to subsidies or abatements?":
         map_col = "Q5_Subsidies"
         map_title = "Access to Subsidies or Abatements"
         # For subsidies: high score = Yes (access exists), low score = No
         df_fiscal["Binary"] = df_fiscal[map_col].apply(lambda x: 1 if x >= 0.5 else 0)
         # Subsidies: Yes = #12E09B (green), No = #fc7a53 (orange-red)
+        binary_colorscale = [[0, '#fc7a53'], [1, '#12E09B']]
+        yes_color = "#12E09B"
+        no_color = "#fc7a53"
+    else:  # Ability to shift profit center abroad?
+        map_col = "Q2_Profit_Center"
+        map_title = "Ability to Shift Profit Center Abroad"
+        # For profit center: high score = Yes (possible), low score = No
+        df_fiscal["Binary"] = df_fiscal[map_col].apply(lambda x: 1 if x >= 0.5 else 0)
+        # Profit center: Yes = #12E09B (green), No = #fc7a53 (orange-red)
         binary_colorscale = [[0, '#fc7a53'], [1, '#12E09B']]
         yes_color = "#12E09B"
         no_color = "#fc7a53"
