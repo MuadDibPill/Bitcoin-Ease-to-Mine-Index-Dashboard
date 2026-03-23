@@ -1124,13 +1124,13 @@ elif page == "Fiscal":
         if rate < 11.0:
             return '#12E09B'  # Green
         elif rate < 20.0:
-            return '#B66DFF'  # Light purple
+            return '#6287F0'  # Light blue
         elif rate <= 25.0:
-            return '#8205FF'  # Purple
+            return '#0D6FFF'  # Blue
         elif rate <= 30.0:
-            return '#F3B11D'  # Orange
+            return '#1D0DED'  # Dark blue
         else:
-            return '#fc7a53'  # Red-orange
+            return '#002060'  # Navy
     
     # Create CIT dataframe
     cit_data = [{"Country": k, "CIT_Rate": v} for k, v in CIT_RATES.items()]
@@ -1177,10 +1177,10 @@ elif page == "Fiscal":
     st.markdown("""
     <div style="display: flex; justify-content: center; gap: 1.5rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
         <span><strong style="color: #12E09B; font-size: 1.1rem;">●</strong> &lt;11%</span>
-        <span><strong style="color: #B66DFF; font-size: 1.1rem;">●</strong> 11-19%</span>
-        <span><strong style="color: #8205FF; font-size: 1.1rem;">●</strong> 20-25%</span>
-        <span><strong style="color: #F3B11D; font-size: 1.1rem;">●</strong> 26-30%</span>
-        <span><strong style="color: #fc7a53; font-size: 1.1rem;">●</strong> &gt;30%</span>
+        <span><strong style="color: #6287F0; font-size: 1.1rem;">●</strong> 11-19%</span>
+        <span><strong style="color: #0D6FFF; font-size: 1.1rem;">●</strong> 20-25%</span>
+        <span><strong style="color: #1D0DED; font-size: 1.1rem;">●</strong> 26-30%</span>
+        <span><strong style="color: #002060; font-size: 1.1rem;">●</strong> &gt;30%</span>
     </div>
     """, unsafe_allow_html=True)
     
