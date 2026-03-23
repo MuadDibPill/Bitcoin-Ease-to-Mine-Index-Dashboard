@@ -665,7 +665,7 @@ elif page == "Legal":
     with col_filter:
         legal_view = st.selectbox(
             "Select metric",
-            ["Q18: Current regulatory environment", "Q19: Future regulatory outlook"],
+            ["Q18: Current legal framework", "Q19: Expected regulatory outlook"],
             key="legal_filter"
         )
     
@@ -730,96 +730,106 @@ elif page == "Legal":
     
     st.markdown("---")
     
-    # Grouped bar chart - Current vs Future with Evolution
-    st.markdown('<p class="section-title">Current vs Future Regulatory Outlook</p>', unsafe_allow_html=True)
+    # Regulatory Evolution Chart with Filter
+    st.markdown('<p class="section-title">Regulatory Evolution</p>', unsafe_allow_html=True)
     
-    df_legal_sorted = df_legal.sort_values("Evolution", ascending=False)
+    # Calculate categories
+    improving = df_legal[df_legal["Evolution"] > 0.001].copy()
+    worsening = df_legal[df_legal["Evolution"] < -0.001].copy()
+    stable = df_legal[(df_legal["Evolution"] >= -0.001) & (df_legal["Evolution"] <= 0.001)].copy()
     
-    fig_legal_bar = go.Figure()
+    col_evo_filter, _ = st.columns([1, 3])
+    with col_evo_filter:
+        evolution_filter = st.selectbox(
+            "Select outlook",
+            ["All", "Improving Outlook", "Stable Outlook", "Worsening Outlook"],
+            key="evolution_filter"
+        )
     
-    # Q18 bars
-    fig_legal_bar.add_trace(go.Bar(
-        name="Q18: Current",
-        x=df_legal_sorted["Country"],
-        y=df_legal_sorted["Q18_Current"],
-        marker_color='#6287F0',
-        text=df_legal_sorted["Q18_Current"].round(2),
-        textposition='outside',
-        textfont=dict(size=10, family="Barlow")
-    ))
+    # Filter data based on selection
+    if evolution_filter == "Improving Outlook":
+        df_evo_filtered = improving.sort_values("Evolution", ascending=False)
+        bar_color = '#1E8449'
+        chart_title = "Jurisdictions with Improving Regulatory Outlook"
+    elif evolution_filter == "Worsening Outlook":
+        df_evo_filtered = worsening.sort_values("Evolution", ascending=True)
+        bar_color = '#922B21'
+        chart_title = "Jurisdictions with Worsening Regulatory Outlook"
+    elif evolution_filter == "Stable Outlook":
+        df_evo_filtered = stable.sort_values("Q18_Current", ascending=False)
+        bar_color = '#64748B'
+        chart_title = "Jurisdictions with Stable Regulatory Outlook"
+    else:
+        df_evo_filtered = df_legal.sort_values("Evolution", ascending=False)
+        bar_color = None
+        chart_title = "All Jurisdictions - Regulatory Evolution"
     
-    # Q19 bars
-    fig_legal_bar.add_trace(go.Bar(
-        name="Q19: Future",
-        x=df_legal_sorted["Country"],
-        y=df_legal_sorted["Q19_Future"],
-        marker_color='#1D0DED',
-        text=df_legal_sorted["Q19_Future"].round(2),
-        textposition='outside',
-        textfont=dict(size=10, family="Barlow")
-    ))
-    
-    # Add evolution annotations
-    annotations = []
-    for idx, row in df_legal_sorted.iterrows():
-        evo = row["Evolution"]
-        if evo > 0:
-            color = "#1E8449"
-            symbol = "↑"
-        elif evo < 0:
-            color = "#922B21"
-            symbol = "↓"
+    if len(df_evo_filtered) > 0:
+        # Create bar chart showing only evolution values
+        if evolution_filter == "All":
+            # Color bars based on evolution direction
+            colors = []
+            for evo in df_evo_filtered["Evolution"]:
+                if evo > 0.001:
+                    colors.append('#1E8449')
+                elif evo < -0.001:
+                    colors.append('#922B21')
+                else:
+                    colors.append('#64748B')
         else:
-            color = "#64748B"
-            symbol = "→"
+            colors = bar_color
         
-        annotations.append(dict(
-            x=row["Country"],
-            y=max(row["Q18_Current"], row["Q19_Future"]) + 0.12,
-            text=f"{symbol} {evo:+.2f}",
-            showarrow=False,
-            font=dict(size=9, color=color, family="Barlow"),
-            xanchor="center"
+        fig_evo = go.Figure(go.Bar(
+            x=df_evo_filtered["Country"],
+            y=df_evo_filtered["Evolution"],
+            marker_color=colors,
+            text=df_evo_filtered["Evolution"].apply(lambda x: f"{x:+.3f}"),
+            textposition='outside',
+            textfont=dict(size=11, family="Barlow")
         ))
-    
-    fig_legal_bar.update_layout(
-        barmode='group',
-        height=600,
-        margin=dict(l=0, r=0, t=30, b=100),
-        xaxis=dict(
-            title="",
-            tickangle=-45,
-            tickfont=dict(family="Barlow", size=11)
-        ),
-        yaxis=dict(
-            range=[0, 1.15],
-            title="Score",
-            gridcolor='#E2E8F0',
-            tickfont=dict(family="Barlow", size=11)
-        ),
-        legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="center",
-            x=0.5,
+        
+        # Calculate y-axis range
+        if evolution_filter == "Stable Outlook":
+            y_range = [-0.05, 0.05]
+        else:
+            max_abs = max(abs(df_evo_filtered["Evolution"].min()), abs(df_evo_filtered["Evolution"].max()), 0.1)
+            y_range = [-max_abs - 0.05, max_abs + 0.08]
+        
+        fig_evo.update_layout(
+            height=450,
+            margin=dict(l=0, r=0, t=40, b=100),
+            title=dict(
+                text=chart_title,
+                font=dict(family="Barlow", size=14, color="#1E293B"),
+                x=0.5,
+                xanchor="center"
+            ),
+            xaxis=dict(
+                title="",
+                tickangle=-45,
+                tickfont=dict(family="Barlow", size=11)
+            ),
+            yaxis=dict(
+                range=y_range,
+                title="Evolution (Q19 - Q18)",
+                gridcolor='#E2E8F0',
+                tickfont=dict(family="Barlow", size=11),
+                zeroline=True,
+                zerolinecolor='#1E293B',
+                zerolinewidth=2
+            ),
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
             font=dict(family="Barlow")
-        ),
-        annotations=annotations,
-        plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='rgba(0,0,0,0)',
-        font=dict(family="Barlow")
-    )
-    st.plotly_chart(fig_legal_bar, use_container_width=True)
+        )
+        st.plotly_chart(fig_evo, use_container_width=True)
+    else:
+        st.info("No jurisdictions in this category.")
     
     st.markdown("---")
     
     # Insight boxes
     st.markdown('<p class="section-title">Regulatory Outlook Insights</p>', unsafe_allow_html=True)
-    
-    improving = df_legal[df_legal["Evolution"] > 0.05].sort_values("Evolution", ascending=False)
-    worsening = df_legal[df_legal["Evolution"] < -0.05].sort_values("Evolution", ascending=True)
-    stable = df_legal[(df_legal["Evolution"] >= -0.05) & (df_legal["Evolution"] <= 0.05)]
     
     col_imp, col_wor, col_sta = st.columns(3)
     
@@ -854,10 +864,10 @@ elif page == "Legal":
     
     df_legal_display = df_legal[["Country", "Region", "Q18_Current", "Q19_Future", "Evolution"]].copy()
     df_legal_display = df_legal_display.rename(columns={
-        "Q18_Current": "Q18: Current",
-        "Q19_Future": "Q19: Future"
+        "Q18_Current": "Current Legal Framework",
+        "Q19_Future": "Expected Regulatory Outlook"
     })
-    df_legal_display = df_legal_display.sort_values("Q18: Current", ascending=False)
+    df_legal_display = df_legal_display.sort_values("Current Legal Framework", ascending=False)
     
     st.dataframe(
         df_legal_display,
@@ -865,14 +875,14 @@ elif page == "Legal":
         hide_index=True,
         height=500,
         column_config={
-            "Q18: Current": st.column_config.ProgressColumn(
-                "Q18: Current",
+            "Current Legal Framework": st.column_config.ProgressColumn(
+                "Current Legal Framework",
                 format="%.2f",
                 min_value=0,
                 max_value=1
             ),
-            "Q19: Future": st.column_config.ProgressColumn(
-                "Q19: Future",
+            "Expected Regulatory Outlook": st.column_config.ProgressColumn(
+                "Expected Regulatory Outlook",
                 format="%.2f",
                 min_value=0,
                 max_value=1
