@@ -1282,8 +1282,8 @@ elif page == "Permits & Licenses":
         r=country1_values,
         theta=radar_categories_closed,
         fill='toself',
-        fillcolor='rgba(98, 135, 240, 0.3)',
-        line=dict(color='#6287F0', width=2),
+        fillcolor='rgba(243, 177, 29, 0.3)',
+        line=dict(color='#F3B11D', width=2),
         name=country1_radar
     ))
     
@@ -1291,8 +1291,8 @@ elif page == "Permits & Licenses":
         r=country2_values,
         theta=radar_categories_closed,
         fill='toself',
-        fillcolor='rgba(29, 13, 237, 0.3)',
-        line=dict(color='#1D0DED', width=2),
+        fillcolor='rgba(252, 122, 83, 0.3)',
+        line=dict(color='#fc7a53', width=2),
         name=country2_radar
     ))
     
