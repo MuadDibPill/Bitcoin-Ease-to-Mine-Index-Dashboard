@@ -642,7 +642,7 @@ elif page == "Jurisdiction":
 # ============================================
 elif page == "Legal":
     st.markdown("# Legal Framework Analysis")
-    st.markdown('<p class="subtitle-text">Regulatory environment assessment based on Q18 (current) and Q19 (future outlook) survey responses</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">Regulatory environment assessment based on survey responses</p>', unsafe_allow_html=True)
     
     # Create Legal DataFrame
     legal_data = []
@@ -665,11 +665,11 @@ elif page == "Legal":
     with col_filter:
         legal_view = st.selectbox(
             "Select metric",
-            ["Q18: Current legal framework", "Q19: Expected regulatory outlook"],
+            ["Current legal framework", "Expected regulatory outlook"],
             key="legal_filter"
         )
     
-    selected_legal_col = "Q18_Current" if "Q18" in legal_view else "Q19_Future"
+    selected_legal_col = "Q18_Current" if "Current" in legal_view else "Q19_Future"
     
     # Map
     st.markdown('<p class="section-title">Regulatory Environment Map</p>', unsafe_allow_html=True)
@@ -811,7 +811,7 @@ elif page == "Legal":
             ),
             yaxis=dict(
                 range=y_range,
-                title="Evolution (Q19 - Q18)",
+                title="Evolution",
                 gridcolor='#E2E8F0',
                 tickfont=dict(family="Barlow", size=11),
                 zeroline=True,
@@ -825,37 +825,6 @@ elif page == "Legal":
         st.plotly_chart(fig_evo, use_container_width=True)
     else:
         st.info("No jurisdictions in this category.")
-    
-    st.markdown("---")
-    
-    # Insight boxes
-    st.markdown('<p class="section-title">Regulatory Outlook Insights</p>', unsafe_allow_html=True)
-    
-    col_imp, col_wor, col_sta = st.columns(3)
-    
-    with col_imp:
-        improving_list = ", ".join(improving["Country"].tolist()) if len(improving) > 0 else "None"
-        st.markdown(f"""<div class="info-box" style="border-left: 4px solid #1E8449;">
-            <div class="info-box-title" style="color: #1E8449;">↑ Improving Outlook</div>
-            <p><strong>{len(improving)}</strong> jurisdictions expect regulatory improvement</p>
-            <p style="font-size: 0.85rem; margin-top: 0.5rem;">{improving_list}</p>
-        </div>""", unsafe_allow_html=True)
-    
-    with col_wor:
-        worsening_list = ", ".join(worsening["Country"].tolist()) if len(worsening) > 0 else "None"
-        st.markdown(f"""<div class="info-box" style="border-left: 4px solid #922B21;">
-            <div class="info-box-title" style="color: #922B21;">↓ Worsening Outlook</div>
-            <p><strong>{len(worsening)}</strong> jurisdictions expect regulatory deterioration</p>
-            <p style="font-size: 0.85rem; margin-top: 0.5rem;">{worsening_list}</p>
-        </div>""", unsafe_allow_html=True)
-    
-    with col_sta:
-        stable_list = ", ".join(stable["Country"].tolist()) if len(stable) > 0 else "None"
-        st.markdown(f"""<div class="info-box" style="border-left: 4px solid #64748B;">
-            <div class="info-box-title" style="color: #64748B;">→ Stable Outlook</div>
-            <p><strong>{len(stable)}</strong> jurisdictions expect no significant change</p>
-            <p style="font-size: 0.85rem; margin-top: 0.5rem;">{stable_list}</p>
-        </div>""", unsafe_allow_html=True)
     
     st.markdown("---")
     
