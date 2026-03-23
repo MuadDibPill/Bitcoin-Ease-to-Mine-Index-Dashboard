@@ -1623,9 +1623,9 @@ elif page == "Energy & Grid":
         annotation_text="15 months", annotation_position="top")
     
     # Add quadrant labels
-    fig_energy_scatter.add_annotation(x=9, y=75, text="<b>Fast / Expensive</b>", showarrow=False,
+    fig_energy_scatter.add_annotation(x=9, y=71, text="<b>Fast / Expensive</b>", showarrow=False,
         font=dict(size=11, color="#E67E22", family="Barlow"), xanchor="center")
-    fig_energy_scatter.add_annotation(x=22.5, y=75, text="<b>Slow / Expensive</b>", showarrow=False,
+    fig_energy_scatter.add_annotation(x=22.5, y=71, text="<b>Slow / Expensive</b>", showarrow=False,
         font=dict(size=11, color="#922B21", family="Barlow"), xanchor="center")
     fig_energy_scatter.add_annotation(x=9, y=20, text="<b>Fast / Cheap</b>", showarrow=False,
         font=dict(size=11, color="#1E8449", family="Barlow"), xanchor="center")
@@ -1720,40 +1720,6 @@ elif page == "Energy & Grid":
         Higher score = Lower barriers to entry for energy market participation or grid interconnection
     </p>
     """, unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    # =====================
-    # SECTION 3: Energy Data Table
-    # =====================
-    st.markdown('<p class="section-title">Energy & Grid Data</p>', unsafe_allow_html=True)
-    
-    # Prepare data table
-    df_energy_table = df_energy_real[["Country", "Price_MWh", "Grid_Months", "Barriers"]].copy()
-    df_energy_table.columns = ["Country", "Power Cost ($/MWh)", "Grid Connection (months)", "Market Access Score"]
-    df_energy_table = df_energy_table.sort_values("Power Cost ($/MWh)", ascending=True)
-    
-    # Format the columns
-    df_energy_table["Power Cost ($/MWh)"] = df_energy_table["Power Cost ($/MWh)"].apply(lambda x: f"${x:.2f}")
-    df_energy_table["Grid Connection (months)"] = df_energy_table["Grid Connection (months)"].apply(lambda x: f"{x:.1f}" if x != int(x) else f"{int(x)}")
-    df_energy_table["Market Access Score"] = df_energy_table["Market Access Score"].apply(lambda x: f"{x:.2f}")
-    
-    st.dataframe(
-        df_energy_table,
-        use_container_width=True,
-        hide_index=True,
-        height=500
-    )
-    
-    # Download button
-    csv_energy = df_energy_real[["Country", "Price_MWh", "Grid_Months", "Barriers"]].copy()
-    csv_energy.columns = ["Country", "Power Cost ($/MWh)", "Grid Connection (months)", "Market Access Score"]
-    st.download_button(
-        label="📥 Download Energy Data (CSV)",
-        data=csv_energy.to_csv(index=False),
-        file_name="emi_energy_grid_data.csv",
-        mime="text/csv"
-    )
 
 # ============================================
 # METHODOLOGY PAGE
