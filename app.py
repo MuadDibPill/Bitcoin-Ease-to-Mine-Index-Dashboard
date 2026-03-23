@@ -1282,8 +1282,8 @@ elif page == "Permits & Licenses":
         r=country1_values,
         theta=radar_categories_closed,
         fill='toself',
-        fillcolor='rgba(243, 177, 29, 0.3)',
-        line=dict(color='#F3B11D', width=2),
+        fillcolor='rgba(18, 224, 155, 0.3)',
+        line=dict(color='#12E09B', width=2),
         name=country1_radar
     ))
     
@@ -1291,8 +1291,8 @@ elif page == "Permits & Licenses":
         r=country2_values,
         theta=radar_categories_closed,
         fill='toself',
-        fillcolor='rgba(252, 122, 83, 0.3)',
-        line=dict(color='#fc7a53', width=2),
+        fillcolor='rgba(243, 177, 29, 0.3)',
+        line=dict(color='#F3B11D', width=2),
         name=country2_radar
     ))
     
@@ -1403,8 +1403,8 @@ elif page == "Permits & Licenses":
     # Binary legend Yes/No
     st.markdown(f"""
     <div style="display: flex; justify-content: center; gap: 3rem; margin: 1rem 0; font-size: 0.9rem;">
-        <span><strong style="color: {yes_color}; font-size: 1.2rem;">●</strong> Yes (License Required)</span>
-        <span><strong style="color: {no_color}; font-size: 1.2rem;">●</strong> No (No License Required)</span>
+        <span><strong style="color: {yes_color}; font-size: 1.2rem;">●</strong> License Required</span>
+        <span><strong style="color: {no_color}; font-size: 1.2rem;">●</strong> No License Required</span>
     </div>
     """, unsafe_allow_html=True)
     
@@ -1415,27 +1415,33 @@ elif page == "Permits & Licenses":
     # =====================
     st.markdown('<p class="section-title">Timeline to Secure Construction Permits</p>', unsafe_allow_html=True)
     
-    df_construction = df_permit.sort_values("Q12_Construction", ascending=True)
+    # Convert score to estimated months (inverse relationship: higher score = faster = fewer months)
+    # Linear mapping: score 1.0 = 2 months, score 0.2 = 18 months
+    df_construction = df_permit.copy()
+    df_construction["Months"] = df_construction["Q12_Construction"].apply(lambda s: round(18 - (s * 16)))
+    df_construction = df_construction.sort_values("Months", ascending=False)
     
-    # Color based on score (higher = faster/better = greener)
-    colors_construction = [get_score_color(s, df_construction["Q12_Construction"].min(), df_construction["Q12_Construction"].max()) for s in df_construction["Q12_Construction"]]
+    # Color based on months (fewer = better = greener)
+    max_months = df_construction["Months"].max()
+    min_months = df_construction["Months"].min()
+    colors_construction = [get_score_color(1 - (m - min_months) / (max_months - min_months) if max_months > min_months else 0.5, 0, 1) for m in df_construction["Months"]]
     
     fig_construction = go.Figure(go.Bar(
-        x=df_construction["Q12_Construction"],
+        x=df_construction["Months"],
         y=df_construction["Country"],
         orientation='h',
         marker_color=colors_construction,
-        text=df_construction["Q12_Construction"].round(2),
+        text=df_construction["Months"].apply(lambda x: f"{x} months"),
         textposition='outside',
         textfont=dict(size=11, family="Barlow")
     ))
     
     fig_construction.update_layout(
         height=550,
-        margin=dict(l=0, r=60, t=10, b=60),
+        margin=dict(l=0, r=80, t=10, b=60),
         xaxis=dict(
-            title="Score (higher = faster approval)",
-            range=[0, 1.1],
+            title="Average Timeline (months)",
+            range=[0, max_months + 3],
             gridcolor='#E2E8F0',
             tickfont=dict(family="Barlow", size=11),
             titlefont=dict(family="Barlow", size=12)
