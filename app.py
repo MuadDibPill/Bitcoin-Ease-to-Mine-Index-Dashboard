@@ -2005,10 +2005,10 @@ elif page == "Customs & Tariffs":
     st.markdown('<p class="section-title">Tariffs & VAT Exposure</p>', unsafe_allow_html=True)
     st.markdown('<p class="subtitle-text">Import tariffs and VAT rates applied to ASICs imports</p>', unsafe_allow_html=True)
     
-    # Country filter - multiselect with Argentina as default
+    # Country filter - multiselect with Brazil, Argentina, Kazakhstan as default
     all_countries = df_customs["Country"].tolist()
-    # Ensure Argentina is first in the default selection
-    default_countries = ["Argentina"]
+    # Default countries
+    default_countries = ["Brazil", "Argentina", "Kazakhstan"]
     
     selected_countries_tariff = st.multiselect(
         "Select countries",
@@ -2017,9 +2017,9 @@ elif page == "Customs & Tariffs":
         key="tariff_vat_countries"
     )
     
-    # If no country selected, show Argentina
+    # If no country selected, show default countries
     if not selected_countries_tariff:
-        selected_countries_tariff = ["Argentina"]
+        selected_countries_tariff = ["Brazil", "Argentina", "Kazakhstan"]
     
     # Filter and sort by total burden (tariff + VAT)
     df_tariff_vat = df_customs[df_customs["Country"].isin(selected_countries_tariff)].copy()
@@ -2044,7 +2044,7 @@ elif page == "Customs & Tariffs":
     vat_colors = []
     for _, row in df_tariff_vat.iterrows():
         if row["Refundable"] == "Yes":
-            vat_colors.append('rgba(13, 111, 255, 0.8)')  # Blue for refundable
+            vat_colors.append('rgba(98, 135, 240, 0.8)')  # Blue #6287F0 for refundable
         elif row["Refundable"] == "Partially":
             vat_colors.append('rgba(0, 32, 96, 0.8)')  # Dark blue for partially
         else:
@@ -2098,7 +2098,7 @@ elif page == "Customs & Tariffs":
     st.markdown("""
     <div style="display: flex; justify-content: center; gap: 2rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
         <span><strong style="color: #A7BCF7; font-size: 1.1rem;">■</strong> Tariff</span>
-        <span><strong style="color: #0D6FFF; font-size: 1.1rem;">■</strong> VAT Refundable*</span>
+        <span><strong style="color: #6287F0; font-size: 1.1rem;">■</strong> VAT Refundable*</span>
         <span><strong style="color: #002060; font-size: 1.1rem;">■</strong> VAT Partially Refundable**</span>
         <span><strong style="color: #F3B11D; font-size: 1.1rem;">■</strong> VAT Non-Refundable</span>
     </div>
