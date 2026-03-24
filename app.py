@@ -459,10 +459,10 @@ def get_text_color_for_score(score):
 # ============================================
 
 # SVG Icons (outline only, no fill)
-ICON_HOME = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
-ICON_GLOBE = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'
-ICON_SEARCH = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'
-ICON_CHART = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
+ICON_HOME = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
+ICON_GLOBE = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'
+ICON_SEARCH = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'
+ICON_CHART = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
 
 with st.sidebar:
     st.markdown("### Navigation")
@@ -475,13 +475,77 @@ with st.sidebar:
     emi_categories = ["Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs"]
     is_emi_active = current in emi_categories
     
-    # Use radio buttons styled as navigation
-    page = st.radio(
-        "",
-        ["Overview", "Jurisdiction", "Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs", "Methodology"],
-        label_visibility="collapsed",
-        key="nav_radio"
-    )
+    # Custom CSS for navigation buttons
+    st.markdown("""
+    <style>
+    .nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.25rem;
+        cursor: pointer;
+        color: #334155;
+        font-size: 0.95rem;
+        font-weight: 500;
+        border: none;
+        background: transparent;
+        width: 100%;
+        text-align: left;
+        transition: color 0.2s;
+    }
+    .nav-btn:hover { color: #1E8449; }
+    .nav-btn.active { color: #1E8449; font-weight: 600; }
+    .nav-btn svg { flex-shrink: 0; }
+    .nav-sub-btn {
+        display: block;
+        padding: 0.3rem 0 0.3rem 1.75rem;
+        cursor: pointer;
+        color: #64748B;
+        font-size: 0.85rem;
+        font-weight: 400;
+        border: none;
+        background: transparent;
+        width: 100%;
+        text-align: left;
+        transition: color 0.2s;
+    }
+    .nav-sub-btn:hover { color: #1E8449; }
+    .nav-sub-btn.active { color: #1E8449; font-weight: 600; }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Overview button
+    ov_active = "active" if current == "Overview" else ""
+    st.markdown(f'<div class="nav-btn {ov_active}">{ICON_HOME} Overview</div>', unsafe_allow_html=True)
+    if st.button("Overview", key="btn_overview", label_visibility="collapsed"):
+        st.session_state.current_page = "Overview"
+        st.rerun()
+    
+    # Jurisdiction button
+    jur_active = "active" if current == "Jurisdiction" else ""
+    st.markdown(f'<div class="nav-btn {jur_active}">{ICON_GLOBE} Jurisdiction</div>', unsafe_allow_html=True)
+    if st.button("Jurisdiction", key="btn_jurisdiction", label_visibility="collapsed"):
+        st.session_state.current_page = "Jurisdiction"
+        st.rerun()
+    
+    # Category expander with search icon
+    cat_active = "active" if is_emi_active else ""
+    with st.expander(f"🔍 Category", expanded=True):
+        for cat in emi_categories:
+            cat_class = "active" if current == cat else ""
+            st.markdown(f'<div class="nav-sub-btn {cat_class}">{cat}</div>', unsafe_allow_html=True)
+            if st.button(cat, key=f"btn_{cat.lower().replace(' ', '_').replace('&', '')}", label_visibility="collapsed"):
+                st.session_state.current_page = cat
+                st.rerun()
+    
+    # Methodology button
+    meth_active = "active" if current == "Methodology" else ""
+    st.markdown(f'<div class="nav-btn {meth_active}">{ICON_CHART} Methodology</div>', unsafe_allow_html=True)
+    if st.button("Methodology", key="btn_methodology", label_visibility="collapsed"):
+        st.session_state.current_page = "Methodology"
+        st.rerun()
+    
+    page = st.session_state.current_page
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
