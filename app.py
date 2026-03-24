@@ -1721,6 +1721,7 @@ elif page == "Energy & Grid":
     </p>
     """, unsafe_allow_html=True)
 
+
 # ============================================
 # CUSTOMS & TARIFFS PAGE
 # ============================================
@@ -1751,27 +1752,27 @@ elif page == "Customs & Tariffs":
         "Australia": {"VAT_Rate": 0.5, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 0.5, "Tariff_Duties": 0.5, "Procurement": 0.5, "Mitigation": 0.30}
     }
     
-    # VAT rates from the Word document (actual percentages)
-    VAT_RATES_PERCENT = {
-        "Argentina": 27.0,
-        "Quebec (CA)": 5.0,
-        "Alberta (CA)": 5.0,
-        "Brazil": 32.5,  # 30-35% average
-        "Chile": 19.0,
-        "Ethiopia": 15.0,
-        "Finland": 25.5,
-        "Iceland": 24.0,
-        "Kazakhstan": 16.0,
-        "Kenya": 16.0,
-        "Norway": 25.0,
-        "Oman": 5.0,
-        "Paraguay": 10.0,
-        "DRC": 16.0,
-        "Russia": 22.0,
-        "Sweden": 25.0,
-        "UAE": 5.0,
-        "Texas (US)": 0.0,
-        "Australia": 10.0
+    # Tariffs and VAT data from the uploaded Excel file
+    TARIFF_VAT_DATA = {
+        "Argentina": {"tariff": 0.11, "vat": 0.27, "refundable": "Yes"},
+        "Australia": {"tariff": 0.00, "vat": 0.10, "refundable": "No"},
+        "Brazil": {"tariff": 0.00, "vat": 0.325, "refundable": "Partially"},
+        "Alberta (CA)": {"tariff": 0.02, "vat": 0.05, "refundable": "Yes"},
+        "Quebec (CA)": {"tariff": 0.00, "vat": 0.05, "refundable": "Yes"},
+        "Chile": {"tariff": 0.10, "vat": 0.19, "refundable": "No"},
+        "DRC": {"tariff": 1.80, "vat": 0.16, "refundable": "No"},
+        "Ethiopia": {"tariff": 0.03, "vat": 0.15, "refundable": "Yes"},
+        "Finland": {"tariff": 0.00, "vat": 0.255, "refundable": "No"},
+        "Iceland": {"tariff": 0.00, "vat": 0.24, "refundable": "Yes"},
+        "Kazakhstan": {"tariff": 0.00, "vat": 0.16, "refundable": "No"},
+        "Kenya": {"tariff": 0.14, "vat": 0.16, "refundable": "Yes"},
+        "Norway": {"tariff": 0.00, "vat": 0.25, "refundable": "No"},
+        "Oman": {"tariff": 0.00, "vat": 0.05, "refundable": "Yes"},
+        "Paraguay": {"tariff": 0.07, "vat": 0.10, "refundable": "Yes"},
+        "Russia": {"tariff": 0.22, "vat": 0.00, "refundable": "No"},
+        "Sweden": {"tariff": 0.00, "vat": 0.25, "refundable": "No"},
+        "UAE": {"tariff": 0.00, "vat": 0.05, "refundable": "Yes"},
+        "Texas (US)": {"tariff": 0.20, "vat": 0.00, "refundable": "No"}
     }
     
     # Customs summaries from the Word document
@@ -1790,7 +1791,7 @@ elif page == "Customs & Tariffs":
         "Oman": "5% VAT (exempted in free zones), <5% tariff. No license required. Highly favorable procedures. Custom brokers effective.",
         "Paraguay": "10% VAT (can be exempted), 4-10% tariff. No license required. Marginally favorable procedures. Mitigation effective to reduce custom burden.",
         "DRC": "16% VAT, up to 180% total tariff possible. License required. Highly unfavorable procedures. Mitigation effective to circumvent taxes.",
-        "Russia": "22% VAT, no tariff. License required. Neutral procedures. Mitigation slightly effective.",
+        "Russia": "22% tariff, no VAT on imports. License required. Neutral procedures. Mitigation slightly effective.",
         "Sweden": "25% VAT, no tariff. No license required. Neutral procedures. Mitigation effective to avoid VAT.",
         "UAE": "5% VAT (exempted in free zones), no tariff. License required. Favorable procedures. Mitigation effective.",
         "Texas (US)": "No VAT, 10-30% tariff (variable). No license required. Unfavorable procedures. Mitigation slightly effective.",
@@ -1800,10 +1801,13 @@ elif page == "Customs & Tariffs":
     # Create customs dataframe
     customs_list = []
     for country, scores in CUSTOMS_TARIFFS_SCORES.items():
+        tariff_data = TARIFF_VAT_DATA.get(country, {"tariff": 0, "vat": 0, "refundable": "No"})
         customs_list.append({
             "Country": country,
             "VAT_Rate": scores["VAT_Rate"],
-            "VAT_Percent": VAT_RATES_PERCENT.get(country, 0),
+            "VAT_Percent": tariff_data["vat"] * 100,
+            "Tariff_Percent": tariff_data["tariff"] * 100,
+            "Refundable": tariff_data["refundable"],
             "VAT_Filing": scores["VAT_Filing"],
             "ASIC_Import": scores["ASIC_Import"],
             "Elec_Import": scores["Elec_Import"],
@@ -1885,45 +1889,58 @@ elif page == "Customs & Tariffs":
     st.markdown("---")
     
     # =====================
-    # SECTION 2: VAT Exposure - Bar Chart with actual VAT rates
+    # SECTION 2: Tariffs & VAT Combined Stacked Bar Chart
     # =====================
-    st.markdown('<p class="section-title">VAT Exposure</p>', unsafe_allow_html=True)
-    st.markdown('<p class="subtitle-text">VAT rate applied to ASICs imports (in %)</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-title">Tariffs & VAT Exposure</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">Import tariffs and VAT rates applied to ASICs imports</p>', unsafe_allow_html=True)
     
-    # Sort by VAT Percent
-    df_vat = df_customs.sort_values("VAT_Percent", ascending=True)
+    # Sort by total burden (tariff + VAT)
+    df_tariff_vat = df_customs.copy()
+    df_tariff_vat["Total_Burden"] = df_tariff_vat["Tariff_Percent"] + df_tariff_vat["VAT_Percent"]
+    df_tariff_vat = df_tariff_vat.sort_values("Total_Burden", ascending=True)
     
-    # Color based on VAT rate brackets
-    def get_vat_color(vat):
-        if vat <= 5:
-            return '#0EAA76'  # Very low
-        elif vat <= 15:
-            return '#12E09B'  # Low
-        elif vat <= 20:
-            return '#F3B11D'  # Medium
-        elif vat <= 25:
-            return '#fc7a53'  # High
-        else:
-            return '#8A0000'  # Very high
+    fig_tariff_vat = go.Figure()
     
-    colors_vat = [get_vat_color(v) for v in df_vat["VAT_Percent"]]
-    
-    fig_vat = go.Figure(go.Bar(
-        y=df_vat["Country"],
-        x=df_vat["VAT_Percent"],
+    # Tariff bars
+    fig_tariff_vat.add_trace(go.Bar(
+        name='Tariff (%)',
+        y=df_tariff_vat["Country"],
+        x=df_tariff_vat["Tariff_Percent"],
         orientation='h',
-        marker_color=colors_vat,
-        text=df_vat["VAT_Percent"].apply(lambda x: f"{x:.1f}%"),
-        textposition='outside',
-        textfont=dict(size=11, family="Barlow")
+        marker_color='#fc7a53',
+        text=df_tariff_vat["Tariff_Percent"].apply(lambda x: f"{x:.0f}%" if x >= 1 else f"{x:.1f}%" if x > 0 else ""),
+        textposition='inside',
+        textfont=dict(size=10, family="Barlow", color="white")
     ))
     
-    fig_vat.update_layout(
-        height=550,
+    # VAT bars (stacked) - Color based on refundable status
+    vat_colors = []
+    for _, row in df_tariff_vat.iterrows():
+        if row["Refundable"] == "Yes":
+            vat_colors.append('#12E09B')  # Green for refundable
+        elif row["Refundable"] == "Partially":
+            vat_colors.append('#F3B11D')  # Yellow for partially
+        else:
+            vat_colors.append('#0D6FFF')  # Blue for non-refundable
+    
+    fig_tariff_vat.add_trace(go.Bar(
+        name='VAT (%)',
+        y=df_tariff_vat["Country"],
+        x=df_tariff_vat["VAT_Percent"],
+        orientation='h',
+        marker_color=vat_colors,
+        text=df_tariff_vat.apply(lambda row: f"{row['VAT_Percent']:.1f}%{'*' if row['Refundable'] == 'Yes' else '**' if row['Refundable'] == 'Partially' else ''}", axis=1),
+        textposition='inside',
+        textfont=dict(size=10, family="Barlow", color="white")
+    ))
+    
+    fig_tariff_vat.update_layout(
+        height=580,
         margin=dict(l=0, r=80, t=10, b=60),
+        barmode='stack',
         xaxis=dict(
-            title="VAT Rate (%)",
-            range=[0, df_vat["VAT_Percent"].max() + 5],
+            title="Rate (%)",
+            range=[0, max(df_tariff_vat["Total_Burden"].max() + 10, 50)],
             gridcolor='#E2E8F0',
             tickfont=dict(family="Barlow", size=11),
             titlefont=dict(family="Barlow", size=12),
@@ -1935,18 +1952,25 @@ elif page == "Customs & Tariffs":
         ),
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
-        font=dict(family="Barlow")
+        font=dict(family="Barlow"),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5,
+            font=dict(family="Barlow", size=11)
+        )
     )
-    st.plotly_chart(fig_vat, use_container_width=True)
+    st.plotly_chart(fig_tariff_vat, use_container_width=True)
     
-    # Legend for VAT color brackets
+    # Legend for VAT refundable status
     st.markdown("""
-    <div style="display: flex; justify-content: center; gap: 1.5rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
-        <span><strong style="color: #0EAA76; font-size: 1.1rem;">●</strong> ≤5%</span>
-        <span><strong style="color: #12E09B; font-size: 1.1rem;">●</strong> 6-15%</span>
-        <span><strong style="color: #F3B11D; font-size: 1.1rem;">●</strong> 16-20%</span>
-        <span><strong style="color: #fc7a53; font-size: 1.1rem;">●</strong> 21-25%</span>
-        <span><strong style="color: #8A0000; font-size: 1.1rem;">●</strong> &gt;25%</span>
+    <div style="display: flex; justify-content: center; gap: 2rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
+        <span><strong style="color: #fc7a53; font-size: 1.1rem;">■</strong> Tariff</span>
+        <span><strong style="color: #12E09B; font-size: 1.1rem;">■</strong> VAT Refundable*</span>
+        <span><strong style="color: #F3B11D; font-size: 1.1rem;">■</strong> VAT Partially Refundable**</span>
+        <span><strong style="color: #0D6FFF; font-size: 1.1rem;">■</strong> VAT Non-Refundable</span>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2007,25 +2031,6 @@ elif page == "Customs & Tariffs":
     )
     st.plotly_chart(fig_mitigation_map, use_container_width=True)
     
-    # Mitigation mechanisms description box
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 12px; padding: 1.5rem; margin: 1rem 0; border: 1px solid #e2e8f0;">
-        <p style="font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 1rem;">🛠️ Common Mitigation Mechanisms by Region</p>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem; color: #475569;">
-            <div>
-                <p><strong style="color: #0D6FFF;">Middle East (Oman, UAE):</strong> Free trade zones with VAT exemptions, experienced custom brokers, direct relationships with port authorities.</p>
-                <p><strong style="color: #0D6FFF;">Europe (Finland, Sweden, Norway):</strong> VAT refund schemes, EU single market benefits, demand response participation credits.</p>
-                <p><strong style="color: #0D6FFF;">North America (Canada, US):</strong> GST refunds, bonded warehouses, USMCA trade agreements, though US faces variable tariffs (10-30%).</p>
-            </div>
-            <div>
-                <p><strong style="color: #0D6FFF;">Latin America (Paraguay, Argentina, Brazil):</strong> Custom brokers with government connections, free zone arrangements, but complex VAT layers in Brazil require local expertise.</p>
-                <p><strong style="color: #0D6FFF;">Africa (DRC, Ethiopia, Kenya):</strong> Investment incentives, tax holidays, but DRC faces up to 180% potential tariffs without proper mitigation.</p>
-                <p><strong style="color: #0D6FFF;">Central Asia (Kazakhstan, Russia):</strong> Special economic zones, license-based exemptions, but limited effectiveness overall.</p>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
     st.markdown("---")
     
     # =====================
@@ -2052,8 +2057,8 @@ elif page == "Customs & Tariffs":
            j1_data["Procurement"], j1_data["VAT_Rate"], j1_data["Mitigation"], j1_data["ASIC_Import"]],
         theta=categories + [categories[0]],
         fill='toself',
-        fillcolor='rgba(13, 111, 255, 0.3)',
-        line=dict(color='#0D6FFF', width=2),
+        fillcolor='rgba(18, 224, 155, 0.3)',
+        line=dict(color='#12E09B', width=2),
         name=customs_j1
     ))
     
@@ -2062,8 +2067,8 @@ elif page == "Customs & Tariffs":
            j2_data["Procurement"], j2_data["VAT_Rate"], j2_data["Mitigation"], j2_data["ASIC_Import"]],
         theta=categories + [categories[0]],
         fill='toself',
-        fillcolor='rgba(252, 122, 83, 0.3)',
-        line=dict(color='#fc7a53', width=2),
+        fillcolor='rgba(243, 177, 29, 0.3)',
+        line=dict(color='#F3B11D', width=2),
         name=customs_j2
     ))
     
@@ -2108,27 +2113,23 @@ elif page == "Customs & Tariffs":
     </div>
     """, unsafe_allow_html=True)
     
-    # Side-by-side customs summaries for selected jurisdictions
-    st.markdown("---")
-    st.markdown('<p class="section-title">Customs & Tariffs Summary</p>', unsafe_allow_html=True)
-    
+    # Side-by-side customs summaries (no separator, no title, new colors)
     col_sum1, col_sum2 = st.columns(2)
     with col_sum1:
         st.markdown(f"""
-        <div style="background: linear-gradient(135deg, rgba(13, 111, 255, 0.1) 0%, rgba(13, 111, 255, 0.05) 100%); border-radius: 12px; padding: 1.25rem; border-left: 4px solid #0D6FFF; height: 100%;">
-            <p style="font-size: 1rem; font-weight: 600; color: #0D6FFF; margin-bottom: 0.75rem;">{customs_j1}</p>
+        <div style="background: linear-gradient(135deg, rgba(18, 224, 155, 0.1) 0%, rgba(18, 224, 155, 0.05) 100%); border-radius: 12px; padding: 1.25rem; border-left: 4px solid #12E09B; height: 100%;">
+            <p style="font-size: 1rem; font-weight: 600; color: #12E09B; margin-bottom: 0.75rem;">{customs_j1}</p>
             <p style="font-size: 0.85rem; color: #334155; line-height: 1.6;">{CUSTOMS_SUMMARIES.get(customs_j1, "No data available.")}</p>
         </div>
         """, unsafe_allow_html=True)
     with col_sum2:
         st.markdown(f"""
-        <div style="background: linear-gradient(135deg, rgba(252, 122, 83, 0.1) 0%, rgba(252, 122, 83, 0.05) 100%); border-radius: 12px; padding: 1.25rem; border-left: 4px solid #fc7a53; height: 100%;">
-            <p style="font-size: 1rem; font-weight: 600; color: #fc7a53; margin-bottom: 0.75rem;">{customs_j2}</p>
+        <div style="background: linear-gradient(135deg, rgba(243, 177, 29, 0.1) 0%, rgba(243, 177, 29, 0.05) 100%); border-radius: 12px; padding: 1.25rem; border-left: 4px solid #F3B11D; height: 100%;">
+            <p style="font-size: 1rem; font-weight: 600; color: #F3B11D; margin-bottom: 0.75rem;">{customs_j2}</p>
             <p style="font-size: 0.85rem; color: #334155; line-height: 1.6;">{CUSTOMS_SUMMARIES.get(customs_j2, "No data available.")}</p>
         </div>
         """, unsafe_allow_html=True)
 
-# ============================================
 # METHODOLOGY PAGE
 # ============================================
 elif page == "Methodology":
