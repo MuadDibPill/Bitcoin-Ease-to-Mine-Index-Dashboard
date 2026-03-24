@@ -42,37 +42,50 @@ st.markdown("""
     [data-testid="stSidebar"] .stRadio > div > label:hover { color: #1E8449 !important; }
     [data-testid="stSidebar"] .stRadio > div > label > div:first-child { display: none !important; }
     
-    /* Sidebar navigation buttons */
-    [data-testid="stSidebar"] button[kind="secondary"] {
-        background: transparent !important;
-        border: none !important;
-        text-align: left !important;
-        padding: 0.5rem 0 !important;
-        font-size: 0.95rem !important;
-        color: #334155 !important;
-        font-weight: 500 !important;
+    /* Sidebar navigation styling */
+    .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0;
+        cursor: pointer;
+        color: #334155;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color 0.2s;
     }
-    [data-testid="stSidebar"] button[kind="secondary"]:hover {
-        color: #1E8449 !important;
-        background: rgba(30, 132, 73, 0.08) !important;
+    .nav-item:hover { color: #1E8449; }
+    .nav-item.active { color: #1E8449; font-weight: 600; }
+    .nav-item svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+    
+    .nav-sub-item {
+        display: flex;
+        align-items: center;
+        padding: 0.25rem 0 0.25rem 1.5rem;
+        cursor: pointer;
+        color: #64748B;
+        font-size: 0.85rem;
+        font-weight: 400;
+        transition: color 0.2s;
     }
-    [data-testid="stSidebar"] .stExpander {
-        border: none !important;
-        background: transparent !important;
+    .nav-sub-item:hover { color: #1E8449; }
+    .nav-sub-item.active { color: #1E8449; font-weight: 600; }
+    
+    .nav-category-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0;
+        cursor: pointer;
+        color: #334155;
+        font-size: 0.95rem;
+        font-weight: 500;
     }
-    [data-testid="stSidebar"] .stExpander > div:first-child {
-        background: transparent !important;
-        border: none !important;
-        padding: 0 !important;
-    }
-    [data-testid="stSidebar"] .stExpander summary {
-        font-size: 0.95rem !important;
-        font-weight: 500 !important;
-        color: #334155 !important;
-        padding: 0.5rem 0 !important;
-    }
-    [data-testid="stSidebar"] .stExpander summary:hover {
-        color: #1E8449 !important;
+    .nav-category-header svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+    
+    .nav-subcategories {
+        margin-left: 0;
+        padding-left: 0;
     }
     
     .block-container { padding-top: 2.5rem !important; }
@@ -490,47 +503,81 @@ def get_text_color_for_score(score):
 # ============================================
 # SIDEBAR
 # ============================================
+
+# SVG Icons (outline only, no fill)
+ICON_HOME = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
+ICON_GLOBE = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'
+ICON_SEARCH = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'
+ICON_CHART = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
+
 with st.sidebar:
     st.markdown("### Navigation")
-    
-    # Overview with home icon
-    overview_clicked = st.button("🏠  Overview", key="nav_overview", use_container_width=True)
-    
-    # Jurisdiction with globe icon
-    jurisdiction_clicked = st.button("🌍  Jurisdiction", key="nav_jurisdiction", use_container_width=True)
-    
-    # EMI Category dropdown with magnifying glass
-    with st.expander("🔍  EMI Category", expanded=True):
-        legal_clicked = st.button("      Legal", key="nav_legal", use_container_width=True)
-        fiscal_clicked = st.button("      Fiscal", key="nav_fiscal", use_container_width=True)
-        permits_clicked = st.button("      Permits & Licenses", key="nav_permits", use_container_width=True)
-        energy_clicked = st.button("      Energy & Grid", key="nav_energy", use_container_width=True)
-        customs_clicked = st.button("      Customs & Tariffs", key="nav_customs", use_container_width=True)
-    
-    # Methodology
-    methodology_clicked = st.button("📊  Methodology", key="nav_methodology", use_container_width=True)
     
     # Initialize session state for page
     if "current_page" not in st.session_state:
         st.session_state.current_page = "Overview"
     
-    # Handle button clicks
-    if overview_clicked:
+    # Initialize session state for EMI Category expanded
+    if "emi_expanded" not in st.session_state:
+        st.session_state.emi_expanded = True
+    
+    # Navigation items with clickable HTML
+    current = st.session_state.current_page
+    
+    # Overview
+    st.markdown(f'''<div class="nav-item {'active' if current == 'Overview' else ''}" id="nav-overview">{ICON_HOME} Overview</div>''', unsafe_allow_html=True)
+    if st.button("", key="btn_overview", help="Overview"):
         st.session_state.current_page = "Overview"
-    if jurisdiction_clicked:
+        st.rerun()
+    
+    # Jurisdiction
+    st.markdown(f'''<div class="nav-item {'active' if current == 'Jurisdiction' else ''}" id="nav-jurisdiction">{ICON_GLOBE} Jurisdiction</div>''', unsafe_allow_html=True)
+    if st.button("", key="btn_jurisdiction", help="Jurisdiction"):
         st.session_state.current_page = "Jurisdiction"
-    if legal_clicked:
-        st.session_state.current_page = "Legal"
-    if fiscal_clicked:
-        st.session_state.current_page = "Fiscal"
-    if permits_clicked:
-        st.session_state.current_page = "Permits & Licenses"
-    if energy_clicked:
-        st.session_state.current_page = "Energy & Grid"
-    if customs_clicked:
-        st.session_state.current_page = "Customs & Tariffs"
-    if methodology_clicked:
+        st.rerun()
+    
+    # EMI Category with dropdown
+    emi_categories = ["Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs"]
+    is_emi_active = current in emi_categories
+    
+    st.markdown(f'''<div class="nav-category-header" style="color: {'#1E8449' if is_emi_active else '#334155'};">{ICON_SEARCH} EMI Category</div>''', unsafe_allow_html=True)
+    
+    # Subcategories in compact format
+    subcats_html = '<div class="nav-subcategories">'
+    for cat in emi_categories:
+        active_class = 'active' if current == cat else ''
+        subcats_html += f'<div class="nav-sub-item {active_class}">{cat}</div>'
+    subcats_html += '</div>'
+    st.markdown(subcats_html, unsafe_allow_html=True)
+    
+    # Hidden buttons for subcategories
+    col1, col2, col3, col4, col5 = st.columns(5)
+    with col1:
+        if st.button("L", key="btn_legal", help="Legal"):
+            st.session_state.current_page = "Legal"
+            st.rerun()
+    with col2:
+        if st.button("F", key="btn_fiscal", help="Fiscal"):
+            st.session_state.current_page = "Fiscal"
+            st.rerun()
+    with col3:
+        if st.button("P", key="btn_permits", help="Permits"):
+            st.session_state.current_page = "Permits & Licenses"
+            st.rerun()
+    with col4:
+        if st.button("E", key="btn_energy", help="Energy"):
+            st.session_state.current_page = "Energy & Grid"
+            st.rerun()
+    with col5:
+        if st.button("C", key="btn_customs", help="Customs"):
+            st.session_state.current_page = "Customs & Tariffs"
+            st.rerun()
+    
+    # Methodology
+    st.markdown(f'''<div class="nav-item {'active' if current == 'Methodology' else ''}" id="nav-methodology">{ICON_CHART} Methodology</div>''', unsafe_allow_html=True)
+    if st.button("", key="btn_methodology", help="Methodology"):
         st.session_state.current_page = "Methodology"
+        st.rerun()
     
     page = st.session_state.current_page
     
@@ -1967,23 +2014,39 @@ elif page == "Customs & Tariffs":
     st.markdown('<p class="section-title">Tariffs & VAT Exposure</p>', unsafe_allow_html=True)
     st.markdown('<p class="subtitle-text">Import tariffs and VAT rates applied to ASICs imports</p>', unsafe_allow_html=True)
     
-    # Sort by total burden (tariff + VAT)
-    df_tariff_vat = df_customs.copy()
+    # Country filter - multiselect with Argentina as default
+    all_countries = df_customs["Country"].tolist()
+    # Ensure Argentina is first in the default selection
+    default_countries = ["Argentina"]
+    
+    selected_countries_tariff = st.multiselect(
+        "Select countries",
+        options=all_countries,
+        default=default_countries,
+        key="tariff_vat_countries"
+    )
+    
+    # If no country selected, show Argentina
+    if not selected_countries_tariff:
+        selected_countries_tariff = ["Argentina"]
+    
+    # Filter and sort by total burden (tariff + VAT)
+    df_tariff_vat = df_customs[df_customs["Country"].isin(selected_countries_tariff)].copy()
     df_tariff_vat["Total_Burden"] = df_tariff_vat["Tariff_Percent"] + df_tariff_vat["VAT_Percent"]
     df_tariff_vat = df_tariff_vat.sort_values("Total_Burden", ascending=True)
     
     fig_tariff_vat = go.Figure()
     
-    # Tariff bars
+    # Tariff bars - new color #A7BCF7
     fig_tariff_vat.add_trace(go.Bar(
         name='Tariff (%)',
         y=df_tariff_vat["Country"],
         x=df_tariff_vat["Tariff_Percent"],
         orientation='h',
-        marker_color='#fc7a53',
+        marker_color='#A7BCF7',
         text=df_tariff_vat["Tariff_Percent"].apply(lambda x: f"{x:.0f}%" if x >= 1 else f"{x:.1f}%" if x > 0 else ""),
         textposition='inside',
-        textfont=dict(size=10, family="Barlow", color="white")
+        textfont=dict(size=10, family="Barlow", color="#1E293B")
     ))
     
     # VAT bars (stacked) - Color based on refundable status
@@ -1994,7 +2057,7 @@ elif page == "Customs & Tariffs":
         elif row["Refundable"] == "Partially":
             vat_colors.append('#F3B11D')  # Yellow for partially
         else:
-            vat_colors.append('#0D6FFF')  # Blue for non-refundable
+            vat_colors.append('#fc7a53')  # Orange for non-refundable
     
     fig_tariff_vat.add_trace(go.Bar(
         name='VAT (%)',
@@ -2007,13 +2070,16 @@ elif page == "Customs & Tariffs":
         textfont=dict(size=10, family="Barlow", color="white")
     ))
     
+    # Dynamic height based on number of countries
+    chart_height = max(200, len(selected_countries_tariff) * 35 + 80)
+    
     fig_tariff_vat.update_layout(
-        height=580,
+        height=chart_height,
         margin=dict(l=0, r=80, t=10, b=60),
         barmode='stack',
         xaxis=dict(
             title="Rate (%)",
-            range=[0, max(df_tariff_vat["Total_Burden"].max() + 10, 50)],
+            range=[0, max(df_tariff_vat["Total_Burden"].max() + 10, 50) if len(df_tariff_vat) > 0 else 50],
             gridcolor='#E2E8F0',
             tickfont=dict(family="Barlow", size=11),
             titlefont=dict(family="Barlow", size=12),
@@ -2037,13 +2103,13 @@ elif page == "Customs & Tariffs":
     )
     st.plotly_chart(fig_tariff_vat, use_container_width=True)
     
-    # Legend for VAT refundable status
+    # Legend for VAT refundable status - updated colors
     st.markdown("""
     <div style="display: flex; justify-content: center; gap: 2rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
-        <span><strong style="color: #fc7a53; font-size: 1.1rem;">■</strong> Tariff</span>
+        <span><strong style="color: #A7BCF7; font-size: 1.1rem;">■</strong> Tariff</span>
         <span><strong style="color: #12E09B; font-size: 1.1rem;">■</strong> VAT Refundable*</span>
         <span><strong style="color: #F3B11D; font-size: 1.1rem;">■</strong> VAT Partially Refundable**</span>
-        <span><strong style="color: #0D6FFF; font-size: 1.1rem;">■</strong> VAT Non-Refundable</span>
+        <span><strong style="color: #fc7a53; font-size: 1.1rem;">■</strong> VAT Non-Refundable</span>
     </div>
     """, unsafe_allow_html=True)
     
