@@ -38,55 +38,9 @@ st.markdown("""
     [data-testid="stSidebar"] { width: 256px !important; min-width: 256px !important; background-color: #FAFAFA; border-right: 1px solid #E2E8F0; }
     [data-testid="stSidebar"] > div:first-child { width: 256px !important; }
     [data-testid="stSidebar"] .stRadio > div { gap: 0 !important; }
-    [data-testid="stSidebar"] .stRadio > div > label { background: transparent !important; border: none !important; padding: 8px 0 !important; cursor: pointer; }
+    [data-testid="stSidebar"] .stRadio > div > label { background: transparent !important; border: none !important; padding: 8px 0 !important; cursor: pointer; font-size: 0.95rem !important; }
     [data-testid="stSidebar"] .stRadio > div > label:hover { color: #1E8449 !important; }
     [data-testid="stSidebar"] .stRadio > div > label > div:first-child { display: none !important; }
-    
-    /* Sidebar navigation styling */
-    .nav-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 0;
-        cursor: pointer;
-        color: #334155;
-        font-size: 0.95rem;
-        font-weight: 500;
-        transition: color 0.2s;
-    }
-    .nav-item:hover { color: #1E8449; }
-    .nav-item.active { color: #1E8449; font-weight: 600; }
-    .nav-item svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
-    
-    .nav-sub-item {
-        display: flex;
-        align-items: center;
-        padding: 0.25rem 0 0.25rem 1.5rem;
-        cursor: pointer;
-        color: #64748B;
-        font-size: 0.85rem;
-        font-weight: 400;
-        transition: color 0.2s;
-    }
-    .nav-sub-item:hover { color: #1E8449; }
-    .nav-sub-item.active { color: #1E8449; font-weight: 600; }
-    
-    .nav-category-header {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 0;
-        cursor: pointer;
-        color: #334155;
-        font-size: 0.95rem;
-        font-weight: 500;
-    }
-    .nav-category-header svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
-    
-    .nav-subcategories {
-        margin-left: 0;
-        padding-left: 0;
-    }
     
     .block-container { padding-top: 2.5rem !important; }
     
@@ -517,69 +471,17 @@ with st.sidebar:
     if "current_page" not in st.session_state:
         st.session_state.current_page = "Overview"
     
-    # Initialize session state for EMI Category expanded
-    if "emi_expanded" not in st.session_state:
-        st.session_state.emi_expanded = True
-    
-    # Navigation items with clickable HTML
     current = st.session_state.current_page
-    
-    # Overview
-    st.markdown(f'''<div class="nav-item {'active' if current == 'Overview' else ''}" id="nav-overview">{ICON_HOME} Overview</div>''', unsafe_allow_html=True)
-    if st.button("", key="btn_overview", help="Overview"):
-        st.session_state.current_page = "Overview"
-        st.rerun()
-    
-    # Jurisdiction
-    st.markdown(f'''<div class="nav-item {'active' if current == 'Jurisdiction' else ''}" id="nav-jurisdiction">{ICON_GLOBE} Jurisdiction</div>''', unsafe_allow_html=True)
-    if st.button("", key="btn_jurisdiction", help="Jurisdiction"):
-        st.session_state.current_page = "Jurisdiction"
-        st.rerun()
-    
-    # EMI Category with dropdown
     emi_categories = ["Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs"]
     is_emi_active = current in emi_categories
     
-    st.markdown(f'''<div class="nav-category-header" style="color: {'#1E8449' if is_emi_active else '#334155'};">{ICON_SEARCH} EMI Category</div>''', unsafe_allow_html=True)
-    
-    # Subcategories in compact format
-    subcats_html = '<div class="nav-subcategories">'
-    for cat in emi_categories:
-        active_class = 'active' if current == cat else ''
-        subcats_html += f'<div class="nav-sub-item {active_class}">{cat}</div>'
-    subcats_html += '</div>'
-    st.markdown(subcats_html, unsafe_allow_html=True)
-    
-    # Hidden buttons for subcategories
-    col1, col2, col3, col4, col5 = st.columns(5)
-    with col1:
-        if st.button("L", key="btn_legal", help="Legal"):
-            st.session_state.current_page = "Legal"
-            st.rerun()
-    with col2:
-        if st.button("F", key="btn_fiscal", help="Fiscal"):
-            st.session_state.current_page = "Fiscal"
-            st.rerun()
-    with col3:
-        if st.button("P", key="btn_permits", help="Permits"):
-            st.session_state.current_page = "Permits & Licenses"
-            st.rerun()
-    with col4:
-        if st.button("E", key="btn_energy", help="Energy"):
-            st.session_state.current_page = "Energy & Grid"
-            st.rerun()
-    with col5:
-        if st.button("C", key="btn_customs", help="Customs"):
-            st.session_state.current_page = "Customs & Tariffs"
-            st.rerun()
-    
-    # Methodology
-    st.markdown(f'''<div class="nav-item {'active' if current == 'Methodology' else ''}" id="nav-methodology">{ICON_CHART} Methodology</div>''', unsafe_allow_html=True)
-    if st.button("", key="btn_methodology", help="Methodology"):
-        st.session_state.current_page = "Methodology"
-        st.rerun()
-    
-    page = st.session_state.current_page
+    # Use radio buttons styled as navigation
+    page = st.radio(
+        "",
+        ["Overview", "Jurisdiction", "Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs", "Methodology"],
+        label_visibility="collapsed",
+        key="nav_radio"
+    )
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
@@ -2053,7 +1955,7 @@ elif page == "Customs & Tariffs":
     vat_colors = []
     for _, row in df_tariff_vat.iterrows():
         if row["Refundable"] == "Yes":
-            vat_colors.append('#12E09B')  # Green for refundable
+            vat_colors.append('#0D6FFF')  # Blue for refundable
         elif row["Refundable"] == "Partially":
             vat_colors.append('#F3B11D')  # Yellow for partially
         else:
@@ -2107,7 +2009,7 @@ elif page == "Customs & Tariffs":
     st.markdown("""
     <div style="display: flex; justify-content: center; gap: 2rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
         <span><strong style="color: #A7BCF7; font-size: 1.1rem;">■</strong> Tariff</span>
-        <span><strong style="color: #12E09B; font-size: 1.1rem;">■</strong> VAT Refundable*</span>
+        <span><strong style="color: #0D6FFF; font-size: 1.1rem;">■</strong> VAT Refundable*</span>
         <span><strong style="color: #F3B11D; font-size: 1.1rem;">■</strong> VAT Partially Refundable**</span>
         <span><strong style="color: #fc7a53; font-size: 1.1rem;">■</strong> VAT Non-Refundable</span>
     </div>
