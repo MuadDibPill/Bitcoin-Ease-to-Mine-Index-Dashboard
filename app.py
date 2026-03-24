@@ -84,10 +84,10 @@ st.markdown("""
         color: #1E8449 !important;
     }
     
-    /* Sub-items inside expander - compact, light weight */
+    /* Sub-items inside expander - compact, light weight, smaller font */
     [data-testid="stSidebar"] .stExpander button[kind="secondary"] {
-        padding: 0.2rem 0 0.2rem 1.2rem !important;
-        font-size: 0.9rem !important;
+        padding: 0.15rem 0 0.15rem 1.2rem !important;
+        font-size: 0.82rem !important;
         color: #64748B !important;
         font-weight: 400 !important;
         min-height: 0 !important;
