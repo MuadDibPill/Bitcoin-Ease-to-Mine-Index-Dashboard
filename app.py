@@ -35,12 +35,45 @@ st.markdown("""
     * { font-family: 'Barlow', 'Forma DJR', -apple-system, BlinkMacSystemFont, sans-serif !important; }
     .stApp { font-family: 'Barlow', 'Forma DJR', sans-serif; background-color: #FFFFFF; }
     
-    [data-testid="stSidebar"] { width: 270px !important; min-width: 270px !important; background-color: #FAFAFA; border-right: 1px solid #E2E8F0; }
-    [data-testid="stSidebar"] > div:first-child { width: 270px !important; }
+    [data-testid="stSidebar"] { width: 256px !important; min-width: 256px !important; background-color: #FAFAFA; border-right: 1px solid #E2E8F0; }
+    [data-testid="stSidebar"] > div:first-child { width: 256px !important; }
     [data-testid="stSidebar"] .stRadio > div { gap: 0 !important; }
     [data-testid="stSidebar"] .stRadio > div > label { background: transparent !important; border: none !important; padding: 8px 0 !important; cursor: pointer; }
     [data-testid="stSidebar"] .stRadio > div > label:hover { color: #1E8449 !important; }
     [data-testid="stSidebar"] .stRadio > div > label > div:first-child { display: none !important; }
+    
+    /* Sidebar navigation buttons */
+    [data-testid="stSidebar"] button[kind="secondary"] {
+        background: transparent !important;
+        border: none !important;
+        text-align: left !important;
+        padding: 0.5rem 0 !important;
+        font-size: 0.95rem !important;
+        color: #334155 !important;
+        font-weight: 500 !important;
+    }
+    [data-testid="stSidebar"] button[kind="secondary"]:hover {
+        color: #1E8449 !important;
+        background: rgba(30, 132, 73, 0.08) !important;
+    }
+    [data-testid="stSidebar"] .stExpander {
+        border: none !important;
+        background: transparent !important;
+    }
+    [data-testid="stSidebar"] .stExpander > div:first-child {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+    [data-testid="stSidebar"] .stExpander summary {
+        font-size: 0.95rem !important;
+        font-weight: 500 !important;
+        color: #334155 !important;
+        padding: 0.5rem 0 !important;
+    }
+    [data-testid="stSidebar"] .stExpander summary:hover {
+        color: #1E8449 !important;
+    }
     
     .block-container { padding-top: 2.5rem !important; }
     
@@ -459,7 +492,47 @@ def get_text_color_for_score(score):
 # ============================================
 with st.sidebar:
     st.markdown("### Navigation")
-    page = st.radio("", ["Overview", "Jurisdiction", "Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs", "Methodology"], label_visibility="collapsed")
+    
+    # Overview with home icon
+    overview_clicked = st.button("🏠  Overview", key="nav_overview", use_container_width=True)
+    
+    # Jurisdiction with globe icon
+    jurisdiction_clicked = st.button("🌍  Jurisdiction", key="nav_jurisdiction", use_container_width=True)
+    
+    # EMI Category dropdown with magnifying glass
+    with st.expander("🔍  EMI Category", expanded=True):
+        legal_clicked = st.button("      Legal", key="nav_legal", use_container_width=True)
+        fiscal_clicked = st.button("      Fiscal", key="nav_fiscal", use_container_width=True)
+        permits_clicked = st.button("      Permits & Licenses", key="nav_permits", use_container_width=True)
+        energy_clicked = st.button("      Energy & Grid", key="nav_energy", use_container_width=True)
+        customs_clicked = st.button("      Customs & Tariffs", key="nav_customs", use_container_width=True)
+    
+    # Methodology
+    methodology_clicked = st.button("📊  Methodology", key="nav_methodology", use_container_width=True)
+    
+    # Initialize session state for page
+    if "current_page" not in st.session_state:
+        st.session_state.current_page = "Overview"
+    
+    # Handle button clicks
+    if overview_clicked:
+        st.session_state.current_page = "Overview"
+    if jurisdiction_clicked:
+        st.session_state.current_page = "Jurisdiction"
+    if legal_clicked:
+        st.session_state.current_page = "Legal"
+    if fiscal_clicked:
+        st.session_state.current_page = "Fiscal"
+    if permits_clicked:
+        st.session_state.current_page = "Permits & Licenses"
+    if energy_clicked:
+        st.session_state.current_page = "Energy & Grid"
+    if customs_clicked:
+        st.session_state.current_page = "Customs & Tariffs"
+    if methodology_clicked:
+        st.session_state.current_page = "Methodology"
+    
+    page = st.session_state.current_page
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
