@@ -42,6 +42,63 @@ st.markdown("""
     [data-testid="stSidebar"] .stRadio > div > label:hover { color: #1E8449 !important; }
     [data-testid="stSidebar"] .stRadio > div > label > div:first-child { display: none !important; }
     
+    /* Sidebar navigation buttons - no border, left aligned */
+    [data-testid="stSidebar"] button[kind="secondary"] {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        text-align: left !important;
+        padding: 0.5rem 0 !important;
+        font-size: 0.95rem !important;
+        color: #334155 !important;
+        font-weight: 500 !important;
+        justify-content: flex-start !important;
+    }
+    [data-testid="stSidebar"] button[kind="secondary"]:hover {
+        color: #1E8449 !important;
+        background: transparent !important;
+        border: none !important;
+    }
+    [data-testid="stSidebar"] button[kind="secondary"]:focus {
+        box-shadow: none !important;
+        border: none !important;
+    }
+    
+    /* Expander styling - no border, same font size */
+    [data-testid="stSidebar"] .stExpander {
+        border: none !important;
+        background: transparent !important;
+    }
+    [data-testid="stSidebar"] .stExpander > div:first-child {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+    [data-testid="stSidebar"] .stExpander summary {
+        font-size: 0.95rem !important;
+        font-weight: 500 !important;
+        color: #334155 !important;
+        padding: 0.5rem 0 !important;
+        border: none !important;
+        background: transparent !important;
+    }
+    [data-testid="stSidebar"] .stExpander summary:hover {
+        color: #1E8449 !important;
+    }
+    [data-testid="stSidebar"] .stExpander > div:first-child > div {
+        border: none !important;
+    }
+    
+    /* Buttons inside expander */
+    [data-testid="stSidebar"] .stExpander button[kind="secondary"] {
+        padding-left: 1rem !important;
+        font-size: 0.9rem !important;
+        color: #64748B !important;
+    }
+    [data-testid="stSidebar"] .stExpander button[kind="secondary"]:hover {
+        color: #1E8449 !important;
+    }
+    
     .block-container { padding-top: 2.5rem !important; }
     
     h1 { font-family: 'Barlow', sans-serif !important; font-weight: 700 !important; font-size: 2rem !important; color: #1E293B !important; margin-top: 0 !important; }
@@ -458,12 +515,6 @@ def get_text_color_for_score(score):
 # SIDEBAR
 # ============================================
 
-# SVG Icons (outline only, no fill)
-ICON_HOME = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
-ICON_GLOBE = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'
-ICON_SEARCH = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'
-ICON_CHART = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
-
 with st.sidebar:
     st.markdown("### Navigation")
     
@@ -473,29 +524,26 @@ with st.sidebar:
     
     current = st.session_state.current_page
     emi_categories = ["Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs"]
-    is_emi_active = current in emi_categories
     
-    # Overview
-    ov_color = "#1E8449" if current == "Overview" else "#334155"
-    ov_weight = "600" if current == "Overview" else "500"
-    if st.button(f"Overview", key="btn_overview", use_container_width=True):
+    # Overview with home icon
+    if st.button("⌂ Overview", key="btn_overview", use_container_width=True):
         st.session_state.current_page = "Overview"
         st.rerun()
     
-    # Jurisdiction
-    if st.button(f"Jurisdiction", key="btn_jurisdiction", use_container_width=True):
+    # Jurisdiction with globe icon
+    if st.button("◎ Jurisdiction", key="btn_jurisdiction", use_container_width=True):
         st.session_state.current_page = "Jurisdiction"
         st.rerun()
     
     # Category expander
-    with st.expander("Category", expanded=True):
+    with st.expander("◷ Category", expanded=True):
         for cat in emi_categories:
-            if st.button(cat, key=f"btn_{cat.lower().replace(' ', '_').replace('&', 'and')}", use_container_width=True):
+            if st.button(f"   {cat}", key=f"btn_{cat.lower().replace(' ', '_').replace('&', 'and')}", use_container_width=True):
                 st.session_state.current_page = cat
                 st.rerun()
     
-    # Methodology
-    if st.button("Methodology", key="btn_methodology", use_container_width=True):
+    # Methodology with chart icon
+    if st.button("▥ Methodology", key="btn_methodology", use_container_width=True):
         st.session_state.current_page = "Methodology"
         st.rerun()
     
