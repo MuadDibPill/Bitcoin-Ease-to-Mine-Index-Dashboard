@@ -459,7 +459,7 @@ def get_text_color_for_score(score):
 # ============================================
 with st.sidebar:
     st.markdown("### Navigation")
-    page = st.radio("", ["Overview", "Jurisdiction", "Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Methodology"], label_visibility="collapsed")
+    page = st.radio("", ["Overview", "Jurisdiction", "Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs", "Methodology"], label_visibility="collapsed")
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
@@ -1719,6 +1719,334 @@ elif page == "Energy & Grid":
     <p style="font-size: 0.85rem; color: #64748B; text-align: center;">
         Higher score = Lower barriers to entry for energy market participation or grid interconnection
     </p>
+    """, unsafe_allow_html=True)
+
+# ============================================
+# CUSTOMS & TARIFFS PAGE
+# ============================================
+elif page == "Customs & Tariffs":
+    st.markdown("# Customs & Tariffs")
+    st.markdown('<p class="subtitle-text">Import procedures, VAT regime, and trade barriers for mining equipment</p>', unsafe_allow_html=True)
+    
+    # Customs & Tariffs data from Excel
+    CUSTOMS_TARIFFS_SCORES = {
+        "Argentina": {"VAT_Rate": 1.0, "VAT_Filing": 0.35, "ASIC_Import": 0.25, "Elec_Import": 0.38, "Tariff_Duties": 0.55, "Procurement": 0.48},
+        "Quebec (CA)": {"VAT_Rate": 1.0, "VAT_Filing": 0.75, "ASIC_Import": 0.62, "Elec_Import": 0.62, "Tariff_Duties": 0.85, "Procurement": 0.25},
+        "Alberta (CA)": {"VAT_Rate": 0.9, "VAT_Filing": 0.75, "ASIC_Import": 0.5, "Elec_Import": 0.5, "Tariff_Duties": 0.85, "Procurement": 0.5},
+        "Brazil": {"VAT_Rate": 0.15, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 1.0, "Tariff_Duties": 0.38, "Procurement": 0.5},
+        "Chile": {"VAT_Rate": 0.75, "VAT_Filing": 0.5, "ASIC_Import": 0.75, "Elec_Import": 0.55, "Tariff_Duties": 0.15, "Procurement": 0.5},
+        "Ethiopia": {"VAT_Rate": 0.45, "VAT_Filing": 0.5, "ASIC_Import": 0.35, "Elec_Import": 0.85, "Tariff_Duties": 0.29, "Procurement": 0.5},
+        "Finland": {"VAT_Rate": 0.62, "VAT_Filing": 0.5, "ASIC_Import": 0.75, "Elec_Import": 1.0, "Tariff_Duties": 0.5, "Procurement": 0.5},
+        "Iceland": {"VAT_Rate": 0.67, "VAT_Filing": 0.5, "ASIC_Import": 0.75, "Elec_Import": 0.5, "Tariff_Duties": 0.48, "Procurement": 0.5},
+        "Kazakhstan": {"VAT_Rate": 0.25, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 0.75, "Tariff_Duties": 1.0, "Procurement": 0.7},
+        "Kenya": {"VAT_Rate": 0.25, "VAT_Filing": 0.35, "ASIC_Import": 0.5, "Elec_Import": 0.5, "Tariff_Duties": 0.0, "Procurement": 0.5},
+        "Norway": {"VAT_Rate": 0.1, "VAT_Filing": 0.62, "ASIC_Import": 0.83, "Elec_Import": 0.75, "Tariff_Duties": 1.0, "Procurement": 0.48},
+        "Oman": {"VAT_Rate": 0.9, "VAT_Filing": 0.5, "ASIC_Import": 0.88, "Elec_Import": 1.0, "Tariff_Duties": 0.57, "Procurement": 0.5},
+        "Paraguay": {"VAT_Rate": 1.0, "VAT_Filing": 0.62, "ASIC_Import": 0.64, "Elec_Import": 0.71, "Tariff_Duties": 0.85, "Procurement": 0.49},
+        "DRC": {"VAT_Rate": 0.5, "VAT_Filing": 0.5, "ASIC_Import": 0.0, "Elec_Import": 0.0, "Tariff_Duties": 0.5, "Procurement": 0.5},
+        "Russia": {"VAT_Rate": 0.25, "VAT_Filing": 0.55, "ASIC_Import": 0.5, "Elec_Import": 0.58, "Tariff_Duties": 1.0, "Procurement": 0.55},
+        "Sweden": {"VAT_Rate": 0.75, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 1.0, "Tariff_Duties": 0.5, "Procurement": 0.5},
+        "UAE": {"VAT_Rate": 0.5, "VAT_Filing": 0.62, "ASIC_Import": 0.62, "Elec_Import": 0.44, "Tariff_Duties": 1.0, "Procurement": 0.15},
+        "Texas (US)": {"VAT_Rate": 0.05, "VAT_Filing": 0.5, "ASIC_Import": 0.33, "Elec_Import": 0.26, "Tariff_Duties": 0.26, "Procurement": 0.5},
+        "Australia": {"VAT_Rate": 0.5, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 0.5, "Tariff_Duties": 0.5, "Procurement": 0.5}
+    }
+    
+    # Create customs dataframe
+    customs_list = []
+    for country, scores in CUSTOMS_TARIFFS_SCORES.items():
+        customs_list.append({
+            "Country": country,
+            "VAT_Rate": scores["VAT_Rate"],
+            "VAT_Filing": scores["VAT_Filing"],
+            "ASIC_Import": scores["ASIC_Import"],
+            "Elec_Import": scores["Elec_Import"],
+            "Tariff_Duties": scores["Tariff_Duties"],
+            "Procurement": scores["Procurement"]
+        })
+    df_customs = pd.DataFrame(customs_list)
+    df_customs = df_customs.merge(df[["Country", "Region"]], on="Country", how="left")
+    df_customs["ISO"] = df_customs["Country"].map(ISO_CODES)
+    
+    # Calculate overall import score (average of import-related metrics)
+    df_customs["Import_Score"] = (df_customs["ASIC_Import"] + df_customs["Elec_Import"] + df_customs["Tariff_Duties"] + df_customs["Procurement"]) / 4
+    
+    # =====================
+    # SECTION 1: Scatter Plot - ASIC Import vs Electrical Infrastructure Import
+    # =====================
+    st.markdown('<p class="section-title">Equipment Import Complexity</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">ASIC miners import process vs. electrical infrastructure import process</p>', unsafe_allow_html=True)
+    
+    fig_import_scatter = go.Figure()
+    
+    # Add quadrant backgrounds
+    fig_import_scatter.add_shape(type="rect", x0=0.5, y0=0.5, x1=1, y1=1,
+        fillcolor="rgba(30, 132, 73, 0.15)", line=dict(width=0), layer="below")
+    fig_import_scatter.add_shape(type="rect", x0=0, y0=0.5, x1=0.5, y1=1,
+        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
+    fig_import_scatter.add_shape(type="rect", x0=0.5, y0=0, x1=1, y1=0.5,
+        fillcolor="rgba(230, 126, 34, 0.15)", line=dict(width=0), layer="below")
+    fig_import_scatter.add_shape(type="rect", x0=0, y0=0, x1=0.5, y1=0.5,
+        fillcolor="rgba(146, 43, 33, 0.15)", line=dict(width=0), layer="below")
+    
+    colors_import = [get_score_color((row["ASIC_Import"] + row["Elec_Import"]) / 2, 0, 1) for _, row in df_customs.iterrows()]
+    
+    fig_import_scatter.add_trace(go.Scatter(
+        x=df_customs["ASIC_Import"],
+        y=df_customs["Elec_Import"],
+        mode='markers+text',
+        marker=dict(size=14, color=colors_import, line=dict(width=1.5, color='#4B5563')),
+        text=df_customs["Country"],
+        textposition='top center',
+        textfont=dict(size=10, family="Barlow"),
+        hovertemplate="<b>%{text}</b><br>ASIC Import: %{x:.2f}<br>Elec Import: %{y:.2f}<extra></extra>"
+    ))
+    
+    fig_import_scatter.add_hline(y=0.5, line_dash="dash", line_color="#94A3B8", line_width=1.5)
+    fig_import_scatter.add_vline(x=0.5, line_dash="dash", line_color="#94A3B8", line_width=1.5)
+    
+    fig_import_scatter.add_annotation(x=0.75, y=0.95, text="<b>Easy ASIC / Easy Elec</b>", showarrow=False,
+        font=dict(size=11, color="#1E8449", family="Barlow"), xanchor="center")
+    fig_import_scatter.add_annotation(x=0.25, y=0.95, text="<b>Hard ASIC / Easy Elec</b>", showarrow=False,
+        font=dict(size=11, color="#E67E22", family="Barlow"), xanchor="center")
+    fig_import_scatter.add_annotation(x=0.75, y=0.05, text="<b>Easy ASIC / Hard Elec</b>", showarrow=False,
+        font=dict(size=11, color="#E67E22", family="Barlow"), xanchor="center")
+    fig_import_scatter.add_annotation(x=0.25, y=0.05, text="<b>Hard ASIC / Hard Elec</b>", showarrow=False,
+        font=dict(size=11, color="#922B21", family="Barlow"), xanchor="center")
+    
+    fig_import_scatter.update_layout(
+        height=500,
+        margin=dict(l=60, r=60, t=30, b=60),
+        xaxis=dict(
+            title="<b>ASIC Import Process</b><br>(Higher = Easier)",
+            range=[-0.05, 1.05],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12)
+        ),
+        yaxis=dict(
+            title="<b>Electrical Infrastructure Import</b><br>(Higher = Easier)",
+            range=[-0.05, 1.05],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12)
+        ),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow"),
+        showlegend=False
+    )
+    st.plotly_chart(fig_import_scatter, use_container_width=True)
+    
+    st.markdown("---")
+    
+    # =====================
+    # SECTION 2: VAT Regime - Grouped Bar Chart
+    # =====================
+    st.markdown('<p class="section-title">VAT Regime Assessment</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">VAT rate favorability vs. filing complexity</p>', unsafe_allow_html=True)
+    
+    # Sort by VAT Rate
+    df_vat = df_customs.sort_values("VAT_Rate", ascending=True)
+    
+    fig_vat = go.Figure()
+    
+    # VAT Rate bars
+    fig_vat.add_trace(go.Bar(
+        name='VAT Rate Favorability',
+        y=df_vat["Country"],
+        x=df_vat["VAT_Rate"],
+        orientation='h',
+        marker_color='#0D6FFF',
+        text=df_vat["VAT_Rate"].apply(lambda x: f"{x:.2f}"),
+        textposition='outside',
+        textfont=dict(size=10, family="Barlow")
+    ))
+    
+    # VAT Filing bars
+    fig_vat.add_trace(go.Bar(
+        name='VAT Filing Ease',
+        y=df_vat["Country"],
+        x=df_vat["VAT_Filing"],
+        orientation='h',
+        marker_color='#12E09B',
+        text=df_vat["VAT_Filing"].apply(lambda x: f"{x:.2f}"),
+        textposition='outside',
+        textfont=dict(size=10, family="Barlow")
+    ))
+    
+    fig_vat.update_layout(
+        height=550,
+        margin=dict(l=0, r=100, t=10, b=60),
+        barmode='group',
+        xaxis=dict(
+            title="Score (Higher = More Favorable)",
+            range=[0, 1.15],
+            gridcolor='#E2E8F0',
+            tickfont=dict(family="Barlow", size=11),
+            titlefont=dict(family="Barlow", size=12)
+        ),
+        yaxis=dict(
+            title="",
+            tickfont=dict(family="Barlow", size=11)
+        ),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow"),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5,
+            font=dict(family="Barlow", size=11)
+        )
+    )
+    st.plotly_chart(fig_vat, use_container_width=True)
+    
+    st.markdown("""
+    <p style="font-size: 0.85rem; color: #64748B; text-align: center;">
+        VAT Rate Favorability: Higher score = Lower VAT rate or favorable regime<br>
+        VAT Filing Ease: Higher score = Simpler filing process and faster refunds
+    </p>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # =====================
+    # SECTION 3: Tariff Duties Map
+    # =====================
+    st.markdown('<p class="section-title">Tariff Duties Exposure</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">Import tariffs and customs duties impact on mining equipment</p>', unsafe_allow_html=True)
+    
+    df_tariff_agg = df_customs.groupby("ISO").agg({
+        "Tariff_Duties": "mean",
+        "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]
+    }).reset_index()
+    df_tariff_agg.columns = ["ISO", "Score", "Country"]
+    
+    fig_tariff_map = go.Figure(go.Choropleth(
+        locations=df_tariff_agg["ISO"],
+        z=df_tariff_agg["Score"],
+        text=df_tariff_agg["Country"],
+        colorscale=[
+            [0, '#922B21'], [0.25, '#E67E22'], [0.5, '#F4D03F'], [0.75, '#52BE80'], [1, '#1E8449']
+        ],
+        autocolorscale=False,
+        zmin=0,
+        zmax=1,
+        marker_line_color='#4B5563',
+        marker_line_width=1,
+        colorbar=dict(
+            title=dict(text="Score", side="right", font=dict(family="Barlow", size=12)),
+            tickfont=dict(family="Barlow", size=10),
+            len=0.6,
+            tickvals=[0, 0.25, 0.5, 0.75, 1],
+            ticktext=["High Tariffs", "", "Moderate", "", "Low/No Tariffs"]
+        ),
+        hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"
+    ))
+    
+    fig_tariff_map.update_layout(
+        height=450,
+        margin=dict(l=0, r=0, t=10, b=0),
+        geo=dict(
+            showframe=False,
+            showcoastlines=True,
+            coastlinecolor="#94A3B8",
+            showland=True,
+            landcolor="#E2E8F0",
+            showocean=True,
+            oceancolor="#FFFFFF",
+            showcountries=True,
+            countrycolor="#94A3B8",
+            projection_type='natural earth',
+            bgcolor='rgba(0,0,0,0)'
+        ),
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow")
+    )
+    st.plotly_chart(fig_tariff_map, use_container_width=True)
+    
+    st.markdown("---")
+    
+    # =====================
+    # SECTION 4: Procurement Lead Times Radar
+    # =====================
+    st.markdown('<p class="section-title">Import Process Comparison</p>', unsafe_allow_html=True)
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        customs_j1 = st.selectbox("Select first jurisdiction", df_customs["Country"].tolist(), index=0, key="customs_j1")
+    with col2:
+        customs_j2 = st.selectbox("Select second jurisdiction", df_customs["Country"].tolist(), index=1, key="customs_j2")
+    
+    # Get data for selected jurisdictions
+    j1_data = df_customs[df_customs["Country"] == customs_j1].iloc[0]
+    j2_data = df_customs[df_customs["Country"] == customs_j2].iloc[0]
+    
+    categories = ['ASIC Import', 'Elec. Import', 'Tariff Duties', 'Procurement', 'VAT Rate', 'VAT Filing']
+    
+    fig_customs_radar = go.Figure()
+    
+    fig_customs_radar.add_trace(go.Scatterpolar(
+        r=[j1_data["ASIC_Import"], j1_data["Elec_Import"], j1_data["Tariff_Duties"], 
+           j1_data["Procurement"], j1_data["VAT_Rate"], j1_data["VAT_Filing"], j1_data["ASIC_Import"]],
+        theta=categories + [categories[0]],
+        fill='toself',
+        fillcolor='rgba(13, 111, 255, 0.3)',
+        line=dict(color='#0D6FFF', width=2),
+        name=customs_j1
+    ))
+    
+    fig_customs_radar.add_trace(go.Scatterpolar(
+        r=[j2_data["ASIC_Import"], j2_data["Elec_Import"], j2_data["Tariff_Duties"], 
+           j2_data["Procurement"], j2_data["VAT_Rate"], j2_data["VAT_Filing"], j2_data["ASIC_Import"]],
+        theta=categories + [categories[0]],
+        fill='toself',
+        fillcolor='rgba(252, 122, 83, 0.3)',
+        line=dict(color='#fc7a53', width=2),
+        name=customs_j2
+    ))
+    
+    fig_customs_radar.update_layout(
+        height=450,
+        polar=dict(
+            radialaxis=dict(
+                visible=True,
+                range=[0, 1],
+                tickfont=dict(family="Barlow", size=10),
+                gridcolor='#E2E8F0'
+            ),
+            angularaxis=dict(
+                tickfont=dict(family="Barlow", size=11),
+                gridcolor='#E2E8F0'
+            ),
+            bgcolor='rgba(0,0,0,0)'
+        ),
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Barlow"),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=-0.15,
+            xanchor="center",
+            x=0.5,
+            font=dict(family="Barlow", size=12)
+        ),
+        margin=dict(l=60, r=60, t=40, b=60)
+    )
+    st.plotly_chart(fig_customs_radar, use_container_width=True)
+    
+    # Descriptions
+    st.markdown("""
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; font-size: 0.85rem; color: #475569;">
+        <div><strong>ASIC Import:</strong> Ease of importing mining hardware (ASICs)</div>
+        <div><strong>Elec. Import:</strong> Ease of importing electrical infrastructure</div>
+        <div><strong>Tariff Duties:</strong> Level of customs duties (higher = lower duties)</div>
+        <div><strong>Procurement:</strong> Lead times impact on equipment delivery</div>
+        <div><strong>VAT Rate:</strong> Favorability of VAT/sales tax regime</div>
+        <div><strong>VAT Filing:</strong> Ease of VAT filing and refund process</div>
+    </div>
     """, unsafe_allow_html=True)
 
 # ============================================
