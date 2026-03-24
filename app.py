@@ -42,86 +42,6 @@ st.markdown("""
     [data-testid="stSidebar"] .stRadio > div > label:hover { color: #1E8449 !important; }
     [data-testid="stSidebar"] .stRadio > div > label > div:first-child { display: none !important; }
     
-    /* Sidebar navigation buttons - no border, left aligned */
-    [data-testid="stSidebar"] button[kind="secondary"] {
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-        text-align: left !important;
-        padding: 0.4rem 0 !important;
-        font-size: 0.95rem !important;
-        color: #334155 !important;
-        font-weight: 500 !important;
-        justify-content: flex-start !important;
-    }
-    [data-testid="stSidebar"] button[kind="secondary"]:hover {
-        color: #1E8449 !important;
-        background: transparent !important;
-        border: none !important;
-    }
-    [data-testid="stSidebar"] button[kind="secondary"]:focus {
-        box-shadow: none !important;
-        border: none !important;
-    }
-    [data-testid="stSidebar"] button[kind="secondary"]:active {
-        background: transparent !important;
-        border: none !important;
-    }
-    
-    /* Expander styling - no border at all, same font size as other buttons */
-    [data-testid="stSidebar"] .stExpander {
-        border: none !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-    [data-testid="stSidebar"] .stExpander > details {
-        border: none !important;
-        background: transparent !important;
-    }
-    [data-testid="stSidebar"] .stExpander > details > summary {
-        font-size: 0.95rem !important;
-        font-weight: 500 !important;
-        color: #334155 !important;
-        padding: 0.4rem 0 !important;
-        border: none !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-    [data-testid="stSidebar"] .stExpander > details > summary:hover {
-        color: #1E8449 !important;
-    }
-    [data-testid="stSidebar"] .stExpander > details[open] > summary {
-        border: none !important;
-        background: transparent !important;
-    }
-    [data-testid="stSidebar"] details {
-        border: none !important;
-    }
-    [data-testid="stSidebar"] summary {
-        border: none !important;
-    }
-    
-    /* Buttons inside expander - compact, no bold, indented */
-    [data-testid="stSidebar"] .stExpander button[kind="secondary"] {
-        padding: 0.2rem 0 0.2rem 1.5rem !important;
-        font-size: 0.88rem !important;
-        color: #64748B !important;
-        font-weight: 400 !important;
-        min-height: 0 !important;
-        height: auto !important;
-    }
-    [data-testid="stSidebar"] .stExpander button[kind="secondary"]:hover {
-        color: #1E8449 !important;
-    }
-    [data-testid="stSidebar"] .stExpander button[kind="secondary"] p {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    [data-testid="stSidebar"] .stExpander > details > div {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-    }
-    
     .block-container { padding-top: 2.5rem !important; }
     
     h1 { font-family: 'Barlow', sans-serif !important; font-weight: 700 !important; font-size: 2rem !important; color: #1E293B !important; margin-top: 0 !important; }
@@ -541,36 +461,13 @@ def get_text_color_for_score(score):
 with st.sidebar:
     st.markdown("### Navigation")
     
-    # Initialize session state for page
-    if "current_page" not in st.session_state:
-        st.session_state.current_page = "Overview"
-    
-    current = st.session_state.current_page
-    emi_categories = ["Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs"]
-    
-    # Overview with home icon (extra space after icon)
-    if st.button("⌂  Overview", key="btn_overview", use_container_width=True):
-        st.session_state.current_page = "Overview"
-        st.rerun()
-    
-    # Jurisdiction with globe icon (extra space after icon)
-    if st.button("◎  Jurisdiction", key="btn_jurisdiction", use_container_width=True):
-        st.session_state.current_page = "Jurisdiction"
-        st.rerun()
-    
-    # Category expander (extra space after icon)
-    with st.expander("◷  Category", expanded=True):
-        for cat in emi_categories:
-            if st.button(f"    {cat}", key=f"btn_{cat.lower().replace(' ', '_').replace('&', 'and')}", use_container_width=True):
-                st.session_state.current_page = cat
-                st.rerun()
-    
-    # Methodology with chart icon (extra space after icon)
-    if st.button("▥  Methodology", key="btn_methodology", use_container_width=True):
-        st.session_state.current_page = "Methodology"
-        st.rerun()
-    
-    page = st.session_state.current_page
+    # Simple radio navigation like V57
+    page = st.radio(
+        "",
+        ["Overview", "Jurisdiction", "Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs", "Methodology"],
+        label_visibility="collapsed",
+        key="nav_radio"
+    )
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
