@@ -1939,27 +1939,27 @@ elif page == "Customs & Tariffs":
     
     fig_tariff_vat = go.Figure()
     
-    # Tariff bars - new color #A7BCF7
+    # Tariff bars - with 20% transparency
     fig_tariff_vat.add_trace(go.Bar(
         name='Tariff (%)',
         y=df_tariff_vat["Country"],
         x=df_tariff_vat["Tariff_Percent"],
         orientation='h',
-        marker_color='#A7BCF7',
+        marker_color='rgba(167, 188, 247, 0.8)',
         text=df_tariff_vat["Tariff_Percent"].apply(lambda x: f"{x:.0f}%" if x >= 1 else f"{x:.1f}%" if x > 0 else ""),
         textposition='inside',
         textfont=dict(size=10, family="Barlow", color="#1E293B")
     ))
     
-    # VAT bars (stacked) - Color based on refundable status
+    # VAT bars (stacked) - Color based on refundable status (with 20% transparency)
     vat_colors = []
     for _, row in df_tariff_vat.iterrows():
         if row["Refundable"] == "Yes":
-            vat_colors.append('#0D6FFF')  # Blue for refundable
+            vat_colors.append('rgba(13, 111, 255, 0.8)')  # Blue for refundable
         elif row["Refundable"] == "Partially":
-            vat_colors.append('#F3B11D')  # Yellow for partially
+            vat_colors.append('rgba(0, 32, 96, 0.8)')  # Dark blue for partially
         else:
-            vat_colors.append('#fc7a53')  # Orange for non-refundable
+            vat_colors.append('rgba(243, 177, 29, 0.8)')  # Yellow/orange for non-refundable
     
     fig_tariff_vat.add_trace(go.Bar(
         name='VAT (%)',
@@ -2010,8 +2010,8 @@ elif page == "Customs & Tariffs":
     <div style="display: flex; justify-content: center; gap: 2rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
         <span><strong style="color: #A7BCF7; font-size: 1.1rem;">■</strong> Tariff</span>
         <span><strong style="color: #0D6FFF; font-size: 1.1rem;">■</strong> VAT Refundable*</span>
-        <span><strong style="color: #F3B11D; font-size: 1.1rem;">■</strong> VAT Partially Refundable**</span>
-        <span><strong style="color: #fc7a53; font-size: 1.1rem;">■</strong> VAT Non-Refundable</span>
+        <span><strong style="color: #002060; font-size: 1.1rem;">■</strong> VAT Partially Refundable**</span>
+        <span><strong style="color: #F3B11D; font-size: 1.1rem;">■</strong> VAT Non-Refundable</span>
     </div>
     """, unsafe_allow_html=True)
     
