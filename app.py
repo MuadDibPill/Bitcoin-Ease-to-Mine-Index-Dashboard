@@ -48,7 +48,7 @@ st.markdown("""
         border: none !important;
         box-shadow: none !important;
         text-align: left !important;
-        padding: 0.5rem 0 !important;
+        padding: 0.4rem 0 !important;
         font-size: 0.95rem !important;
         color: #334155 !important;
         font-weight: 500 !important;
@@ -82,7 +82,7 @@ st.markdown("""
         font-size: 0.95rem !important;
         font-weight: 500 !important;
         color: #334155 !important;
-        padding: 0.5rem 0 !important;
+        padding: 0.4rem 0 !important;
         border: none !important;
         background: transparent !important;
         box-shadow: none !important;
@@ -101,14 +101,25 @@ st.markdown("""
         border: none !important;
     }
     
-    /* Buttons inside expander - indented */
+    /* Buttons inside expander - compact, no bold, indented */
     [data-testid="stSidebar"] .stExpander button[kind="secondary"] {
-        padding-left: 1.5rem !important;
-        font-size: 0.9rem !important;
+        padding: 0.2rem 0 0.2rem 1.5rem !important;
+        font-size: 0.88rem !important;
         color: #64748B !important;
+        font-weight: 400 !important;
+        min-height: 0 !important;
+        height: auto !important;
     }
     [data-testid="stSidebar"] .stExpander button[kind="secondary"]:hover {
         color: #1E8449 !important;
+    }
+    [data-testid="stSidebar"] .stExpander button[kind="secondary"] p {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    [data-testid="stSidebar"] .stExpander > details > div {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
     }
     
     .block-container { padding-top: 2.5rem !important; }
