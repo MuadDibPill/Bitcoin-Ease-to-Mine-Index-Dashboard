@@ -1730,25 +1730,71 @@ elif page == "Customs & Tariffs":
     
     # Customs & Tariffs data from Excel
     CUSTOMS_TARIFFS_SCORES = {
-        "Argentina": {"VAT_Rate": 1.0, "VAT_Filing": 0.35, "ASIC_Import": 0.25, "Elec_Import": 0.38, "Tariff_Duties": 0.55, "Procurement": 0.48},
-        "Quebec (CA)": {"VAT_Rate": 1.0, "VAT_Filing": 0.75, "ASIC_Import": 0.62, "Elec_Import": 0.62, "Tariff_Duties": 0.85, "Procurement": 0.25},
-        "Alberta (CA)": {"VAT_Rate": 0.9, "VAT_Filing": 0.75, "ASIC_Import": 0.5, "Elec_Import": 0.5, "Tariff_Duties": 0.85, "Procurement": 0.5},
-        "Brazil": {"VAT_Rate": 0.15, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 1.0, "Tariff_Duties": 0.38, "Procurement": 0.5},
-        "Chile": {"VAT_Rate": 0.75, "VAT_Filing": 0.5, "ASIC_Import": 0.75, "Elec_Import": 0.55, "Tariff_Duties": 0.15, "Procurement": 0.5},
-        "Ethiopia": {"VAT_Rate": 0.45, "VAT_Filing": 0.5, "ASIC_Import": 0.35, "Elec_Import": 0.85, "Tariff_Duties": 0.29, "Procurement": 0.5},
-        "Finland": {"VAT_Rate": 0.62, "VAT_Filing": 0.5, "ASIC_Import": 0.75, "Elec_Import": 1.0, "Tariff_Duties": 0.5, "Procurement": 0.5},
-        "Iceland": {"VAT_Rate": 0.67, "VAT_Filing": 0.5, "ASIC_Import": 0.75, "Elec_Import": 0.5, "Tariff_Duties": 0.48, "Procurement": 0.5},
-        "Kazakhstan": {"VAT_Rate": 0.25, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 0.75, "Tariff_Duties": 1.0, "Procurement": 0.7},
-        "Kenya": {"VAT_Rate": 0.25, "VAT_Filing": 0.35, "ASIC_Import": 0.5, "Elec_Import": 0.5, "Tariff_Duties": 0.0, "Procurement": 0.5},
-        "Norway": {"VAT_Rate": 0.1, "VAT_Filing": 0.62, "ASIC_Import": 0.83, "Elec_Import": 0.75, "Tariff_Duties": 1.0, "Procurement": 0.48},
-        "Oman": {"VAT_Rate": 0.9, "VAT_Filing": 0.5, "ASIC_Import": 0.88, "Elec_Import": 1.0, "Tariff_Duties": 0.57, "Procurement": 0.5},
-        "Paraguay": {"VAT_Rate": 1.0, "VAT_Filing": 0.62, "ASIC_Import": 0.64, "Elec_Import": 0.71, "Tariff_Duties": 0.85, "Procurement": 0.49},
-        "DRC": {"VAT_Rate": 0.5, "VAT_Filing": 0.5, "ASIC_Import": 0.0, "Elec_Import": 0.0, "Tariff_Duties": 0.5, "Procurement": 0.5},
-        "Russia": {"VAT_Rate": 0.25, "VAT_Filing": 0.55, "ASIC_Import": 0.5, "Elec_Import": 0.58, "Tariff_Duties": 1.0, "Procurement": 0.55},
-        "Sweden": {"VAT_Rate": 0.75, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 1.0, "Tariff_Duties": 0.5, "Procurement": 0.5},
-        "UAE": {"VAT_Rate": 0.5, "VAT_Filing": 0.62, "ASIC_Import": 0.62, "Elec_Import": 0.44, "Tariff_Duties": 1.0, "Procurement": 0.15},
-        "Texas (US)": {"VAT_Rate": 0.05, "VAT_Filing": 0.5, "ASIC_Import": 0.33, "Elec_Import": 0.26, "Tariff_Duties": 0.26, "Procurement": 0.5},
-        "Australia": {"VAT_Rate": 0.5, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 0.5, "Tariff_Duties": 0.5, "Procurement": 0.5}
+        "Argentina": {"VAT_Rate": 1.0, "VAT_Filing": 0.35, "ASIC_Import": 0.25, "Elec_Import": 0.38, "Tariff_Duties": 0.55, "Procurement": 0.48, "Mitigation": 0.50},
+        "Quebec (CA)": {"VAT_Rate": 1.0, "VAT_Filing": 0.75, "ASIC_Import": 0.62, "Elec_Import": 0.62, "Tariff_Duties": 0.85, "Procurement": 0.25, "Mitigation": 0.50},
+        "Alberta (CA)": {"VAT_Rate": 0.9, "VAT_Filing": 0.75, "ASIC_Import": 0.5, "Elec_Import": 0.5, "Tariff_Duties": 0.85, "Procurement": 0.5, "Mitigation": 0.50},
+        "Brazil": {"VAT_Rate": 0.15, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 1.0, "Tariff_Duties": 0.38, "Procurement": 0.5, "Mitigation": 0.68},
+        "Chile": {"VAT_Rate": 0.75, "VAT_Filing": 0.5, "ASIC_Import": 0.75, "Elec_Import": 0.55, "Tariff_Duties": 0.15, "Procurement": 0.5, "Mitigation": 0.20},
+        "Ethiopia": {"VAT_Rate": 0.45, "VAT_Filing": 0.5, "ASIC_Import": 0.35, "Elec_Import": 0.85, "Tariff_Duties": 0.29, "Procurement": 0.5, "Mitigation": 0.65},
+        "Finland": {"VAT_Rate": 0.62, "VAT_Filing": 0.5, "ASIC_Import": 0.75, "Elec_Import": 1.0, "Tariff_Duties": 0.5, "Procurement": 0.5, "Mitigation": 0.70},
+        "Iceland": {"VAT_Rate": 0.67, "VAT_Filing": 0.5, "ASIC_Import": 0.75, "Elec_Import": 0.5, "Tariff_Duties": 0.48, "Procurement": 0.5, "Mitigation": 0.47},
+        "Kazakhstan": {"VAT_Rate": 0.25, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 0.75, "Tariff_Duties": 1.0, "Procurement": 0.7, "Mitigation": 0.50},
+        "Kenya": {"VAT_Rate": 0.25, "VAT_Filing": 0.35, "ASIC_Import": 0.5, "Elec_Import": 0.5, "Tariff_Duties": 0.0, "Procurement": 0.5, "Mitigation": 0.50},
+        "Norway": {"VAT_Rate": 0.1, "VAT_Filing": 0.62, "ASIC_Import": 0.83, "Elec_Import": 0.75, "Tariff_Duties": 1.0, "Procurement": 0.48, "Mitigation": 0.50},
+        "Oman": {"VAT_Rate": 0.9, "VAT_Filing": 0.5, "ASIC_Import": 0.88, "Elec_Import": 1.0, "Tariff_Duties": 0.57, "Procurement": 0.5, "Mitigation": 0.75},
+        "Paraguay": {"VAT_Rate": 1.0, "VAT_Filing": 0.62, "ASIC_Import": 0.64, "Elec_Import": 0.71, "Tariff_Duties": 0.85, "Procurement": 0.49, "Mitigation": 0.50},
+        "DRC": {"VAT_Rate": 0.5, "VAT_Filing": 0.5, "ASIC_Import": 0.0, "Elec_Import": 0.0, "Tariff_Duties": 0.5, "Procurement": 0.5, "Mitigation": 0.75},
+        "Russia": {"VAT_Rate": 0.25, "VAT_Filing": 0.55, "ASIC_Import": 0.5, "Elec_Import": 0.58, "Tariff_Duties": 1.0, "Procurement": 0.55, "Mitigation": 0.50},
+        "Sweden": {"VAT_Rate": 0.75, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 1.0, "Tariff_Duties": 0.5, "Procurement": 0.5, "Mitigation": 0.75},
+        "UAE": {"VAT_Rate": 0.5, "VAT_Filing": 0.62, "ASIC_Import": 0.62, "Elec_Import": 0.44, "Tariff_Duties": 1.0, "Procurement": 0.15, "Mitigation": 0.50},
+        "Texas (US)": {"VAT_Rate": 0.05, "VAT_Filing": 0.5, "ASIC_Import": 0.33, "Elec_Import": 0.26, "Tariff_Duties": 0.26, "Procurement": 0.5, "Mitigation": 0.66},
+        "Australia": {"VAT_Rate": 0.5, "VAT_Filing": 0.5, "ASIC_Import": 0.5, "Elec_Import": 0.5, "Tariff_Duties": 0.5, "Procurement": 0.5, "Mitigation": 0.30}
+    }
+    
+    # VAT rates from the Word document (actual percentages)
+    VAT_RATES_PERCENT = {
+        "Argentina": 27.0,
+        "Quebec (CA)": 5.0,
+        "Alberta (CA)": 5.0,
+        "Brazil": 32.5,  # 30-35% average
+        "Chile": 19.0,
+        "Ethiopia": 15.0,
+        "Finland": 25.5,
+        "Iceland": 24.0,
+        "Kazakhstan": 16.0,
+        "Kenya": 16.0,
+        "Norway": 25.0,
+        "Oman": 5.0,
+        "Paraguay": 10.0,
+        "DRC": 16.0,
+        "Russia": 22.0,
+        "Sweden": 25.0,
+        "UAE": 5.0,
+        "Texas (US)": 0.0,
+        "Australia": 10.0
+    }
+    
+    # Customs summaries from the Word document
+    CUSTOMS_SUMMARIES = {
+        "Argentina": "27% VAT (refundable), 11% tariff on ASICs. Import license required. Unfavorable procedures for ASICs. Custom brokers effective to mitigate delays and avoid tariffs.",
+        "Quebec (CA)": "5% GST (refundable), 0% tariff. No license required. Slightly favorable import procedures. Mitigation mechanisms effective to accelerate deliveries.",
+        "Alberta (CA)": "5% GST (refundable), 2% tariff. No license required. Neutral import procedures. Mitigation mechanisms effective to cut tariffs.",
+        "Brazil": "30-35% VAT (complex layers), tariffs temporarily suspended. No license required. Neutral procedures but qualified local expert strongly recommended.",
+        "Chile": "19% VAT, 10% tariff. No license required. Highly favorable procedures for ASICs. Mitigation mechanisms ineffective to cut tariffs.",
+        "Ethiopia": "15% VAT (not yet applied), 3-15% tariff depending on HS classification. License required. Slightly unfavorable procedures, experienced clearing agent essential.",
+        "Finland": "25.5% VAT, no tariff. No license required. Neutral procedures for ASICs. Mitigation mechanisms effective to avoid VAT.",
+        "Iceland": "24% VAT (refundable), no tariff. No license required. Favorable procedures. Mitigation slightly effective, VAT exclusion discussions ongoing.",
+        "Kazakhstan": "16% VAT, no tariff. License required. Neutral procedures. Mitigation marginally effective.",
+        "Kenya": "16% VAT (can be exempted), 14% tariff. No license required. Mitigation mechanisms effective to cut tariffs.",
+        "Norway": "25% VAT, no tariff. License required. Favorable procedures. Mitigation effective to avoid VAT.",
+        "Oman": "5% VAT (exempted in free zones), <5% tariff. No license required. Highly favorable procedures. Custom brokers effective.",
+        "Paraguay": "10% VAT (can be exempted), 4-10% tariff. No license required. Marginally favorable procedures. Mitigation effective to reduce custom burden.",
+        "DRC": "16% VAT, up to 180% total tariff possible. License required. Highly unfavorable procedures. Mitigation effective to circumvent taxes.",
+        "Russia": "22% VAT, no tariff. License required. Neutral procedures. Mitigation slightly effective.",
+        "Sweden": "25% VAT, no tariff. No license required. Neutral procedures. Mitigation effective to avoid VAT.",
+        "UAE": "5% VAT (exempted in free zones), no tariff. License required. Favorable procedures. Mitigation effective.",
+        "Texas (US)": "No VAT, 10-30% tariff (variable). No license required. Unfavorable procedures. Mitigation slightly effective.",
+        "Australia": "10% GST, no tariff. License required. Unfavorable procedures with stringent oversight. Mitigation largely ineffective."
     }
     
     # Create customs dataframe
@@ -1757,18 +1803,17 @@ elif page == "Customs & Tariffs":
         customs_list.append({
             "Country": country,
             "VAT_Rate": scores["VAT_Rate"],
+            "VAT_Percent": VAT_RATES_PERCENT.get(country, 0),
             "VAT_Filing": scores["VAT_Filing"],
             "ASIC_Import": scores["ASIC_Import"],
             "Elec_Import": scores["Elec_Import"],
             "Tariff_Duties": scores["Tariff_Duties"],
-            "Procurement": scores["Procurement"]
+            "Procurement": scores["Procurement"],
+            "Mitigation": scores["Mitigation"]
         })
     df_customs = pd.DataFrame(customs_list)
     df_customs = df_customs.merge(df[["Country", "Region"]], on="Country", how="left")
     df_customs["ISO"] = df_customs["Country"].map(ISO_CODES)
-    
-    # Calculate overall import score (average of import-related metrics)
-    df_customs["Import_Score"] = (df_customs["ASIC_Import"] + df_customs["Elec_Import"] + df_customs["Tariff_Duties"] + df_customs["Procurement"]) / 4
     
     # =====================
     # SECTION 1: Scatter Plot - ASIC Import vs Electrical Infrastructure Import
@@ -1840,50 +1885,49 @@ elif page == "Customs & Tariffs":
     st.markdown("---")
     
     # =====================
-    # SECTION 2: VAT Regime - Grouped Bar Chart
+    # SECTION 2: VAT Exposure - Bar Chart with actual VAT rates
     # =====================
-    st.markdown('<p class="section-title">VAT Regime Assessment</p>', unsafe_allow_html=True)
-    st.markdown('<p class="subtitle-text">VAT rate favorability vs. filing complexity</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-title">VAT Exposure</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">VAT rate applied to ASICs imports (in %)</p>', unsafe_allow_html=True)
     
-    # Sort by VAT Rate
-    df_vat = df_customs.sort_values("VAT_Rate", ascending=True)
+    # Sort by VAT Percent
+    df_vat = df_customs.sort_values("VAT_Percent", ascending=True)
     
-    fig_vat = go.Figure()
+    # Color based on VAT rate brackets
+    def get_vat_color(vat):
+        if vat <= 5:
+            return '#0EAA76'  # Very low
+        elif vat <= 15:
+            return '#12E09B'  # Low
+        elif vat <= 20:
+            return '#F3B11D'  # Medium
+        elif vat <= 25:
+            return '#fc7a53'  # High
+        else:
+            return '#8A0000'  # Very high
     
-    # VAT Rate bars
-    fig_vat.add_trace(go.Bar(
-        name='VAT Rate Favorability',
+    colors_vat = [get_vat_color(v) for v in df_vat["VAT_Percent"]]
+    
+    fig_vat = go.Figure(go.Bar(
         y=df_vat["Country"],
-        x=df_vat["VAT_Rate"],
+        x=df_vat["VAT_Percent"],
         orientation='h',
-        marker_color='#0D6FFF',
-        text=df_vat["VAT_Rate"].apply(lambda x: f"{x:.2f}"),
+        marker_color=colors_vat,
+        text=df_vat["VAT_Percent"].apply(lambda x: f"{x:.1f}%"),
         textposition='outside',
-        textfont=dict(size=10, family="Barlow")
-    ))
-    
-    # VAT Filing bars
-    fig_vat.add_trace(go.Bar(
-        name='VAT Filing Ease',
-        y=df_vat["Country"],
-        x=df_vat["VAT_Filing"],
-        orientation='h',
-        marker_color='#12E09B',
-        text=df_vat["VAT_Filing"].apply(lambda x: f"{x:.2f}"),
-        textposition='outside',
-        textfont=dict(size=10, family="Barlow")
+        textfont=dict(size=11, family="Barlow")
     ))
     
     fig_vat.update_layout(
         height=550,
-        margin=dict(l=0, r=100, t=10, b=60),
-        barmode='group',
+        margin=dict(l=0, r=80, t=10, b=60),
         xaxis=dict(
-            title="Score (Higher = More Favorable)",
-            range=[0, 1.15],
+            title="VAT Rate (%)",
+            range=[0, df_vat["VAT_Percent"].max() + 5],
             gridcolor='#E2E8F0',
             tickfont=dict(family="Barlow", size=11),
-            titlefont=dict(family="Barlow", size=12)
+            titlefont=dict(family="Barlow", size=12),
+            ticksuffix="%"
         ),
         yaxis=dict(
             title="",
@@ -1891,43 +1935,39 @@ elif page == "Customs & Tariffs":
         ),
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
-        font=dict(family="Barlow"),
-        legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="center",
-            x=0.5,
-            font=dict(family="Barlow", size=11)
-        )
+        font=dict(family="Barlow")
     )
     st.plotly_chart(fig_vat, use_container_width=True)
     
+    # Legend for VAT color brackets
     st.markdown("""
-    <p style="font-size: 0.85rem; color: #64748B; text-align: center;">
-        VAT Rate Favorability: Higher score = Lower VAT rate or favorable regime<br>
-        VAT Filing Ease: Higher score = Simpler filing process and faster refunds
-    </p>
+    <div style="display: flex; justify-content: center; gap: 1.5rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
+        <span><strong style="color: #0EAA76; font-size: 1.1rem;">●</strong> ≤5%</span>
+        <span><strong style="color: #12E09B; font-size: 1.1rem;">●</strong> 6-15%</span>
+        <span><strong style="color: #F3B11D; font-size: 1.1rem;">●</strong> 16-20%</span>
+        <span><strong style="color: #fc7a53; font-size: 1.1rem;">●</strong> 21-25%</span>
+        <span><strong style="color: #8A0000; font-size: 1.1rem;">●</strong> &gt;25%</span>
+    </div>
     """, unsafe_allow_html=True)
     
     st.markdown("---")
     
     # =====================
-    # SECTION 3: Tariff Duties Map
+    # SECTION 3: Mitigation Mechanisms Map
     # =====================
-    st.markdown('<p class="section-title">Tariff Duties Exposure</p>', unsafe_allow_html=True)
-    st.markdown('<p class="subtitle-text">Import tariffs and customs duties impact on mining equipment</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-title">Import Constraint Mitigation Mechanisms</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle-text">Effectiveness of administrative mitigation efforts to reduce import burdens</p>', unsafe_allow_html=True)
     
-    df_tariff_agg = df_customs.groupby("ISO").agg({
-        "Tariff_Duties": "mean",
+    df_mitigation_agg = df_customs.groupby("ISO").agg({
+        "Mitigation": "mean",
         "Country": lambda x: ", ".join(x) if len(x) > 1 else x.iloc[0]
     }).reset_index()
-    df_tariff_agg.columns = ["ISO", "Score", "Country"]
+    df_mitigation_agg.columns = ["ISO", "Score", "Country"]
     
-    fig_tariff_map = go.Figure(go.Choropleth(
-        locations=df_tariff_agg["ISO"],
-        z=df_tariff_agg["Score"],
-        text=df_tariff_agg["Country"],
+    fig_mitigation_map = go.Figure(go.Choropleth(
+        locations=df_mitigation_agg["ISO"],
+        z=df_mitigation_agg["Score"],
+        text=df_mitigation_agg["Country"],
         colorscale=[
             [0, '#922B21'], [0.25, '#E67E22'], [0.5, '#F4D03F'], [0.75, '#52BE80'], [1, '#1E8449']
         ],
@@ -1941,12 +1981,12 @@ elif page == "Customs & Tariffs":
             tickfont=dict(family="Barlow", size=10),
             len=0.6,
             tickvals=[0, 0.25, 0.5, 0.75, 1],
-            ticktext=["High Tariffs", "", "Moderate", "", "Low/No Tariffs"]
+            ticktext=["Ineffective", "", "Moderate", "", "Highly Effective"]
         ),
         hovertemplate="<b>%{text}</b><br>Score: %{z:.2f}<extra></extra>"
     ))
     
-    fig_tariff_map.update_layout(
+    fig_mitigation_map.update_layout(
         height=450,
         margin=dict(l=0, r=0, t=10, b=0),
         geo=dict(
@@ -1965,12 +2005,31 @@ elif page == "Customs & Tariffs":
         paper_bgcolor='rgba(0,0,0,0)',
         font=dict(family="Barlow")
     )
-    st.plotly_chart(fig_tariff_map, use_container_width=True)
+    st.plotly_chart(fig_mitigation_map, use_container_width=True)
+    
+    # Mitigation mechanisms description box
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 12px; padding: 1.5rem; margin: 1rem 0; border: 1px solid #e2e8f0;">
+        <p style="font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 1rem;">🛠️ Common Mitigation Mechanisms by Region</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem; color: #475569;">
+            <div>
+                <p><strong style="color: #0D6FFF;">Middle East (Oman, UAE):</strong> Free trade zones with VAT exemptions, experienced custom brokers, direct relationships with port authorities.</p>
+                <p><strong style="color: #0D6FFF;">Europe (Finland, Sweden, Norway):</strong> VAT refund schemes, EU single market benefits, demand response participation credits.</p>
+                <p><strong style="color: #0D6FFF;">North America (Canada, US):</strong> GST refunds, bonded warehouses, USMCA trade agreements, though US faces variable tariffs (10-30%).</p>
+            </div>
+            <div>
+                <p><strong style="color: #0D6FFF;">Latin America (Paraguay, Argentina, Brazil):</strong> Custom brokers with government connections, free zone arrangements, but complex VAT layers in Brazil require local expertise.</p>
+                <p><strong style="color: #0D6FFF;">Africa (DRC, Ethiopia, Kenya):</strong> Investment incentives, tax holidays, but DRC faces up to 180% potential tariffs without proper mitigation.</p>
+                <p><strong style="color: #0D6FFF;">Central Asia (Kazakhstan, Russia):</strong> Special economic zones, license-based exemptions, but limited effectiveness overall.</p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     
     st.markdown("---")
     
     # =====================
-    # SECTION 4: Procurement Lead Times Radar
+    # SECTION 4: Import Process Comparison Radar
     # =====================
     st.markdown('<p class="section-title">Import Process Comparison</p>', unsafe_allow_html=True)
     
@@ -1984,13 +2043,13 @@ elif page == "Customs & Tariffs":
     j1_data = df_customs[df_customs["Country"] == customs_j1].iloc[0]
     j2_data = df_customs[df_customs["Country"] == customs_j2].iloc[0]
     
-    categories = ['ASIC Import', 'Elec. Import', 'Tariff Duties', 'Procurement', 'VAT Rate', 'VAT Filing']
+    categories = ['ASIC Import', 'Elec. Import', 'Tariff Duties', 'Procurement', 'VAT Rate', 'Mitigation']
     
     fig_customs_radar = go.Figure()
     
     fig_customs_radar.add_trace(go.Scatterpolar(
         r=[j1_data["ASIC_Import"], j1_data["Elec_Import"], j1_data["Tariff_Duties"], 
-           j1_data["Procurement"], j1_data["VAT_Rate"], j1_data["VAT_Filing"], j1_data["ASIC_Import"]],
+           j1_data["Procurement"], j1_data["VAT_Rate"], j1_data["Mitigation"], j1_data["ASIC_Import"]],
         theta=categories + [categories[0]],
         fill='toself',
         fillcolor='rgba(13, 111, 255, 0.3)',
@@ -2000,7 +2059,7 @@ elif page == "Customs & Tariffs":
     
     fig_customs_radar.add_trace(go.Scatterpolar(
         r=[j2_data["ASIC_Import"], j2_data["Elec_Import"], j2_data["Tariff_Duties"], 
-           j2_data["Procurement"], j2_data["VAT_Rate"], j2_data["VAT_Filing"], j2_data["ASIC_Import"]],
+           j2_data["Procurement"], j2_data["VAT_Rate"], j2_data["Mitigation"], j2_data["ASIC_Import"]],
         theta=categories + [categories[0]],
         fill='toself',
         fillcolor='rgba(252, 122, 83, 0.3)',
@@ -2045,9 +2104,29 @@ elif page == "Customs & Tariffs":
         <div><strong>Tariff Duties:</strong> Level of customs duties (higher = lower duties)</div>
         <div><strong>Procurement:</strong> Lead times impact on equipment delivery</div>
         <div><strong>VAT Rate:</strong> Favorability of VAT/sales tax regime</div>
-        <div><strong>VAT Filing:</strong> Ease of VAT filing and refund process</div>
+        <div><strong>Mitigation:</strong> Effectiveness of mechanisms to reduce import burdens</div>
     </div>
     """, unsafe_allow_html=True)
+    
+    # Side-by-side customs summaries for selected jurisdictions
+    st.markdown("---")
+    st.markdown('<p class="section-title">Customs & Tariffs Summary</p>', unsafe_allow_html=True)
+    
+    col_sum1, col_sum2 = st.columns(2)
+    with col_sum1:
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, rgba(13, 111, 255, 0.1) 0%, rgba(13, 111, 255, 0.05) 100%); border-radius: 12px; padding: 1.25rem; border-left: 4px solid #0D6FFF; height: 100%;">
+            <p style="font-size: 1rem; font-weight: 600; color: #0D6FFF; margin-bottom: 0.75rem;">{customs_j1}</p>
+            <p style="font-size: 0.85rem; color: #334155; line-height: 1.6;">{CUSTOMS_SUMMARIES.get(customs_j1, "No data available.")}</p>
+        </div>
+        """, unsafe_allow_html=True)
+    with col_sum2:
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, rgba(252, 122, 83, 0.1) 0%, rgba(252, 122, 83, 0.05) 100%); border-radius: 12px; padding: 1.25rem; border-left: 4px solid #fc7a53; height: 100%;">
+            <p style="font-size: 1rem; font-weight: 600; color: #fc7a53; margin-bottom: 0.75rem;">{customs_j2}</p>
+            <p style="font-size: 0.85rem; color: #334155; line-height: 1.6;">{CUSTOMS_SUMMARIES.get(customs_j2, "No data available.")}</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # ============================================
 # METHODOLOGY PAGE
