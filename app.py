@@ -42,6 +42,63 @@ st.markdown("""
     [data-testid="stSidebar"] .stRadio > div > label:hover { color: #1E8449 !important; }
     [data-testid="stSidebar"] .stRadio > div > label > div:first-child { display: none !important; }
     
+    /* Sidebar buttons - clean style, no border */
+    [data-testid="stSidebar"] button[kind="secondary"] {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        text-align: left !important;
+        padding: 0.35rem 0 !important;
+        font-size: 0.95rem !important;
+        color: #334155 !important;
+        font-weight: 500 !important;
+        justify-content: flex-start !important;
+    }
+    [data-testid="stSidebar"] button[kind="secondary"]:hover {
+        color: #1E8449 !important;
+        background: transparent !important;
+    }
+    [data-testid="stSidebar"] button[kind="secondary"]:focus,
+    [data-testid="stSidebar"] button[kind="secondary"]:active {
+        box-shadow: none !important;
+        border: none !important;
+        background: transparent !important;
+    }
+    
+    /* Expander - no border, same font */
+    [data-testid="stSidebar"] .stExpander,
+    [data-testid="stSidebar"] .stExpander > details,
+    [data-testid="stSidebar"] details,
+    [data-testid="stSidebar"] summary {
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    [data-testid="stSidebar"] .stExpander > details > summary {
+        font-size: 0.95rem !important;
+        font-weight: 500 !important;
+        color: #334155 !important;
+        padding: 0.35rem 0 !important;
+    }
+    [data-testid="stSidebar"] .stExpander > details > summary:hover {
+        color: #1E8449 !important;
+    }
+    
+    /* Sub-items inside expander - compact, light weight */
+    [data-testid="stSidebar"] .stExpander button[kind="secondary"] {
+        padding: 0.2rem 0 0.2rem 1.2rem !important;
+        font-size: 0.9rem !important;
+        color: #64748B !important;
+        font-weight: 400 !important;
+        min-height: 0 !important;
+    }
+    [data-testid="stSidebar"] .stExpander button[kind="secondary"]:hover {
+        color: #1E8449 !important;
+    }
+    [data-testid="stSidebar"] .stExpander > details > div {
+        padding: 0 !important;
+    }
+    
     .block-container { padding-top: 2.5rem !important; }
     
     h1 { font-family: 'Barlow', sans-serif !important; font-weight: 700 !important; font-size: 2rem !important; color: #1E293B !important; margin-top: 0 !important; }
@@ -461,13 +518,71 @@ def get_text_color_for_score(score):
 with st.sidebar:
     st.markdown("### Navigation")
     
-    # Simple radio navigation like V57
-    page = st.radio(
-        "",
-        ["Overview", "Jurisdiction", "Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs", "Methodology"],
-        label_visibility="collapsed",
-        key="nav_radio"
-    )
+    # Initialize session state for page
+    if "current_page" not in st.session_state:
+        st.session_state.current_page = "Overview"
+    
+    current = st.session_state.current_page
+    emi_categories = ["Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs"]
+    
+    # Custom styling for clean navigation
+    st.markdown("""
+    <style>
+    /* Hide default radio buttons */
+    [data-testid="stSidebar"] .stRadio { display: none; }
+    
+    /* Navigation links style */
+    .nav-link {
+        display: block;
+        padding: 0.4rem 0;
+        color: #334155;
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .nav-link:hover { color: #1E8449; }
+    .nav-link.active { color: #1E8449; font-weight: 600; }
+    
+    .nav-sub-link {
+        display: block;
+        padding: 0.25rem 0 0.25rem 1.2rem;
+        color: #64748B;
+        font-size: 0.9rem;
+        font-weight: 400;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .nav-sub-link:hover { color: #1E8449; }
+    .nav-sub-link.active { color: #1E8449; }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Overview
+    ov_class = "active" if current == "Overview" else ""
+    if st.button("⌂  Overview", key="nav_overview", use_container_width=True):
+        st.session_state.current_page = "Overview"
+        st.rerun()
+    
+    # Jurisdiction
+    if st.button("◎  Jurisdiction", key="nav_jurisdiction", use_container_width=True):
+        st.session_state.current_page = "Jurisdiction"
+        st.rerun()
+    
+    # Category expander
+    is_cat_active = current in emi_categories
+    with st.expander("◷  Category", expanded=is_cat_active or True):
+        for cat in emi_categories:
+            if st.button(cat, key=f"nav_{cat.lower().replace(' ', '_').replace('&', 'and')}", use_container_width=True):
+                st.session_state.current_page = cat
+                st.rerun()
+    
+    # Methodology
+    if st.button("▥  Methodology", key="nav_methodology", use_container_width=True):
+        st.session_state.current_page = "Methodology"
+        st.rerun()
+    
+    page = st.session_state.current_page
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
