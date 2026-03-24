@@ -63,35 +63,47 @@ st.markdown("""
         box-shadow: none !important;
         border: none !important;
     }
+    [data-testid="stSidebar"] button[kind="secondary"]:active {
+        background: transparent !important;
+        border: none !important;
+    }
     
-    /* Expander styling - no border, same font size */
+    /* Expander styling - no border at all, same font size as other buttons */
     [data-testid="stSidebar"] .stExpander {
         border: none !important;
         background: transparent !important;
+        box-shadow: none !important;
     }
-    [data-testid="stSidebar"] .stExpander > div:first-child {
-        background: transparent !important;
+    [data-testid="stSidebar"] .stExpander > details {
         border: none !important;
-        padding: 0 !important;
+        background: transparent !important;
     }
-    [data-testid="stSidebar"] .stExpander summary {
+    [data-testid="stSidebar"] .stExpander > details > summary {
         font-size: 0.95rem !important;
         font-weight: 500 !important;
         color: #334155 !important;
         padding: 0.5rem 0 !important;
         border: none !important;
         background: transparent !important;
+        box-shadow: none !important;
     }
-    [data-testid="stSidebar"] .stExpander summary:hover {
+    [data-testid="stSidebar"] .stExpander > details > summary:hover {
         color: #1E8449 !important;
     }
-    [data-testid="stSidebar"] .stExpander > div:first-child > div {
+    [data-testid="stSidebar"] .stExpander > details[open] > summary {
+        border: none !important;
+        background: transparent !important;
+    }
+    [data-testid="stSidebar"] details {
+        border: none !important;
+    }
+    [data-testid="stSidebar"] summary {
         border: none !important;
     }
     
-    /* Buttons inside expander */
+    /* Buttons inside expander - indented */
     [data-testid="stSidebar"] .stExpander button[kind="secondary"] {
-        padding-left: 1rem !important;
+        padding-left: 1.5rem !important;
         font-size: 0.9rem !important;
         color: #64748B !important;
     }
@@ -525,25 +537,25 @@ with st.sidebar:
     current = st.session_state.current_page
     emi_categories = ["Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs"]
     
-    # Overview with home icon
-    if st.button("⌂ Overview", key="btn_overview", use_container_width=True):
+    # Overview with home icon (extra space after icon)
+    if st.button("⌂  Overview", key="btn_overview", use_container_width=True):
         st.session_state.current_page = "Overview"
         st.rerun()
     
-    # Jurisdiction with globe icon
-    if st.button("◎ Jurisdiction", key="btn_jurisdiction", use_container_width=True):
+    # Jurisdiction with globe icon (extra space after icon)
+    if st.button("◎  Jurisdiction", key="btn_jurisdiction", use_container_width=True):
         st.session_state.current_page = "Jurisdiction"
         st.rerun()
     
-    # Category expander
-    with st.expander("◷ Category", expanded=True):
+    # Category expander (extra space after icon)
+    with st.expander("◷  Category", expanded=True):
         for cat in emi_categories:
-            if st.button(f"   {cat}", key=f"btn_{cat.lower().replace(' ', '_').replace('&', 'and')}", use_container_width=True):
+            if st.button(f"    {cat}", key=f"btn_{cat.lower().replace(' ', '_').replace('&', 'and')}", use_container_width=True):
                 st.session_state.current_page = cat
                 st.rerun()
     
-    # Methodology with chart icon
-    if st.button("▥ Methodology", key="btn_methodology", use_container_width=True):
+    # Methodology with chart icon (extra space after icon)
+    if st.button("▥  Methodology", key="btn_methodology", use_container_width=True):
         st.session_state.current_page = "Methodology"
         st.rerun()
     
