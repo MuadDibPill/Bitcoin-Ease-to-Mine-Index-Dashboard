@@ -42,8 +42,8 @@ st.markdown("""
     [data-testid="stSidebar"] .stRadio > div > label:hover { color: #1E8449 !important; }
     [data-testid="stSidebar"] .stRadio > div > label > div:first-child { display: none !important; }
     
-    /* Sidebar buttons - clean style, no border */
-    [data-testid="stSidebar"] button[kind="secondary"] {
+    /* Main sidebar buttons - clean style, no border */
+    [data-testid="stSidebar"] > div > div > div > div > div > button {
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
@@ -54,49 +54,64 @@ st.markdown("""
         font-weight: 500 !important;
         justify-content: flex-start !important;
     }
-    [data-testid="stSidebar"] button[kind="secondary"]:hover {
+    [data-testid="stSidebar"] > div > div > div > div > div > button:hover {
         color: #1E8449 !important;
         background: transparent !important;
     }
-    [data-testid="stSidebar"] button[kind="secondary"]:focus,
-    [data-testid="stSidebar"] button[kind="secondary"]:active {
+    
+    /* Expander container - no border */
+    [data-testid="stSidebar"] [data-testid="stExpander"] {
+        border: none !important;
+        background: transparent !important;
         box-shadow: none !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stExpander"] details {
         border: none !important;
         background: transparent !important;
     }
     
-    /* Expander - no border, same font */
-    [data-testid="stSidebar"] .stExpander,
-    [data-testid="stSidebar"] .stExpander > details,
-    [data-testid="stSidebar"] details,
-    [data-testid="stSidebar"] summary {
-        border: none !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-    [data-testid="stSidebar"] .stExpander > details > summary {
+    /* Expander header (Category) - larger font */
+    [data-testid="stSidebar"] [data-testid="stExpander"] summary {
         font-size: 0.95rem !important;
         font-weight: 500 !important;
         color: #334155 !important;
         padding: 0.35rem 0 !important;
+        border: none !important;
+        background: transparent !important;
     }
-    [data-testid="stSidebar"] .stExpander > details > summary:hover {
+    [data-testid="stSidebar"] [data-testid="stExpander"] summary:hover {
         color: #1E8449 !important;
     }
+    [data-testid="stSidebar"] [data-testid="stExpander"] summary span {
+        font-size: 0.95rem !important;
+    }
     
-    /* Sub-items inside expander - compact, light weight, smaller font */
-    [data-testid="stSidebar"] .stExpander button[kind="secondary"] {
-        padding: 0.15rem 0 0.15rem 1.2rem !important;
-        font-size: 0.82rem !important;
+    /* Sub-items inside expander - smaller font */
+    [data-testid="stSidebar"] [data-testid="stExpander"] button {
+        padding: 0.12rem 0 0.12rem 1.2rem !important;
+        font-size: 0.8rem !important;
         color: #64748B !important;
         font-weight: 400 !important;
         min-height: 0 !important;
+        height: auto !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        text-align: left !important;
+        justify-content: flex-start !important;
     }
-    [data-testid="stSidebar"] .stExpander button[kind="secondary"]:hover {
+    [data-testid="stSidebar"] [data-testid="stExpander"] button span,
+    [data-testid="stSidebar"] [data-testid="stExpander"] button p {
+        font-size: 0.8rem !important;
+        font-weight: 400 !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stExpander"] button:hover {
         color: #1E8449 !important;
+        background: transparent !important;
     }
-    [data-testid="stSidebar"] .stExpander > details > div {
+    [data-testid="stSidebar"] [data-testid="stExpander"] > details > div {
         padding: 0 !important;
+        margin: 0 !important;
     }
     
     .block-container { padding-top: 2.5rem !important; }
@@ -525,41 +540,7 @@ with st.sidebar:
     current = st.session_state.current_page
     emi_categories = ["Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs"]
     
-    # Custom styling for clean navigation
-    st.markdown("""
-    <style>
-    /* Hide default radio buttons */
-    [data-testid="stSidebar"] .stRadio { display: none; }
-    
-    /* Navigation links style */
-    .nav-link {
-        display: block;
-        padding: 0.4rem 0;
-        color: #334155;
-        font-size: 0.95rem;
-        font-weight: 500;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    .nav-link:hover { color: #1E8449; }
-    .nav-link.active { color: #1E8449; font-weight: 600; }
-    
-    .nav-sub-link {
-        display: block;
-        padding: 0.25rem 0 0.25rem 1.2rem;
-        color: #64748B;
-        font-size: 0.9rem;
-        font-weight: 400;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    .nav-sub-link:hover { color: #1E8449; }
-    .nav-sub-link.active { color: #1E8449; }
-    </style>
-    """, unsafe_allow_html=True)
-    
     # Overview
-    ov_class = "active" if current == "Overview" else ""
     if st.button("⌂  Overview", key="nav_overview", use_container_width=True):
         st.session_state.current_page = "Overview"
         st.rerun()
@@ -569,11 +550,20 @@ with st.sidebar:
         st.session_state.current_page = "Jurisdiction"
         st.rerun()
     
-    # Category expander
+    # Category section with custom expander styling
     is_cat_active = current in emi_categories
-    with st.expander("◷  Category", expanded=is_cat_active or True):
-        for cat in emi_categories:
-            if st.button(cat, key=f"nav_{cat.lower().replace(' ', '_').replace('&', 'and')}", use_container_width=True):
+    
+    # Use columns to create compact sub-navigation
+    st.markdown('<p style="font-size: 0.95rem; font-weight: 500; color: #334155; margin: 0.35rem 0 0.2rem 0;">◷  Category</p>', unsafe_allow_html=True)
+    
+    # Sub-items as small buttons
+    for cat in emi_categories:
+        col1, col2 = st.columns([0.1, 0.9])
+        with col2:
+            # Style the button label smaller
+            active_color = "#1E8449" if current == cat else "#64748B"
+            st.markdown(f'<style>div[data-testid="stButton"][key="nav_{cat.lower().replace(" ", "_").replace("&", "and")}"] button {{ font-size: 0.75rem !important; padding: 0.1rem 0 !important; color: {active_color} !important; }}</style>', unsafe_allow_html=True)
+            if st.button(cat, key=f"nav_{cat.lower().replace(' ', '_').replace('&', 'and')}"):
                 st.session_state.current_page = cat
                 st.rerun()
     
@@ -2106,13 +2096,13 @@ elif page == "Customs & Tariffs":
     )
     st.plotly_chart(fig_tariff_vat, use_container_width=True)
     
-    # Legend for VAT refundable status - updated colors
+    # Legend for VAT refundable status - updated colors and labels
     st.markdown("""
     <div style="display: flex; justify-content: center; gap: 2rem; margin: 0.5rem 0 1rem 0; font-size: 0.85rem; flex-wrap: wrap;">
         <span><strong style="color: #A7BCF7; font-size: 1.1rem;">■</strong> Tariff</span>
-        <span><strong style="color: #6287F0; font-size: 1.1rem;">■</strong> VAT Refundable*</span>
+        <span><strong style="color: #6287F0; font-size: 1.1rem;">■</strong> VAT Refundable or Exempted*</span>
         <span><strong style="color: #002060; font-size: 1.1rem;">■</strong> VAT Partially Refundable**</span>
-        <span><strong style="color: #F3B11D; font-size: 1.1rem;">■</strong> VAT Non-Refundable</span>
+        <span><strong style="color: #F3B11D; font-size: 1.1rem;">■</strong> VAT</span>
     </div>
     """, unsafe_allow_html=True)
     
