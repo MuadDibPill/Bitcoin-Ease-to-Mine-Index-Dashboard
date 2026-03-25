@@ -487,37 +487,72 @@ def get_text_color_for_score(score):
 with st.sidebar:
     st.markdown("### Navigation")
     
-    # Simple radio navigation with small Unicode icons
-    page = st.radio(
-        "",
-        [
-            "⌂  Overview",
-            "◎  Jurisdiction",
-            "▤  Category",
-            "    Legal",
-            "    Fiscal",
-            "    Permits & Licenses",
-            "    Energy & Grid",
-            "    Customs & Tariffs",
-            "▥  Methodology"
-        ],
-        label_visibility="collapsed",
-        key="nav_radio"
-    )
+    # Initialize session state
+    if "current_page" not in st.session_state:
+        st.session_state.current_page = "Overview"
     
-    # Map display names to page names
-    page_mapping = {
-        "⌂  Overview": "Overview",
-        "◎  Jurisdiction": "Jurisdiction",
-        "▤  Category": "Overview",  # Category header goes to Overview
-        "    Legal": "Legal",
-        "    Fiscal": "Fiscal",
-        "    Permits & Licenses": "Permits & Licenses",
-        "    Energy & Grid": "Energy & Grid",
-        "    Customs & Tariffs": "Customs & Tariffs",
-        "▥  Methodology": "Methodology"
+    # Custom CSS for clean navigation without borders/backgrounds
+    st.markdown("""
+    <style>
+    /* All sidebar buttons - no border, no background */
+    [data-testid="stSidebar"] button {
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0.25rem 0 !important;
+        color: var(--color-text-primary) !important;
     }
-    page = page_mapping.get(page, "Overview")
+    [data-testid="stSidebar"] button:hover {
+        color: #1E8449 !important;
+        background: none !important;
+    }
+    [data-testid="stSidebar"] button:focus {
+        box-shadow: none !important;
+    }
+    /* Expander styling */
+    [data-testid="stSidebar"] [data-testid="stExpander"] {
+        border: none !important;
+        background: none !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stExpander"] details {
+        border: none !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stExpander"] summary {
+        padding: 0.25rem 0 !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stExpander"] summary:hover {
+        color: #1E8449 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    current = st.session_state.current_page
+    emi_categories = ["Legal", "Fiscal", "Permits & Licenses", "Energy & Grid", "Customs & Tariffs"]
+    
+    # Overview
+    if st.button("⌂  Overview", key="nav_overview"):
+        st.session_state.current_page = "Overview"
+        st.rerun()
+    
+    # Jurisdiction
+    if st.button("◎  Jurisdiction", key="nav_jurisdiction"):
+        st.session_state.current_page = "Jurisdiction"
+        st.rerun()
+    
+    # Category with expander
+    is_cat_active = current in emi_categories
+    with st.expander("▤  Category", expanded=is_cat_active):
+        for cat in emi_categories:
+            if st.button(cat, key=f"nav_{cat.lower().replace(' ', '_').replace('&', 'and')}"):
+                st.session_state.current_page = cat
+                st.rerun()
+    
+    # Methodology
+    if st.button("▥  Methodology", key="nav_methodology"):
+        st.session_state.current_page = "Methodology"
+        st.rerun()
+    
+    page = st.session_state.current_page
     
     st.markdown("---")
     st.markdown("**Ease to Mine Index (EMI)**")
